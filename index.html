@@ -512,70 +512,103 @@
     }
 
     // Fallback inteligente contextual (por si no hay API Key)
-    function evaluateMemberLocally(member, recipeText) {
+        function evaluateMemberLocally(member, recipeText) {
       const cleanRecipe = normalizeText(recipeText);
       const cleanCond = normalizeText(member.condition);
-      const allRestrictions = member.restrictions.map(r => normalizeText(r)).join(' ');
 
       let status = 'approved';
       let reasons = [];
       let fix = '';
 
-      const isSoy = cleanRecipe.includes('soya') || cleanRecipe.includes('soja') || cleanRecipe.includes('tofu') || cleanRecipe.includes('edamame');
-      const isWheatGluten = cleanRecipe.includes('harina de trigo') || cleanRecipe.includes('trigo') || cleanRecipe.includes('pan') || cleanRecipe.includes('pasta');
+      // 1. ESCANEO DINÁMICO UNIVERSAL DE RESTRICCIONES PERSONALIZADAS
+      if (member.restrictions && Array.isArray(member.restrictions)) {
+        member.restrictions.forEach(rawRest => {
+          let cleanRest = normalizeText(rawRest).trim();
+          // Quitar prefijos comunes como 'sin ', 'evitar ', 'no ', 'cero ', 'alergia a '
+          cleanRest = cleanRest.replace(/^(sin|evitar|no|cero|alergia a la|alergia al|alergia a)\s+/, '').trim();
+          
+          if (cleanRest.length > 2) {
+            // Verificar coincidencia directa en el texto de la receta
+            if (cleanRecipe.includes(cleanRest)) {
+              status = 'rejected';
+              reasons.push(`Contiene ${cleanRest} (Restricción explícita en su perfil)`);
+              if (!fix) fix = `Eliminar o sustituir ${cleanRest} en la porción de ${member.name}.`;
+            }
+          }
+        });
+      }
+
+      // Derivados conocidos de soya
+      const isSoy = cleanRecipe.includes('soya') || cleanRecipe.includes('soja') || cleanRecipe.includes('tofu') || cleanRecipe.includes('edamame') || cleanRecipe.includes('tempeh');
+      // Trigo y gluten refinado
+      const isWheatGluten = cleanRecipe.includes('harina de trigo') || cleanRecipe.includes('trigo') || cleanRecipe.includes('pan') || cleanRecipe.includes('pasta') || cleanRecipe.includes('galleta');
+      // Azúcares rápidos
       const isQuickSugar = cleanRecipe.includes('miel') || cleanRecipe.includes('azucar') || cleanRecipe.includes('datil') || cleanRecipe.includes('jarabe');
-      
+
       // Detectar lácteo bovino SOLO si no dice "vegetal", "almendra", "chicharo", "coco"
       const mentionsMilk = cleanRecipe.includes('leche');
       const isExplicitVegetal = cleanRecipe.includes('leche vegetal') || cleanRecipe.includes('leche de almendra') || cleanRecipe.includes('leche de chicharo') || cleanRecipe.includes('leche de coco') || cleanRecipe.includes('leche de soya');
       const isBovineDairy = (mentionsMilk && !isExplicitVegetal) || cleanRecipe.includes('leche de vaca') || cleanRecipe.includes('queso') || cleanRecipe.includes('crema') || cleanRecipe.includes('mantequilla');
 
-      // 1. REVISIÓN DINO (Alergia a la soya)
-      if (cleanCond.includes('soya') || allRestrictions.includes('soya')) {
-        if (isSoy) {
-          status = 'rejected';
-          reasons.push('Contiene soya (Alérgeno crítico declarado en su perfil)');
-          fix = 'Sustituir por leche casera de almendra, chícharo o avena sin gluten.';
+      // 2. REGLA CLÍNICA: Alergia a la soya
+      const hasSoyInProfile = cleanCond.includes('soya') || member.restrictions.some(r => normalizeText(r).includes('soya'));
+      if (hasSoyInProfile && isSoy) {
+        status = 'rejected';
+        if (!reasons.some(r => r.includes('soya'))) {
+          reasons.push('Contiene soya o derivados (Alérgeno crítico declarado en su perfil)');
         }
+        if (!fix) fix = 'Sustituir por leche casera de almendra, chícharo o avena sin gluten.';
       }
 
-      // 2. REVISIÓN OLIVER (Adrenarquia / Crecimiento acelerado)
+      // 3. REGLA CLÍNICA: Adrenarquia / Crecimiento acelerado (Oliver)
       if (cleanCond.includes('adrenarquia') || cleanCond.includes('crecimiento')) {
         if (isSoy) {
           status = 'rejected';
-          reasons.push('Contiene soya: aporta fitoestrógenos (isoflavonas) que interfieren con la maduración suprarrenal y el crecimiento acelerado.');
+          if (!reasons.some(r => r.includes('soya'))) {
+            reasons.push('Contiene soya: aporta fitoestrógenos (isoflavonas) que interfieren con la maduración suprarrenal y el crecimiento acelerado.');
+          }
           if (!fix) fix = 'Cambiar la leche de soya por leche casera de almendra o proteína de chícharo.';
         }
         if (isWheatGluten) {
           status = 'rejected';
-          reasons.push('Harina de trigo / gluten: genera picos de glucosa e insulina que elevan andrógenos suprarrenales.');
+          if (!reasons.some(r => r.includes('trigo') || r.includes('gluten'))) {
+            reasons.push('Harina de trigo / gluten: genera picos de glucosa e insulina que elevan andrógenos suprarrenales.');
+          }
           if (!fix) fix = 'Usar harina de almendra fina con avena entera o harina de coco.';
         }
         if (isQuickSugar) {
           status = 'rejected';
-          reasons.push('Azúcar simple / miel: detona pico de insulina incompatible con adrenarquia.');
+          if (!reasons.some(r => r.includes('azucar') || r.includes('miel') || r.includes('datil'))) {
+            reasons.push('Azúcar simple / miel: detona pico de insulina incompatible con adrenarquia.');
+          }
         }
         if (isBovineDairy) {
           status = 'warning';
-          reasons.push('Contiene lácteos bovinos (pueden sobreestimular IGF-1).');
+          if (!reasons.some(r => r.includes('bovino') || r.includes('lacteo'))) {
+            reasons.push('Contiene lácteos bovinos (pueden sobreestimular IGF-1).');
+          }
         }
       }
 
-      // 3. REVISIÓN MAMÁ (Xanat - Autoinmune)
+      // 4. REGLA CLÍNICA: Mamá (Xanat - Autoinmune)
       if (cleanCond.includes('sjogren') || cleanCond.includes('hipotiroidismo') || cleanCond.includes('fibromialgia')) {
         if (isWheatGluten) {
           status = 'rejected';
-          reasons.push('Contiene gluten de trigo (detonador inflamatorio y autoinmune).');
+          if (!reasons.some(r => r.includes('gluten') || r.includes('trigo'))) {
+            reasons.push('Contiene gluten de trigo (detonador inflamatorio y autoinmune).');
+          }
           if (!fix) fix = 'Optar por tortillas de maíz nixtamalizado o avena certificada sin gluten.';
         }
         if (isBovineDairy) {
           status = 'warning';
-          reasons.push('Lácteo bovino: potencial proinflamatorio.');
+          if (!reasons.some(r => r.includes('bovino') || r.includes('lacteo'))) {
+            reasons.push('Lácteo bovino: potencial proinflamatorio.');
+          }
         }
       }
 
-      // 4. REVISIÓN PAPÁ
-      if (isWheatGluten) {
+      // 5. REGLA CLÍNICA: Papá
+      if (isWheatGluten && status === 'approved') {
         status = 'warning';
         reasons.push('Harina refinada: menor saciedad y mayor carga glucémica.');
       }
@@ -750,11 +783,32 @@ Responde ÚNICAMENTE un JSON válido (sin backticks markdown ni texto adicional)
         renderAuditResults(auditData);
       } catch (err) {
         console.error(err);
-        alert('Hubo un problema al consultar la API de Gemini: ' + err.message + '. Aplicando auditoría local de respaldo.');
-        // Fallback a local
-        geminiApiKey = '';
-        saveState();
-        runAudit();
+        alert('Servidores de IA temporalmente saturados (' + err.message + '). Mostrando auditoría con el motor local.');
+        // Ejecutar evaluación local sin borrar la API Key
+        let memberResults = [];
+        let globalHasReject = false;
+        let globalHasWarning = false;
+        let adaptationSteps = [];
+
+        members.forEach(member => {
+          const res = evaluateMemberLocally(member, input);
+          if (res.status === 'rejected') globalHasReject = true;
+          if (res.status === 'warning') globalHasWarning = true;
+          if (res.fix) adaptationSteps.push(`<strong>${member.name}:</strong> ${res.fix}`);
+          memberResults.push({
+            name: member.name,
+            condition: member.condition,
+            status: res.status,
+            reasons: res.reasons
+          });
+        });
+
+        renderAuditResults({
+          globalStatus: globalHasReject ? 'rejected' : (globalHasWarning ? 'warning' : 'approved'),
+          globalTitle: globalHasReject ? 'Requiere Adaptación Individual Inmediata' : (globalHasWarning ? 'Aprobado con Leves Modificaciones' : 'Aprobado para Toda la Familia (Consenso 100%)'),
+          adaptationStep: adaptationSteps.join('<br>'),
+          members: memberResults
+        });
       } finally {
         auditBtn.disabled = false;
       }
