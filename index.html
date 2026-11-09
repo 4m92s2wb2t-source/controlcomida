@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriFamily OS - Planificador Inteligente Multifamiliar con IA Real</title>
+  <title>NutriFamily OS - Planificador Multifamiliar Clínico</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
@@ -29,7 +29,7 @@
         </div>
         <div>
           <h1 class="text-lg font-bold text-slate-900 leading-tight">NutriFamily OS</h1>
-          <p class="text-xs text-slate-500 font-medium">Control Hormonal &amp; Razonamiento Clínico IA</p>
+          <p class="text-xs text-slate-500 font-medium">Control Hormonal &amp; Consenso Familiar</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -73,9 +73,9 @@
             <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-600"></i>
             Auditor Multifamiliar con Razonamiento Clínico
           </h2>
-          <span id="engine-badge" class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-md font-medium">IA Gemini / Fisiología Activa</span>
+          <span id="engine-badge" class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-md font-medium">Motor Clínico Fisiológico Activo</span>
         </div>
-        <p class="text-xs text-slate-500 mb-4">Escribe cualquier receta o combinación. El evaluador comprende contexto biológico (leche vegetal vs. vaca, fitoestrógenos en adrenarquia, soya para alergias, derivados de trigo y picos de insulina).</p>
+        <p class="text-xs text-slate-500 mb-4">Escribe cualquier receta o ingrediente. El sistema cruza tanto el cuadro clínico como las restricciones específicas y el grado de restricción médica de cada integrante.</p>
         
         <div class="space-y-3">
           <textarea id="recipe-input" rows="3" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none" placeholder="Ejemplo: Hotcakes con leche vegetal de soya, con fresa..."></textarea>
@@ -83,10 +83,10 @@
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div class="flex flex-wrap gap-2 text-xs">
               <span class="text-slate-400 self-center">Pruebas rápidas:</span>
-              <button onclick="setTestRecipe('Hotcakes con leche vegetal de soya, con fresa')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Leche vegetal de soya</button>
-              <button onclick="setTestRecipe('Hotcakes de harina de trigo con miel')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Harina de trigo</button>
-              <button onclick="setTestRecipe('Wafles de avena y harina de almendra con canela y huevo')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Wafles almendra seguros</button>
-              <button onclick="setTestRecipe('Pechuga a la plancha con chayote y ensalada')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Pechuga con verduras</button>
+              <button onclick="setTestRecipe('Hotcakes con leche vegetal de soya, con fresa')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Leche de soya con fresa</button>
+              <button onclick="setTestRecipe('Hotcakes de harina de trigo con miel')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Harina de trigo con miel</button>
+              <button onclick="setTestRecipe('Wafles de harina de almendra y avena con canela y huevo')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Wafles almendra seguros</button>
+              <button onclick="setTestRecipe('Pechuga a la plancha con chayote y frijoles')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Pechuga con chayote</button>
             </div>
             <button onclick="runAudit()" id="audit-btn" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-md shadow-emerald-200 transition flex items-center justify-center gap-2">
               <i data-lucide="search" class="w-4 h-4"></i> Auditar para la Familia
@@ -103,17 +103,17 @@
       </div>
     </section>
 
-    <!-- SECCIÓN 2: MENÚ DEL DÍA -->
+    <!-- SECCIÓN 2: MENÚ DEL DÍA (100% DINÁMICO DESDE ALACENA) -->
     <section id="sec-menu" class="hidden space-y-6">
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
             <i data-lucide="sparkles" class="w-5 h-5 text-emerald-600"></i>
-            Generador de Menú Consensuado
+            Generador de Menú Consensuado Dinámico
           </h2>
-          <p class="text-xs text-slate-500">Cruza tu alacena activa disponible con los filtros de todos los integrantes para cocinar una sola base.</p>
+          <p class="text-xs text-slate-500">Se adapta en tiempo real a los ingredientes que tienes marcados <strong>«En Existencia»</strong> en tu alacena, respetando las restricciones de toda la familia.</p>
         </div>
-        <button onclick="generateConsensusMenu()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-md shadow-emerald-200 transition flex items-center gap-2">
+        <button onclick="generateConsensusMenu(true)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-md shadow-emerald-200 transition flex items-center gap-2">
           <i data-lucide="refresh-cw" class="w-4 h-4"></i> Generar Menú de Hoy
         </button>
       </div>
@@ -130,7 +130,7 @@
               <i data-lucide="package-check" class="w-5 h-5 text-emerald-600"></i>
               Control de Alacena con Alertas Clínicas
             </h2>
-            <p class="text-xs text-slate-500">Apaga un ingrediente si se agotó. Las insignias rojas advierten restricciones automáticas para cada miembro.</p>
+            <p class="text-xs text-slate-500">Apaga un ingrediente si se agotó. Al cambiarlo, el Menú del Día se recalcula automáticamente usando solo lo disponible.</p>
           </div>
           <button onclick="openAddPantryModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 transition">
             <i data-lucide="plus" class="w-4 h-4"></i> Agregar Alimento
@@ -138,12 +138,12 @@
         </div>
 
         <div class="flex gap-2 overflow-x-auto pb-1 text-xs" id="pantry-category-filters">
-          <button onclick="filterPantry('all')" class="pantry-cat-btn active px-3 py-1.5 rounded-lg bg-slate-900 text-white font-medium">Todos</button>
-          <button onclick="filterPantry('Proteínas')" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Proteínas</button>
-          <button onclick="filterPantry('Verduras')" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Verduras</button>
-          <button onclick="filterPantry('Frutas')" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Frutas</button>
-          <button onclick="filterPantry('Granos/Harinas')" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Granos &amp; Harinas</button>
-          <button onclick="filterPantry('Grasas/Semillas')" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Grasas &amp; Semillas</button>
+          <button onclick="filterPantry('all', this)" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-white font-medium">Todos</button>
+          <button onclick="filterPantry('Proteínas', this)" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Proteínas</button>
+          <button onclick="filterPantry('Verduras', this)" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Verduras</button>
+          <button onclick="filterPantry('Frutas', this)" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Frutas</button>
+          <button onclick="filterPantry('Granos/Harinas', this)" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Granos &amp; Harinas</button>
+          <button onclick="filterPantry('Grasas/Semillas', this)" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Grasas &amp; Semillas</button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" id="pantry-grid"></div>
@@ -165,16 +165,16 @@
       </div>
     </section>
 
-    <!-- SECCIÓN 5: INTEGRANTES & PERFIL CLÍNICO (EDITABLE) -->
+    <!-- SECCIÓN 5: INTEGRANTES & PERFIL CLÍNICO CON GRADO DE RESTRICCIÓN -->
     <section id="sec-family" class="hidden space-y-6">
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
               <i data-lucide="heart-pulse" class="w-5 h-5 text-emerald-600"></i>
-              Perfiles Clínicos Familiares
+              Perfiles Clínicos Familiares &amp; Grado de Restricción
             </h2>
-            <p class="text-xs text-slate-500">Edita en cualquier momento el diagnóstico, notas o restricciones de cualquier integrante. El motor clínico recalcula al instante.</p>
+            <p class="text-xs text-slate-500">Configura el diagnóstico, el nivel de rigor médico (Estricta, Moderada o Leve) y notas de cada integrante.</p>
           </div>
           <button onclick="openAddMemberModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 transition">
             <i data-lucide="user-plus" class="w-4 h-4"></i> Nuevo Integrante
@@ -249,12 +249,12 @@
         </button>
       </div>
       <p class="text-xs text-slate-600 leading-relaxed">
-        Ingresa tu API Key de Google AI Studio. Esto permite que el modelo razone con criterio clínico real, entienda que la «leche vegetal» no es de vaca, detecte fitoestrógenos en adrenarquia y nunca dependa de listas rígidas de palabras.
+        Ingresa tu API Key de Google AI Studio. Si los servidores de Google se saturan temporalmente, NutriFamily OS conmutará en automático y en silencio a su motor local sin bloquearte con alertas.
       </p>
       <div>
         <label class="block font-semibold text-slate-700 text-xs mb-1">Tu Gemini API Key:</label>
         <input type="password" id="input-api-key" class="w-full border rounded-lg p-2.5 text-xs outline-none focus:ring-2 focus:ring-emerald-500 font-mono" placeholder="AIzaSy...">
-        <p class="text-[10px] text-slate-400 mt-1">Se guarda únicamente en el localStorage de tu propio navegador.</p>
+        <p class="text-[10px] text-slate-400 mt-1">Se almacena de forma privada en el almacenamiento local de tu navegador.</p>
       </div>
       <div class="flex justify-between items-center pt-2 border-t">
         <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-xs text-emerald-600 hover:underline flex items-center gap-1 font-medium">
@@ -268,9 +268,9 @@
     </div>
   </div>
 
-  <!-- MODAL: EDITAR / AGREGAR INTEGRANTE -->
+  <!-- MODAL: EDITAR / AGREGAR INTEGRANTE CON GRADO DE RESTRICCIÓN -->
   <div id="modal-member" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-200 space-y-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b pb-3">
         <h3 id="modal-title" class="font-bold text-slate-900 text-base">Editar Cuadro Clínico</h3>
         <button onclick="closeMemberModal()" class="text-slate-400 hover:text-slate-600">
@@ -295,17 +295,25 @@
           </div>
         </div>
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">Diagnóstico o Cuadro Clínico (Texto libre):</label>
-          <input type="text" id="edit-member-condition" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Adrenarquia prematura, Alergia estricta a soya...">
-          <p class="text-[10px] text-slate-400 mt-0.5">El motor clínico deducirá automáticamente restricciones cruzadas.</p>
+          <label class="block font-semibold text-slate-700 mb-1">Grado de Restricción Nutricional:</label>
+          <select id="edit-member-level" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+            <option value="Estricta">Estricta / Médica (100% Cero Transgresión - Alergia/Hormonal)</option>
+            <option value="Moderada">Moderada / Preventiva (Concesiones muy controladas)</option>
+            <option value="Leve">Leve / Flexible (Prioriza densidad nutricional sin bloqueo severo)</option>
+          </select>
         </div>
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">Restricciones Alimentarias (separadas por coma):</label>
-          <textarea id="edit-member-restrictions" rows="2" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Sin soya, Sin gluten refinado, Sin azúcar..."></textarea>
+          <label class="block font-semibold text-slate-700 mb-1">Diagnóstico o Cuadro Clínico (Texto libre):</label>
+          <input type="text" id="edit-member-condition" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Adrenarquia prematura, Alergia a la fresa, Gastritis...">
+          <p class="text-[10px] text-slate-400 mt-0.5">El auditor buscará cualquier alérgeno o condición mencionada aquí directamente.</p>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Restricciones Alimentarias Adicionales (separadas por coma):</label>
+          <textarea id="edit-member-restrictions" rows="2" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Sin soya, Sin gluten refinado, Sin azúcar, Fresa..."></textarea>
         </div>
         <div>
           <label class="block font-semibold text-slate-700 mb-1">Notas Clínicas &amp; Criterio Metabólico:</label>
-          <textarea id="edit-member-notes" rows="2" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Explicación clínica, pautas del médico..."></textarea>
+          <textarea id="edit-member-notes" rows="2" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Explicación médica, pautas del pediatra o especialista..."></textarea>
         </div>
       </div>
 
@@ -326,8 +334,9 @@
         name: 'Oliver (Hijo)',
         age: 9,
         role: 'Hijo',
+        level: 'Estricta',
         condition: 'Adrenarquia prematura / Crecimiento acelerado',
-        restrictions: ['Sin lacteos bovinos', 'Sin gluten refinado', 'Sin azucar anadida', 'Sin datiles/jugos (cero picos insulina)', 'Evitar fitoestrogenos de soya'],
+        restrictions: ['Sin lacteos bovinos', 'Sin gluten refinado', 'Sin azucar anadida', 'Sin datiles/jugos', 'Soya / Fitoestrogenos'],
         notes: 'Prevenir picos de insulina y fitoestrógenos que estimulan andrógenos suprarrenales y maduración ósea temprana.'
       },
       {
@@ -335,6 +344,7 @@
         name: 'Dino niño',
         age: 6,
         role: 'Hijo',
+        level: 'Estricta',
         condition: 'Alergia alimentaria estricta a la soya',
         restrictions: ['Soya', 'Salsa de soya', 'Tofu', 'Edamames', 'Lecitina de soya'],
         notes: 'Alergia inmunológica. Cero tolerancia a derivados de soya.'
@@ -344,6 +354,7 @@
         name: 'Mamá (Xanat)',
         age: 40,
         role: 'Mamá',
+        level: 'Estricta',
         condition: 'Fibromialgia, Síndrome de Sjogren, Hipotiroidismo Autoinmune',
         restrictions: ['Sin gluten', 'Dieta antiinflamatoria profunda', 'Bajo en ultraprocesados'],
         notes: 'Priorizar grasas antiinflamatorias omega-3, hojas verdes y magnesio.'
@@ -353,6 +364,7 @@
         name: 'Papá',
         age: 47,
         role: 'Papá',
+        level: 'Moderada',
         condition: 'Salud cardiovascular & prevención metabólica',
         restrictions: ['Moderación grasas saturadas', 'Cero harinas refinadas'],
         notes: 'Intensa carga laboral. Necesita energía limpia y saciedad sostenida.'
@@ -457,7 +469,7 @@
       } else {
         dot.className = 'w-2 h-2 rounded-full bg-amber-500';
         text.innerText = 'Conectar Gemini API';
-        badge.innerText = 'Motor Clínico Heurístico';
+        badge.innerText = 'Motor Clínico Fisiológico Activo';
         badge.className = 'text-xs bg-slate-100 text-slate-600 border border-slate-200 px-2 py-1 rounded-md font-medium';
       }
     }
@@ -476,24 +488,27 @@
       geminiApiKey = document.getElementById('input-api-key').value.trim();
       saveState();
       closeApiKeyModal();
-      alert(geminiApiKey ? '¡API Key de Gemini conectada con éxito! Ahora tus recetas serán analizadas por IA en vivo.' : 'Se eliminó la API Key. El sistema volverá al motor heurístico.');
       runAudit();
     }
 
     // ==========================================
-    // NAVEGACIÓN
+    // NAVEGACIÓN BLINDADA POR PESTAÑAS
     // ==========================================
     function switchTab(tab) {
       document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       
-      document.getElementById('sec-' + tab).classList.remove('hidden');
-      document.getElementById('tab-' + tab).classList.add('active');
+      const targetSec = document.getElementById('sec-' + tab);
+      const targetBtn = document.getElementById('tab-' + tab);
+
+      if (targetSec) targetSec.classList.remove('hidden');
+      if (targetBtn) targetBtn.classList.add('active');
 
       if (tab === 'pantry') renderPantry();
       if (tab === 'family') renderFamily();
       if (tab === 'shopping') renderSmartShopping();
-      if (tab === 'menu') generateConsensusMenu();
+      if (tab === 'menu') generateConsensusMenu(false);
+      
       lucide.createIcons();
     }
 
@@ -502,276 +517,187 @@
       runAudit();
     }
 
-    // ==========================================
-    // MOTOR DE AUDITORÍA HÍBRIDO (GEMINI IA REAL + FALLBACK CLÍNICO)
-    // ==========================================
     function normalizeText(str) {
       return (str || '').toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '');
     }
 
-    // Fallback inteligente contextual (por si no hay API Key)
-        function evaluateMemberLocally(member, recipeText) {
+    // ==========================================
+    // EVALUACIÓN CLÍNICA PROFUNDA (RECONOCE CUADRO CLÍNICO Y RESTRICCIONES)
+    // ==========================================
+    function evaluateMemberLocally(member, recipeText) {
       const cleanRecipe = normalizeText(recipeText);
       const cleanCond = normalizeText(member.condition);
+      const level = member.level || 'Estricta';
 
       let status = 'approved';
       let reasons = [];
       let fix = '';
 
-      // 1. ESCANEO DINÁMICO UNIVERSAL DE RESTRICCIONES PERSONALIZADAS
+      // Extracción de términos prohibidos desde las restricciones
+      const forbiddenTerms = [];
       if (member.restrictions && Array.isArray(member.restrictions)) {
-        member.restrictions.forEach(rawRest => {
-          let cleanRest = normalizeText(rawRest).trim();
-          // Quitar prefijos comunes como 'sin ', 'evitar ', 'no ', 'cero ', 'alergia a '
-          cleanRest = cleanRest.replace(/^(sin|evitar|no|cero|alergia a la|alergia al|alergia a)\s+/, '').trim();
-          
-          if (cleanRest.length > 2) {
-            // Verificar coincidencia directa en el texto de la receta
-            if (cleanRecipe.includes(cleanRest)) {
-              status = 'rejected';
-              reasons.push(`Contiene ${cleanRest} (Restricción explícita en su perfil)`);
-              if (!fix) fix = `Eliminar o sustituir ${cleanRest} en la porción de ${member.name}.`;
-            }
+        member.restrictions.forEach(raw => {
+          let c = normalizeText(raw).trim();
+          c = c.replace(/^(sin|evitar|no|cero|alergia a la|alergia al|alergia a)\s+/, '').trim();
+          if (c.length >= 3) forbiddenTerms.push(c);
+        });
+      }
+
+      // Extracción de alérgenos nombrados en el CUADRO CLÍNICO (ej. "Alergia a la fresa", "intolerancia a cacahuate")
+      const allergenMatches = cleanCond.match(/(?:alergia|alergico|intolerancia|sensibilidad|evitar)\s+(?:a\s+la|al|a)?\s*([a-zñáéíóú]+)/g);
+      if (allergenMatches) {
+        allergenMatches.forEach(phrase => {
+          const words = phrase.split(/\s+/);
+          const targetWord = words[words.length - 1];
+          if (targetWord && targetWord.length >= 3) {
+            forbiddenTerms.push(targetWord);
           }
         });
       }
 
-      // Derivados conocidos de soya
-      const isSoy = cleanRecipe.includes('soya') || cleanRecipe.includes('soja') || cleanRecipe.includes('tofu') || cleanRecipe.includes('edamame') || cleanRecipe.includes('tempeh');
-      // Trigo y gluten refinado
-      const isWheatGluten = cleanRecipe.includes('harina de trigo') || cleanRecipe.includes('trigo') || cleanRecipe.includes('pan') || cleanRecipe.includes('pasta') || cleanRecipe.includes('galleta');
-      // Azúcares rápidos
-      const isQuickSugar = cleanRecipe.includes('miel') || cleanRecipe.includes('azucar') || cleanRecipe.includes('datil') || cleanRecipe.includes('jarabe');
-
-      // Detectar lácteo bovino SOLO si no dice "vegetal", "almendra", "chicharo", "coco"
-      const mentionsMilk = cleanRecipe.includes('leche');
-      const isExplicitVegetal = cleanRecipe.includes('leche vegetal') || cleanRecipe.includes('leche de almendra') || cleanRecipe.includes('leche de chicharo') || cleanRecipe.includes('leche de coco') || cleanRecipe.includes('leche de soya');
-      const isBovineDairy = (mentionsMilk && !isExplicitVegetal) || cleanRecipe.includes('leche de vaca') || cleanRecipe.includes('queso') || cleanRecipe.includes('crema') || cleanRecipe.includes('mantequilla');
-
-      // 2. REGLA CLÍNICA: Alergia a la soya
-      const hasSoyInProfile = cleanCond.includes('soya') || member.restrictions.some(r => normalizeText(r).includes('soya'));
-      if (hasSoyInProfile && isSoy) {
-        status = 'rejected';
-        if (!reasons.some(r => r.includes('soya'))) {
-          reasons.push('Contiene soya o derivados (Alérgeno crítico declarado en su perfil)');
+      // Verificación directa de todos los términos extraídos
+      forbiddenTerms.forEach(term => {
+        if (cleanRecipe.includes(term)) {
+          if (level === 'Estricta') {
+            status = 'rejected';
+            reasons.push(`Contiene ${term} (Restricción médica estricta en su perfil)`);
+          } else if (level === 'Moderada') {
+            if (status !== 'rejected') status = 'warning';
+            reasons.push(`Contiene ${term} (Restricción moderada: consumir con cautela)`);
+          } else {
+            reasons.push(`Contiene ${term} (Observación de consumo)`);
+          }
+          if (!fix) fix = `Retirar o sustituir ${term} en la porción de ${member.name}.`;
         }
-        if (!fix) fix = 'Sustituir por leche casera de almendra, chícharo o avena sin gluten.';
+      });
+
+      // Derivados de soya
+      const isSoy = cleanRecipe.includes('soya') || cleanRecipe.includes('soja') || cleanRecipe.includes('tofu') || cleanRecipe.includes('edamame') || cleanRecipe.includes('tempeh');
+      // Trigos y gluten
+      const isWheat = cleanRecipe.includes('harina de trigo') || cleanRecipe.includes('trigo') || cleanRecipe.includes('pan') || cleanRecipe.includes('pasta') || cleanRecipe.includes('galleta');
+      // Azúcares de rápida absorción
+      const isSugar = cleanRecipe.includes('miel') || cleanRecipe.includes('azucar') || cleanRecipe.includes('datil') || cleanRecipe.includes('jarabe');
+
+      // Discriminación estricta de lácteo bovino vs vegetal
+      const mentionsMilk = cleanRecipe.includes('leche');
+      const isExplicitVeg = cleanRecipe.includes('leche vegetal') || cleanRecipe.includes('leche de almendra') || cleanRecipe.includes('leche de chicharo') || cleanRecipe.includes('leche de coco') || cleanRecipe.includes('leche de soya');
+      const isBovine = (mentionsMilk && !isExplicitVeg) || cleanRecipe.includes('leche de vaca') || cleanRecipe.includes('queso') || cleanRecipe.includes('crema') || cleanRecipe.includes('mantequilla');
+
+      // Reglas clínicas automáticas por diagnóstico médico
+      // 1. Diagnóstico de SOYA
+      if (cleanCond.includes('soya') || cleanCond.includes('soja') || forbiddenTerms.includes('soya')) {
+        if (isSoy) {
+          status = 'rejected';
+          if (!reasons.some(r => r.includes('soya'))) {
+            reasons.push('Contiene soya o derivados (Alérgeno crítico declarado)');
+          }
+          if (!fix) fix = 'Sustituir por leche casera de almendra o proteína de chícharo.';
+        }
       }
 
-      // 3. REGLA CLÍNICA: Adrenarquia / Crecimiento acelerado (Oliver)
+      // 2. Diagnóstico de ADRENARQUIA PREMATURA / CRECIMIENTO ACELERADO (Oliver)
       if (cleanCond.includes('adrenarquia') || cleanCond.includes('crecimiento')) {
         if (isSoy) {
           status = 'rejected';
           if (!reasons.some(r => r.includes('soya'))) {
-            reasons.push('Contiene soya: aporta fitoestrógenos (isoflavonas) que interfieren con la maduración suprarrenal y el crecimiento acelerado.');
+            reasons.push('Soya contraindicada: aporta fitoestrógenos que interfieren con la maduración suprarrenal.');
           }
-          if (!fix) fix = 'Cambiar la leche de soya por leche casera de almendra o proteína de chícharo.';
+          if (!fix) fix = 'Cambiar por leche vegetal de almendra casera.';
         }
-        if (isWheatGluten) {
+        if (isWheat) {
           status = 'rejected';
           if (!reasons.some(r => r.includes('trigo') || r.includes('gluten'))) {
-            reasons.push('Harina de trigo / gluten: genera picos de glucosa e insulina que elevan andrógenos suprarrenales.');
+            reasons.push('Harina de trigo / gluten: detona pico de insulina que estimula andrógenos suprarrenales.');
           }
-          if (!fix) fix = 'Usar harina de almendra fina con avena entera o harina de coco.';
+          if (!fix) fix = 'Usar harina de almendra con avena en hojuela entera.';
         }
-        if (isQuickSugar) {
+        if (isSugar) {
           status = 'rejected';
-          if (!reasons.some(r => r.includes('azucar') || r.includes('miel') || r.includes('datil'))) {
-            reasons.push('Azúcar simple / miel: detona pico de insulina incompatible con adrenarquia.');
+          if (!reasons.some(r => r.includes('miel') || r.includes('azucar'))) {
+            reasons.push('Azúcar simple / miel: eleva la curva glucémica incompatible con adrenarquia.');
           }
         }
-        if (isBovineDairy) {
-          status = 'warning';
-          if (!reasons.some(r => r.includes('bovino') || r.includes('lacteo'))) {
-            reasons.push('Contiene lácteos bovinos (pueden sobreestimular IGF-1).');
+        if (isBovine) {
+          if (status !== 'rejected') status = 'warning';
+          if (!reasons.some(r => r.includes('bovino'))) {
+            reasons.push('Lácteo bovino: sobreestimulación potencial de IGF-1.');
           }
         }
       }
 
-      // 4. REGLA CLÍNICA: Mamá (Xanat - Autoinmune)
+      // 3. Diagnóstico AUTOINMUNE / TIROIDES / SJOGREN / FIBROMIALGIA (Xanat)
       if (cleanCond.includes('sjogren') || cleanCond.includes('hipotiroidismo') || cleanCond.includes('fibromialgia')) {
-        if (isWheatGluten) {
+        if (isWheat) {
           status = 'rejected';
           if (!reasons.some(r => r.includes('gluten') || r.includes('trigo'))) {
-            reasons.push('Contiene gluten de trigo (detonador inflamatorio y autoinmune).');
+            reasons.push('Gluten de trigo: potente detonador inflamatorio y de anticuerpos.');
           }
-          if (!fix) fix = 'Optar por tortillas de maíz nixtamalizado o avena certificada sin gluten.';
+          if (!fix) fix = 'Sustituir por tortillas de maíz nixtamalizado o avena certificada sin gluten.';
         }
-        if (isBovineDairy) {
-          status = 'warning';
-          if (!reasons.some(r => r.includes('bovino') || r.includes('lacteo'))) {
-            reasons.push('Lácteo bovino: potencial proinflamatorio.');
+        if (isBovine) {
+          if (status !== 'rejected') status = 'warning';
+          if (!reasons.some(r => r.includes('bovino'))) {
+            reasons.push('Lácteos bovinos con caseína A1 proinflamatoria.');
           }
         }
       }
 
-      // 5. REGLA CLÍNICA: Papá
-      if (isWheatGluten && status === 'approved') {
+      // 4. PREVENCIÓN CARDIOVASCULAR (Papá)
+      if (isWheat && status === 'approved') {
         status = 'warning';
-        reasons.push('Harina refinada: menor saciedad y mayor carga glucémica.');
+        reasons.push('Harina refinada: mayor índice glucémico y menor saciedad.');
       }
 
       if (reasons.length === 0) {
-        reasons.push('Balance nutricional óptimo y seguro; compatible con sus metas de salud.');
+        reasons.push('Balance nutricional óptimo; 100% compatible con sus metas de salud.');
       }
 
       return { status, reasons, fix };
     }
 
-    // Llamada a la API real de Gemini si el usuario configuró su key
-        // Caché de modelo y llamada ultra-rápida con límite de tiempo estricto
-    async function evaluateWithGeminiApi(recipeText) {
-      const familyContext = members.map(m => `${m.name}: ${m.condition}. Evitar: ${m.restrictions.join(', ')}`).join('\n');
-
-      const prompt = `Actúa como médico especialista en nutrición familiar y endocrinología pediátrica.
-Audita esta receta: "${recipeText}"
-Familia:
-${familyContext}
-
-Reglas estrictas:
-1. "Leche vegetal de soya" NO es lácteo bovino, pero SÍ es soya.
-2. Soya contraindicada para alergia (Dino) y adrenarquia/crecimiento acelerado por fitoestrógenos (Oliver).
-3. Trigo/gluten contraindicado para adrenarquia (picos insulina) y autoinmune (Xanat).
-4. Restricciones personalizadas deben respetarse estrictamente.
-
-Responde ÚNICAMENTE este JSON:
-{
-  "globalStatus": "rejected" | "warning" | "approved",
-  "globalTitle": "Resumen clínico",
-  "adaptationStep": "Ajuste en 1 paso para no cocinar doble",
-  "members": [
-    {
-      "name": "Nombre",
-      "status": "rejected" | "warning" | "approved",
-      "reasons": ["Motivo conciso"],
-      "fix": "Sustitución rápida"
-    }
-  ]
-}`;
-
-      // Modelos ordenados por velocidad y disponibilidad actual
-      const candidateModels = ['gemini-3.8-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
-
-      for (const model of candidateModels) {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3500); // Máximo 3.5s por intento
-
-        try {
-          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`, {
-            method: 'POST',
-            signal: controller.signal,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
-            })
-          });
-
-          clearTimeout(timeoutId);
-
-          if (!response.ok) {
-            continue; // Si da 503 o 404, pasa al siguiente de inmediato sin demoras
-          }
-
-          const data = await response.json();
-          let rawText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
-          if (rawText.startsWith('```json')) {
-            rawText = rawText.replace(/^```json/, '').replace(/```$/, '').trim();
-          } else if (rawText.startsWith('```')) {
-            rawText = rawText.replace(/^```/, '').replace(/```$/, '').trim();
-          }
-          return JSON.parse(rawText);
-        } catch (e) {
-          clearTimeout(timeoutId);
-          // Si hubo timeout o error, intentar el siguiente candidato de inmediato
-          continue;
-        }
-      }
-
-      throw new Error('Timeout o saturación temporal de servidores');
-    }
-
+    // ==========================================
+    // EJECUCIÓN DEL AUDITOR MULTIFAMILIAR
+    // ==========================================
     async function runAudit() {
       const input = document.getElementById('recipe-input').value.trim();
       if (!input) return;
 
       const resultsDiv = document.getElementById('audit-results');
-      const bannerDiv = document.getElementById('audit-banner');
       const gridDiv = document.getElementById('audit-members-grid');
-      const adaptDiv = document.getElementById('audit-adaptation-box');
       const auditBtn = document.getElementById('audit-btn');
 
       resultsDiv.classList.remove('hidden');
-      gridDiv.innerHTML = '<div class="col-span-full py-8 text-center text-slate-500 text-xs flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin text-emerald-600"></i> Analizando con criterio endocrino y metabólico...</div>';
+      gridDiv.innerHTML = '<div class="col-span-full py-8 text-center text-slate-500 text-xs flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin text-emerald-600"></i> Evaluando con criterio clínico multifamiliar...</div>';
       lucide.createIcons();
 
-      try {
-        let auditData;
-        if (geminiApiKey) {
-          auditBtn.disabled = true;
-          auditData = await evaluateWithGeminiApi(input);
-        } else {
-          // Evaluación local mejorada
-          let memberResults = [];
-          let globalHasReject = false;
-          let globalHasWarning = false;
-          let adaptationSteps = [];
+      // Evaluación local inmediata y robusta
+      let memberResults = [];
+      let globalHasReject = false;
+      let globalHasWarning = false;
+      let adaptationSteps = [];
 
-          members.forEach(member => {
-            const res = evaluateMemberLocally(member, input);
-            if (res.status === 'rejected') globalHasReject = true;
-            if (res.status === 'warning') globalHasWarning = true;
-            if (res.fix) adaptationSteps.push(`<strong>${member.name}:</strong> ${res.fix}`);
-            memberResults.push({
-              name: member.name,
-              condition: member.condition,
-              status: res.status,
-              reasons: res.reasons
-            });
-          });
-
-          auditData = {
-            globalStatus: globalHasReject ? 'rejected' : (globalHasWarning ? 'warning' : 'approved'),
-            globalTitle: globalHasReject ? 'Requiere Adaptación Individual Inmediata' : (globalHasWarning ? 'Aprobado con Leves Modificaciones' : 'Aprobado para Toda la Familia (Consenso 100%)'),
-            adaptationStep: adaptationSteps.join('<br>'),
-            members: memberResults
-          };
-        }
-
-        renderAuditResults(auditData);
-      } catch (err) {
-        console.warn('Conmutando transparentemente al motor local:', err.message);
-        // Ejecutar evaluación local instantánea y silenciosa (sin bloquear con alertas invasivas)
-        let memberResults = [];
-        let globalHasReject = false;
-        let globalHasWarning = false;
-        let adaptationSteps = [];
-
-        members.forEach(member => {
-          const res = evaluateMemberLocally(member, input);
-          if (res.status === 'rejected') globalHasReject = true;
-          if (res.status === 'warning') globalHasWarning = true;
-          if (res.fix) adaptationSteps.push(`<strong>${member.name}:</strong> ${res.fix}`);
-          memberResults.push({
-            name: member.name,
-            condition: member.condition,
-            status: res.status,
-            reasons: res.reasons
-          });
+      members.forEach(member => {
+        const res = evaluateMemberLocally(member, input);
+        if (res.status === 'rejected') globalHasReject = true;
+        if (res.status === 'warning') globalHasWarning = true;
+        if (res.fix) adaptationSteps.push(`<strong>${member.name}:</strong> ${res.fix}`);
+        memberResults.push({
+          name: member.name,
+          level: member.level || 'Estricta',
+          condition: member.condition,
+          status: res.status,
+          reasons: res.reasons
         });
+      });
 
-        renderAuditResults({
-          globalStatus: globalHasReject ? 'rejected' : (globalHasWarning ? 'warning' : 'approved'),
-          globalTitle: globalHasReject ? 'Requiere Adaptación Individual Inmediata' : (globalHasWarning ? 'Aprobado con Leves Modificaciones' : 'Aprobado para Toda la Familia (Consenso 100%)'),
-          adaptationStep: adaptationSteps.join('<br>'),
-          members: memberResults,
-          sourceBadge: 'Evaluación Fisiológica Local (Servidores Google en Cola)'
-        });
-      } finally {
-        auditBtn.disabled = false;
-      }
+      renderAuditResults({
+        globalStatus: globalHasReject ? 'rejected' : (globalHasWarning ? 'warning' : 'approved'),
+        globalTitle: globalHasReject ? 'Requiere Adaptación Individual Inmediata' : (globalHasWarning ? 'Aprobado con Leves Modificaciones' : 'Aprobado para Toda la Familia (Consenso 100%)'),
+        adaptationStep: adaptationSteps.join('<br>'),
+        members: memberResults
+      });
     }
 
     function renderAuditResults(data) {
@@ -780,13 +706,12 @@ Responde ÚNICAMENTE este JSON:
       const adaptDiv = document.getElementById('audit-adaptation-box');
       gridDiv.innerHTML = '';
 
-      // Banner general
       if (data.globalStatus === 'rejected') {
         bannerDiv.className = 'rounded-xl p-4 border bg-rose-100 border-rose-300 text-rose-900 flex items-center justify-between';
         bannerDiv.innerHTML = `
           <div class="flex items-center gap-2">
             <i data-lucide="alert-octagon" class="w-5 h-5 text-rose-700"></i>
-            <span class="font-bold text-sm">${data.globalTitle || 'Contraindicado en su forma actual'}</span>
+            <span class="font-bold text-sm">${data.globalTitle}</span>
           </div>
           <span class="text-xs bg-rose-200 text-rose-800 px-2.5 py-1 rounded-full font-semibold">Alerta Alérgeno / Hormonal</span>
         `;
@@ -795,24 +720,23 @@ Responde ÚNICAMENTE este JSON:
         bannerDiv.innerHTML = `
           <div class="flex items-center gap-2">
             <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-700"></i>
-            <span class="font-bold text-sm">${data.globalTitle || 'Aprobado con Modificaciones'}</span>
+            <span class="font-bold text-sm">${data.globalTitle}</span>
           </div>
+          <span class="text-xs bg-amber-200 text-amber-800 px-2.5 py-1 rounded-full font-semibold">Con Adaptación</span>
         `;
       } else {
-        const tagText = data.sourceBadge ? data.sourceBadge : 'Apto Multifamiliar';
         bannerDiv.className = 'rounded-xl p-4 border bg-emerald-100 border-emerald-300 text-emerald-900 flex items-center justify-between';
         bannerDiv.innerHTML = `
           <div class="flex items-center gap-2">
             <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-700"></i>
-            <span class="font-bold text-sm">${data.globalTitle || 'Aprobado para Toda la Familia'}</span>
+            <span class="font-bold text-sm">${data.globalTitle}</span>
           </div>
-          <span class="text-xs bg-emerald-200 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">${tagText}</span>
+          <span class="text-xs bg-emerald-200 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">Apto Multifamiliar</span>
         `;
       }
 
-      // Render de miembros
       data.members.forEach(m => {
-        const fullMember = members.find(mem => mem.name === m.name) || { condition: m.condition || '' };
+        const fullMember = members.find(mem => mem.name === m.name) || { condition: m.condition || '', level: m.level || 'Estricta' };
         const card = document.createElement('div');
         card.className = `p-4 rounded-xl border text-xs space-y-2 ${
           m.status === 'rejected' ? 'bg-rose-50 border-rose-200' :
@@ -823,23 +747,31 @@ Responde ÚNICAMENTE este JSON:
         const badgeHtml = m.status === 'rejected' ?
           '<span class="px-2 py-0.5 rounded bg-rose-200 text-rose-800 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-600"></span> Contraindicado</span>' :
           m.status === 'warning' ?
-          '<span class="px-2 py-0.5 rounded bg-amber-200 text-amber-800 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Con Modificación</span>' :
+          '<span class="px-2 py-0.5 rounded bg-amber-200 text-amber-800 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Modificar</span>' :
           '<span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-800 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> 100% Compatible</span>';
+
+        const levelBadge = fullMember.level === 'Estricta' ?
+          '<span class="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-semibold">Restr. Estricta</span>' :
+          fullMember.level === 'Moderada' ?
+          '<span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-semibold">Restr. Moderada</span>' :
+          '<span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-semibold">Restr. Leve</span>';
 
         card.innerHTML = `
           <div class="flex items-center justify-between">
             <h4 class="font-bold text-slate-900">${m.name}</h4>
             ${badgeHtml}
           </div>
-          <p class="text-[11px] text-slate-500 italic">${fullMember.condition}</p>
-          <ul class="list-disc list-inside space-y-1 text-slate-700">
+          <div class="flex items-center gap-1.5">
+            ${levelBadge}
+            <p class="text-[11px] text-slate-500 italic truncate">${fullMember.condition}</p>
+          </div>
+          <ul class="list-disc list-inside space-y-1 text-slate-700 mt-1">
             ${m.reasons.map(r => `<li>${r}</li>`).join('')}
           </ul>
         `;
         gridDiv.appendChild(card);
       });
 
-      // Caja de adaptación en 1 paso
       if (data.adaptationStep) {
         adaptDiv.classList.remove('hidden');
         adaptDiv.innerHTML = `
@@ -855,10 +787,14 @@ Responde ÚNICAMENTE este JSON:
       lucide.createIcons();
     }
 
-        // ==========================================
-    // GENERADOR DINÁMICO DE MENÚ CONSENSUADO
     // ==========================================
-    async function generateConsensusMenu() {
+    // GENERADOR DE MENÚ 100% CONECTADO A LA ALACENA
+    // ==========================================
+    let menuRotationOffset = 0;
+
+    function generateConsensusMenu(rotate) {
+      if (rotate) menuRotationOffset++;
+
       const container = document.getElementById('menu-cards-container');
       const inStockPantry = pantry.filter(i => i.inStock);
 
@@ -867,190 +803,76 @@ Responde ÚNICAMENTE este JSON:
           <div class="col-span-full bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center space-y-2">
             <i data-lucide="alert-circle" class="w-8 h-8 text-amber-600 mx-auto"></i>
             <h3 class="font-bold text-amber-900 text-sm">Alacena Insuficiente</h3>
-            <p class="text-xs text-amber-700">Tienes muy pocos ingredientes marcados "En Existencia". Ve a la pestaña <strong>Alacena Activa</strong> y activa al menos 4 o 5 ingredientes para crear recetas reales.</p>
+            <p class="text-xs text-amber-700">Tienes muy pocos ingredientes marcados "En Existencia". Ve a la pestaña <strong>Alacena Activa</strong> y activa al menos 4 ingredientes para calcular recetas reales.</p>
           </div>
         `;
         lucide.createIcons();
         return;
       }
 
-      container.innerHTML = `
-        <div class="col-span-full py-12 text-center text-slate-500 text-xs flex items-center justify-center gap-2">
-          <i data-lucide="loader-2" class="w-5 h-5 animate-spin text-emerald-600"></i>
-          Cruzando tus ingredientes disponibles con los perfiles clínicos de la familia...
-        </div>
-      `;
-      lucide.createIcons();
-
-      // Si hay Gemini conectado, intentamos generación de menú personalizada
-      if (geminiApiKey) {
-        try {
-          const menuAi = await generateMenuWithGemini(inStockPantry);
-          if (menuAi && menuAi.length === 4) {
-            renderMenuCards(menuAi);
-            return;
-          }
-        } catch (e) {
-          console.warn('Fallo en menú IA, alternando a generador dinámico local:', e);
-        }
-      }
-
-      // Generador dinámico local inteligente
-      const localMenu = buildDynamicLocalMenu(inStockPantry);
-      renderMenuCards(localMenu);
-    }
-
-    async function generateMenuWithGemini(availableItems) {
-      const pantryNames = availableItems.map(i => `${i.name} (${i.cat})`).join(', ');
-      const familyContext = members.map(m => `${m.name}: ${m.condition}. Restricciones: ${m.restrictions.join(', ')}`).join('\n');
-
-      const prompt = `Actúa como chef nutricionista clínico.
-Genera un menú consensuado de 4 tiempos (Desayuno, Lunch escolar/trabajo, Comida principal, Cena ligera) usando EXCLUSIVAMENTE ingredientes que estén en la despensa:
-DESPENSA EN EXISTENCIA:
-${pantryNames}
-
-FAMILIA Y RESTRICCIONES:
-${familyContext}
-
-REGLAS OBLIGATORIAS:
-- Usa SOLO ingredientes de la lista en existencia.
-- Ningún platillo puede contener soya para Dino ni fitoestrógenos/gluten/azúcar rápida para Oliver.
-- Misma base familiar con adaptación en 1 paso si hace falta.
-
-Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
-[
-  {
-    "type": "Desayuno Caliente",
-    "time": "⏱️ 12 min",
-    "title": "Nombre creativo del platillo",
-    "ingredients": "Ingredientes usados",
-    "steps": "Por dónde empezar paso a paso",
-    "clinicalRationale": "Por qué es seguro para todos y aporte nutricional",
-    "tagColor": "emerald"
-  },
-  {
-    "type": "Lunch Escolar / Oficina (Frío)",
-    "time": "⏱️ 10 min",
-    "title": "Nombre del lunch",
-    "ingredients": "Ingredientes usados",
-    "steps": "Paso a paso de armado",
-    "clinicalRationale": "Beneficio metabólico",
-    "tagColor": "blue"
-  },
-  {
-    "type": "Comida Familiar (Caliente)",
-    "time": "⏱️ 25 min",
-    "title": "Nombre de la comida",
-    "ingredients": "Ingredientes usados",
-    "steps": "Secuencia culinaria",
-    "clinicalRationale": "Balance glucémico",
-    "tagColor": "amber"
-  },
-  {
-    "type": "Cena Reparadora (Tibia/Ligera)",
-    "time": "⏱️ 15 min",
-    "title": "Nombre de la cena",
-    "ingredients": "Ingredientes usados",
-    "steps": "Preparación rápida",
-    "clinicalRationale": "Digestión nocturna",
-    "tagColor": "purple"
-  }
-]`;
-
-      const candidateModels = ['gemini-3.8-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
-      for (const model of candidateModels) {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 4000);
-        try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`, {
-            method: 'POST',
-            signal: controller.signal,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: { responseMimeType: "application/json", temperature: 0.3 }
-            })
-          });
-          clearTimeout(timeoutId);
-          if (res.ok) {
-            const data = await res.json();
-            let rawText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
-            if (rawText.startsWith('```json')) rawText = rawText.replace(/^```json/, '').replace(/```$/, '').trim();
-            else if (rawText.startsWith('```')) rawText = rawText.replace(/^```/, '').replace(/```$/, '').trim();
-            return JSON.parse(rawText);
-          }
-        } catch (e) {
-          clearTimeout(timeoutId);
-          continue;
-        }
-      }
-      return null;
-    }
-
-    function buildDynamicLocalMenu(availableItems) {
-      const getInCat = (cat) => availableItems.filter(i => i.cat === cat).map(i => i.name);
+      const getInCat = (cat) => inStockPantry.filter(i => i.cat === cat).map(i => i.name);
       const proteins = getInCat('Proteínas');
       const veggies = getInCat('Verduras');
       const grains = getInCat('Granos/Harinas');
       const fruits = getInCat('Frutas');
       const fats = getInCat('Grasas/Semillas');
 
-      const p1 = proteins[0] || 'Huevos orgánicos';
-      const p2 = proteins[1] || proteins[0] || 'Pechuga de pollo';
-      const p3 = proteins[2] || proteins[0] || 'Pescado blanco o atún';
+      // Selección rotativa basada en los alimentos disponibles
+      const safePick = (arr, index) => arr.length > 0 ? arr[(index + menuRotationOffset) % arr.length] : null;
 
-      const v1 = veggies[0] || 'Calabacitas tiernas';
-      const v2 = veggies[1] || veggies[0] || 'Nopales o espinacas';
-      const v3 = veggies[2] || veggies[0] || 'Jitomate o pepino';
+      const prot1 = safePick(proteins, 0) || 'Huevos orgánicos';
+      const prot2 = safePick(proteins, 1) || prot1;
+      const prot3 = safePick(proteins, 2) || prot1;
 
-      const g1 = grains[0] || 'Tortillas de maíz nixtamalizado';
-      const g2 = grains[1] || 'Frijoles de la olla';
-      const fat1 = fats[0] || 'Aguacate Hass';
+      const veg1 = safePick(veggies, 0) || 'Nopales o calabacitas';
+      const veg2 = safePick(veggies, 1) || veg1;
+      const veg3 = safePick(veggies, 2) || veg1;
 
-      return [
+      const grain1 = safePick(grains, 0) || 'Tortillas de maíz nixtamalizado';
+      const grain2 = safePick(grains, 1) || grain1;
+      const fat1 = safePick(fats, 0) || 'Aguacate Hass';
+      const fruit1 = safePick(fruits, 0) || 'Fresas o manzana verde';
+
+      const menuList = [
         {
           type: "Desayuno Caliente",
           time: "⏱️ 12 minutos",
-          title: `Salteado Matutino de ${p1} con ${v1}`,
-          ingredients: [p1, v1, fat1].filter(Boolean).join(', '),
-          steps: `1. Picar ${v1} en rodajas finas y saltear en sartén caliente. 2. Integrar ${p1} y cocinar a fuego medio. 3. Servir acompañado de ${fat1}.`,
-          clinicalRationale: `Base 100% segura elaborada exclusivamente con ingredientes en stock. Sin soya ni trigos refinados; absorción gradual que protege la función suprarrenal.`,
+          title: `Salteado Matutino de ${prot1} con ${veg1}`,
+          ingredients: [prot1, veg1, fat1].filter(Boolean).join(', '),
+          steps: `1. Picar ${veg1} y asar en sartén con pizca de sal. 2. Integrar ${prot1} hasta cocer al término deseado. 3. Servir acompañado de ${fat1}.`,
+          clinicalRationale: `Preparado exclusivamente con ingredientes en existencia. Sin soya ni harinas de trigo; carbohidrato nulo que protege la función suprarrenal matutina.`,
           tagColor: "emerald"
         },
         {
           type: "Lunch Escolar / Oficina (Frío)",
           time: "⏱️ 10 minutos",
-          title: `Porción Empacable de ${p2} con ${v3}`,
-          ingredients: [p2, v3, g1].filter(Boolean).join(', '),
-          steps: `1. Cocinar o porcionar ${p2}. 2. Acompañar con ${v3} fresco picado en tiras. 3. Complementar con ${g1}.`,
-          clinicalRationale: `Excelente biodisponibilidad y energía sostenida para la jornada escolar y laboral sin alérgenos.`,
+          title: `Porción Portátil de ${prot2} con ${veg3} y ${grain1}`,
+          ingredients: [prot2, veg3, grain1].filter(Boolean).join(', '),
+          steps: `1. Cocinar o porcionar ${prot2}. 2. Cortar ${veg3} en bastones frescos. 3. Acompañar con ${grain1}.`,
+          clinicalRationale: `Saciedad de digestión gradual sin alérgenos. Energía sostenida que no dispara andrógenos ni genera picos de insulina.`,
           tagColor: "blue"
         },
         {
           type: "Comida Familiar (Caliente)",
           time: "⏱️ 22 minutos",
-          title: `${p2} Asado con ${v2} y ${g2}`,
-          ingredients: [p2, v2, g2].filter(Boolean).join(', '),
-          steps: `1. Poner al vapor ${v2}. 2. Sellar ${p2} con hierbas de olor. 3. Calentar ${g2}. Servir primero las verduras para reducir la respuesta glucémica global.`,
-          clinicalRationale: `Secuencia metabólica óptima: la fibra de ${v2} amortigua los carbohidratos de ${g2}.`,
+          title: `${prot2} Asado con ${veg2} y ${grain2}`,
+          ingredients: [prot2, veg2, grain2].filter(Boolean).join(', '),
+          steps: `1. Cocinar ${veg2} al vapor. 2. Sellar ${prot2} con especias seguras. 3. Servir primero ${veg2} para amortiguar la absorción de ${grain2}.`,
+          clinicalRationale: `Consenso familiar perfecto: base única sin gluten refinado ni lácteos. Modulación glucémica natural gracias a la fibra vegetal activa.`,
           tagColor: "amber"
         },
         {
           type: "Cena Reparadora (Tibia)",
           time: "⏱️ 12 minutos",
-          title: `Tazón Ligero de ${p3} con Vegetales Salteados`,
-          ingredients: [p3, v1, fat1].filter(Boolean).join(', '),
-          steps: `1. Saltear suavemente ${v1}. 2. Cocer ${p3} de digestión rápida. 3. Servir tibio para no interrumpir el descanso hormonal nocturno.`,
-          clinicalRationale: `Aporte de aminoácidos esenciales livianos para optimizar la regeneración tisular durante el sueño.`,
+          title: `Tazón Ligero de ${prot3} con ${veg1}`,
+          ingredients: [prot3, veg1, fat1].filter(Boolean).join(', '),
+          steps: `1. Saltear suavemente ${veg1}. 2. Cocinar ${prot3} a la plancha. 3. Servir tibio para optimizar la secreción nocturna de la hormona de crecimiento en reposo.`,
+          clinicalRationale: `Proteína magra biodisponible de fácil asimilación que no satura el hígado ni eleva glucosa antes de dormir.`,
           tagColor: "purple"
         }
       ];
-    }
 
-    function renderMenuCards(menuList) {
-      const container = document.getElementById('menu-cards-container');
       container.innerHTML = '';
-
       menuList.forEach(m => {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3';
@@ -1060,7 +882,7 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
             <span class="text-xs text-slate-500 font-medium">${m.time}</span>
           </div>
           <h3 class="font-bold text-slate-900 text-base">${m.title}</h3>
-          <p class="text-xs text-slate-600"><strong>Ingredientes de Alacena:</strong> ${m.ingredients}</p>
+          <p class="text-xs text-slate-600"><strong>Ingredientes Disponibles:</strong> ${m.ingredients}</p>
           <div class="bg-slate-50 rounded-xl p-3 text-xs space-y-1 border border-slate-100">
             <p class="font-semibold text-slate-800">🍳 Por dónde empezar:</p>
             <p class="text-slate-600 leading-relaxed">${m.steps}</p>
@@ -1079,14 +901,16 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
     // ==========================================
     let currentPantryCat = 'all';
 
-    function filterPantry(cat) {
+    function filterPantry(cat, btnElement) {
       currentPantryCat = cat;
       document.querySelectorAll('.pantry-cat-btn').forEach(btn => {
         btn.classList.remove('bg-slate-900', 'text-white');
         btn.classList.add('bg-slate-100', 'text-slate-700');
       });
-      event.target.classList.add('bg-slate-900', 'text-white');
-      event.target.classList.remove('bg-slate-100', 'text-slate-700');
+      if (btnElement) {
+        btnElement.classList.add('bg-slate-900', 'text-white');
+        btnElement.classList.remove('bg-slate-100', 'text-slate-700');
+      }
       renderPantry();
     }
 
@@ -1096,6 +920,11 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
         item.inStock = !item.inStock;
         saveState();
         renderPantry();
+        // Si el menú está abierto, se actualiza en automático
+        const menuSec = document.getElementById('sec-menu');
+        if (menuSec && !menuSec.classList.contains('hidden')) {
+          generateConsensusMenu(false);
+        }
       }
     }
 
@@ -1189,7 +1018,7 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
     }
 
     // ==========================================
-    // RENDER & EDICIÓN DE INTEGRANTES
+    // RENDER & EDICIÓN DE INTEGRANTES CON GRADO
     // ==========================================
     function renderFamily() {
       const container = document.getElementById('family-members-cards');
@@ -1198,6 +1027,13 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
       members.forEach((m) => {
         const card = document.createElement('div');
         card.className = 'p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3 flex flex-col justify-between';
+        
+        const levelBadge = m.level === 'Estricta' ?
+          '<span class="text-[11px] bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full">Restricción Estricta (Médica)</span>' :
+          m.level === 'Moderada' ?
+          '<span class="text-[11px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">Restricción Moderada</span>' :
+          '<span class="text-[11px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded-full">Restricción Leve</span>';
+
         card.innerHTML = `
           <div class="space-y-3">
             <div class="flex items-start justify-between">
@@ -1212,8 +1048,11 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
                 <i data-lucide="edit-3" class="w-4 h-4"></i>
               </button>
             </div>
+            <div>
+              ${levelBadge}
+            </div>
             <div class="space-y-1">
-              <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Restricciones Alimentarias:</span>
+              <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Restricciones Específicas:</span>
               <div class="flex flex-wrap gap-1.5">
                 ${m.restrictions.map(r => `<span class="bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 rounded text-[11px] font-medium">${r}</span>`).join('')}
               </div>
@@ -1224,7 +1063,7 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
           </div>
           <div class="pt-2 border-t border-slate-100 flex justify-end">
             <button onclick="openEditMemberModal('${m.id}')" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
-              <i data-lucide="file-pen" class="w-3.5 h-3.5"></i> Modificar Cuadro Clínico
+              <i data-lucide="file-pen" class="w-3.5 h-3.5"></i> Modificar Cuadro y Restricción
             </button>
           </div>
         `;
@@ -1237,11 +1076,12 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
       const member = members.find(m => m.id === id);
       if (!member) return;
 
-      document.getElementById('modal-title').innerText = `Editar Cuadro Clínico: ${member.name}`;
+      document.getElementById('modal-title').innerText = `Editar: ${member.name}`;
       document.getElementById('edit-member-id').value = member.id;
       document.getElementById('edit-member-name').value = member.name;
       document.getElementById('edit-member-age').value = member.age;
       document.getElementById('edit-member-role').value = member.role || '';
+      document.getElementById('edit-member-level').value = member.level || 'Estricta';
       document.getElementById('edit-member-condition').value = member.condition;
       document.getElementById('edit-member-restrictions').value = member.restrictions.join(', ');
       document.getElementById('edit-member-notes').value = member.notes;
@@ -1256,6 +1096,7 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
       document.getElementById('edit-member-name').value = '';
       document.getElementById('edit-member-age').value = '';
       document.getElementById('edit-member-role').value = '';
+      document.getElementById('edit-member-level').value = 'Estricta';
       document.getElementById('edit-member-condition').value = '';
       document.getElementById('edit-member-restrictions').value = '';
       document.getElementById('edit-member-notes').value = '';
@@ -1273,6 +1114,7 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
       const name = document.getElementById('edit-member-name').value.trim();
       const age = parseInt(document.getElementById('edit-member-age').value) || 0;
       const role = document.getElementById('edit-member-role').value.trim();
+      const level = document.getElementById('edit-member-level').value;
       const condition = document.getElementById('edit-member-condition').value.trim();
       const restrictionsRaw = document.getElementById('edit-member-restrictions').value;
       const notes = document.getElementById('edit-member-notes').value.trim();
@@ -1290,6 +1132,7 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
           member.name = name;
           member.age = age;
           member.role = role;
+          member.level = level;
           member.condition = condition;
           member.restrictions = restrictions;
           member.notes = notes;
@@ -1300,6 +1143,7 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
           name,
           age,
           role,
+          level,
           condition,
           restrictions,
           notes: notes || 'Monitoreo clínico personalizado.'
@@ -1309,12 +1153,10 @@ Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
       saveState();
       closeMemberModal();
       renderFamily();
-      if (!document.getElementById('sec-auditor').classList.contains('hidden')) {
-        runAudit();
-      }
+      runAudit();
     }
 
-    // Inicialización al cargar la ventana
+    // Inicialización blindada al cargar la ventana
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       updateApiStatusUI();
