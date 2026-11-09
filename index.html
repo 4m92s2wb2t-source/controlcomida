@@ -835,189 +835,7 @@
     }
 
     // ==========================================
-    // CATÁLOGO DE RECETAS REALES (COCINA CASERA MEXICANA)
-    // Cero textos inventados. Solo recetas culinarias coherentes y verificables.
-    // ==========================================
-    const AUTHENTIC_RECIPES_DB = [
-      // DESAYUNOS
-      {
-        type: "Desayuno Caliente",
-        tagColor: "emerald",
-        time: "⏱️ 12 minutos",
-        title: "Omelette con Nopales Asados y Aguacate",
-        requiredIngredients: ["Huevos orgánicos", "Nopales frescos", "Aguacate Hass"],
-        ingredientsText: "Huevos orgánicos, nopales frescos, aguacate Hass, aceite de oliva",
-        steps: "1. Cortar los nopales en cubos y asarlos en sartén caliente seco 5 min hasta evaporar baba. 2. Batir 2 huevos con pizca de sal marina. 3. Verter sobre los nopales, doblar el omelette y servir con rebanadas de aguacate.",
-        clinicalRationale: "Sin carbohidratos simples ni soya. El mucílago del nopal aplana la curva de glucosa y aporta saciedad inmediata.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Desayuno Caliente",
-        tagColor: "emerald",
-        time: "⏱️ 10 minutos",
-        title: "Huevos Revueltos a la Mexicana con Aguacate",
-        requiredIngredients: ["Huevos orgánicos", "Jitomate saladet", "Aguacate Hass"],
-        ingredientsText: "Huevos orgánicos, jitomate saladet picado, aguacate Hass, aceite de oliva",
-        steps: "1. Saltear jitomate saladet picado en aceite de oliva durante 2 minutos. 2. Añadir huevos batidos con sal de mar y revolver a fuego bajo. 3. Acompañar con aguacate.",
-        clinicalRationale: "Aporte rico en colina, licopeno y grasas monoinsaturadas sin picos de insulina.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Desayuno Caliente",
-        tagColor: "emerald",
-        time: "⏱️ 10 minutos",
-        title: "Huevos con Calabacitas Salteadas al Orégano",
-        requiredIngredients: ["Huevos orgánicos", "Calabacitas tiernas"],
-        ingredientsText: "Huevos orgánicos, calabacitas tiernas en medias lunas, orégano seco",
-        steps: "1. Saltear calabacitas en sartén 3 minutos con pizca de orégano. 2. Estrellar o batir los huevos en el mismo sartén hasta cuajar.",
-        clinicalRationale: "Desayuno ligero y digestivo, rico en potasio y proteína limpia.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Desayuno Caliente",
-        tagColor: "emerald",
-        time: "⏱️ 8 minutos",
-        title: "Porridge Tibio de Avena Integral con Canela y Almendra",
-        requiredIngredients: ["Avena entera en hojuelas", "Leche casera de almendra"],
-        ingredientsText: "Avena entera en hojuela, leche casera de almendra, canela en polvo",
-        steps: "1. Calentar la leche de almendra con abundante canela. 2. Agregar la avena y cocer 4 minutos a fuego bajo hasta espesar.",
-        clinicalRationale: "Betaglucanos de absorción lenta. La canela actúa como sensibilizador celular a la insulina.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-
-      // LUNCH ESCOLAR / OFICINA (FRÍO O PORTÁTIL)
-      {
-        type: "Lunch Escolar / Oficina (Frío)",
-        tagColor: "blue",
-        time: "⏱️ 10 minutos",
-        title: "Tacos Fríos de Pollo Deshebrado en Tortilla Nixtamalizada",
-        requiredIngredients: ["Pechuga de pollo", "Tortillas de maíz nixtamalizado", "Pepino persa"],
-        ingredientsText: "Pechuga de pollo cocida deshebrada, tortillas de maíz nixtamalizado, bastones de pepino persa con limón",
-        steps: "1. Armar taquitos con pollo frío sazonado en tortilla de maíz nixtamalizado. 2. Empacar en lonchera junto con bastones de pepino con limón y sal de mar.",
-        clinicalRationale: "Calcio biodisponible del maíz nixtamalizado. Cero gluten refinado y cero alérgenos de soya.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Lunch Escolar / Oficina (Frío)",
-        tagColor: "blue",
-        time: "⏱️ 8 minutos",
-        title: "Ensalada Proteica de Atún con Aguacate y Pepino",
-        requiredIngredients: ["Atún en agua bajo en sodio", "Aguacate Hass", "Pepino persa"],
-        ingredientsText: "Atún en agua drenado, aguacate Hass en cubos, pepino persa picado, limón y sal marina",
-        steps: "1. Drenar el atún en agua. 2. Mezclar en tazón con cubos de aguacate, pepino y jugo de limón. 3. Empacar frío.",
-        clinicalRationale: "Grasas omega-3 y proteína de alta asimilación que no elevan insulina escolar.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Lunch Escolar / Oficina (Frío)",
-        tagColor: "blue",
-        time: "⏱️ 10 minutos",
-        title: "Rollitos de Lechuga con Salpicón de Pollo y Jitomate",
-        requiredIngredients: ["Pechuga de pollo", "Jitomate saladet", "Pepino persa"],
-        ingredientsText: "Pechuga de pollo deshebrada, jitomate picado, pepino en cubos, hojas de lechuga o espinaca",
-        steps: "1. Mezclar pollo deshebrado con jitomate, pepino, limón y aceite de oliva. 2. Envolver en hojas crujientes de lechuga.",
-        clinicalRationale: "Ultra bajo en carbohidratos netos, refrescante y completamente libre de granos.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-
-      // COMIDA PRINCIPAL (CALIENTE)
-      {
-        type: "Comida Familiar (Caliente)",
-        tagColor: "amber",
-        time: "⏱️ 22 minutos",
-        title: "Pechuga Asada al Limón con Chayote al Vapor y Frijoles de la Olla",
-        requiredIngredients: ["Pechuga de pollo", "Chayote sin espinas", "Frijoles negros de la olla"],
-        ingredientsText: "Pechuga de pollo, chayote sin espinas rebanado, frijoles negros de la olla, ajo y orégano",
-        steps: "1. Poner rodajas de chayote al vapor por 8 min. 2. Sellar pechugas con ajo y orégano en sartén. 3. Calentar frijoles de la olla. Servir primero la verdura y al final la porción de frijol.",
-        clinicalRationale: "Secuencia metabólica óptima: la fibra del chayote reduce el impacto glucémico global.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Comida Familiar (Caliente)",
-        tagColor: "amber",
-        time: "⏱️ 20 minutos",
-        title: "Picadillo Casero Magro con Calabacitas y Tortillas Nixtamalizadas",
-        requiredIngredients: ["Carne de res magra", "Calabacitas tiernas", "Jitomate saladet", "Tortillas de maíz nixtamalizado"],
-        ingredientsText: "Carne de res magra molida, calabacitas en cubos, caldillo de jitomate saladet natural, tortillas nixtamalizadas",
-        steps: "1. Sellar carne de res magra con cebolla. 2. Licuar jitomate natural con ajo y verter. 3. Añadir calabacitas en cubos y cocer 8 min. Servir con tortillas nixtamalizadas.",
-        clinicalRationale: "Hierro hemínico de alta biodisponibilidad y zinc mineral para soporte suprarrenal.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Comida Familiar (Caliente)",
-        tagColor: "amber",
-        time: "⏱️ 18 minutos",
-        title: "Pescado Blanco a la Plancha con Nopales Asados y Aguacate",
-        requiredIngredients: ["Filete de pescado blanco", "Nopales frescos", "Aguacate Hass"],
-        ingredientsText: "Filete de pescado blanco magro, nopales asados, aguacate Hass, limón",
-        steps: "1. Asar nopales en sartén seco. 2. Cocinar filete de pescado con ajo y limón 4 min por lado. 3. Servir con aguacate fresco.",
-        clinicalRationale: "Excelente digestión gástrica, antiinflamatorio para condiciones autoinmunes y sin alérgenos.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Comida Familiar (Caliente)",
-        tagColor: "amber",
-        time: "⏱️ 20 minutos",
-        title: "Fajitas de Pollo con Calabacita y Chayote Salteados",
-        requiredIngredients: ["Pechuga de pollo", "Calabacitas tiernas", "Chayote sin espinas"],
-        ingredientsText: "Pechuga de pollo en fajitas, calabacitas y chayote en tiras, aceite de oliva",
-        steps: "1. Saltear chayote en tiras 4 min. 2. Integrar fajitas de pollo y calabacita. 3. Cocinar tapado 6 minutos a fuego medio.",
-        clinicalRationale: "Equilibrio perfecto de aminoácidos y fibra soluble sin elevar la glucosa sanguínea.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-
-      // CENAS REPARADORAS (LIGERAS / TIBIAS)
-      {
-        type: "Cena Reparadora (Tibia)",
-        tagColor: "purple",
-        time: "⏱️ 12 minutos",
-        title: "Tazón Tibio de Pescado Blanco con Espinacas Salteadas",
-        requiredIngredients: ["Filete de pescado blanco", "Espinacas baby", "Aceite de oliva extra virgen"],
-        ingredientsText: "Filete de pescado blanco, espinacas baby, aceite de oliva virgen extra, limón",
-        steps: "1. Saltear espinacas con aceite de oliva 2 min. 2. En el mismo sartén cocer pescado blanco 4 min por lado con limón. Servir tibio.",
-        clinicalRationale: "Digestión liviana que favorece el pico nocturno de la hormona de crecimiento en reposo.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Cena Reparadora (Tibia)",
-        tagColor: "purple",
-        time: "⏱️ 10 minutos",
-        title: "Omelette Ligero de Espinacas con Aguacate",
-        requiredIngredients: ["Huevos orgánicos", "Espinacas baby", "Aguacate Hass"],
-        ingredientsText: "Huevos orgánicos, espinacas baby, rebanadas de aguacate Hass",
-        steps: "1. Saltear espinacas baby 1 minuto. 2. Verter huevos batidos y cuajar a fuego suave. 3. Servir con aguacate.",
-        clinicalRationale: "Aporte de magnesio y triptófano natural para inducir relajación muscular y descanso reparador.",
-        containsSoy: false,
-        containsWheatGluten: false
-      },
-      {
-        type: "Cena Reparadora (Tibia)",
-        tagColor: "purple",
-        time: "⏱️ 15 minutos",
-        title: "Caldo Claro de Pollo con Chayote y Calabacita",
-        requiredIngredients: ["Pechuga de pollo", "Chayote sin espinas", "Calabacitas tiernas"],
-        ingredientsText: "Caldo de pechuga de pollo desgrasado, chayote y calabacita en cubos, cilantro",
-        steps: "1. Calentar caldo de pollo desgrasado con trozos de pechuga. 2. Añadir chayote y calabacita en cubos y hervir 7 minutos. Servir caliente.",
-        clinicalRationale: "Hidratación celular profunda, descanso digestivo completo sin carbohidratos fermentables.",
-        containsSoy: false,
-        containsWheatGluten: false
-      }
-    ];
-
-    // ==========================================
-    // MOTOR REAL DE GENERACIÓN DE MENÚ (CERO RECETAS INVENTADAS)
+    // MOTOR CULINARIO ADAPTATIVO REAL (4 TIEMPOS GARANTIZADOS)
     // ==========================================
     let menuRotationOffset = 0;
 
@@ -1027,12 +845,10 @@
       const container = document.getElementById('menu-cards-container');
       const inStockBar = document.getElementById('in-stock-bar');
 
-      // 1. Obtener lista estricta de nombres en stock (normalizados para comparación)
+      // 1. Filtrar alacena en existencia
       const inStockItems = pantry.filter(i => i.inStock);
-      const inStockNames = inStockItems.map(i => i.name);
-      const inStockSet = new Set(inStockNames.map(n => normalizeText(n)));
 
-      // Renderizar barra visual de ingredientes en stock
+      // Renderizar barra visual de ingredientes considerados
       if (inStockBar) {
         if (inStockItems.length === 0) {
           inStockBar.innerHTML = '<span class="text-rose-600 font-bold">⚠️ No hay ingredientes en stock. Ve a Alacena Activa y marca los que tengas disponibles.</span>';
@@ -1048,69 +864,159 @@
         container.innerHTML = `
           <div class="col-span-full bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center space-y-2">
             <i data-lucide="alert-circle" class="w-8 h-8 text-amber-600 mx-auto"></i>
-            <h3 class="font-bold text-amber-900 text-sm">Alacena Vacía</h3>
-            <p class="text-xs text-amber-700">Por favor ve a la pestaña <strong>Alacena Activa</strong> y marca al menos 3 o 4 ingredientes que tengas en casa para calcular recetas reales.</p>
+            <h3 class="font-bold text-amber-900 text-sm">Alacena Insuficiente</h3>
+            <p class="text-xs text-amber-700">Por favor ve a la pestaña <strong>Alacena Activa</strong> y marca al menos 3 o 4 ingredientes que tengas disponibles en casa.</p>
           </div>
         `;
         lucide.createIcons();
         return;
       }
 
-      // 2. Extraer restricciones familiares críticas
+      // 2. Extraer restricciones clínicas familiares críticas
       const hasSoyAllergy = members.some(m => normalizeText(m.condition).includes('soya') || m.restrictions.some(r => normalizeText(r).includes('soya')));
-      const hasGlutenAdrenarquia = members.some(m => normalizeText(m.condition).includes('adrenarquia') || normalizeText(m.condition).includes('gluten') || m.restrictions.some(r => normalizeText(r).includes('gluten')));
+      const hasAdrenarquia = members.some(m => normalizeText(m.condition).includes('adrenarquia') || normalizeText(m.condition).includes('crecimiento'));
+      const hasGlutenRestriction = members.some(m => normalizeText(m.condition).includes('gluten') || m.restrictions.some(r => normalizeText(r).includes('gluten')));
 
-      // 3. Filtrar recetas del catálogo que cumplan AL 100%:
-      // a) TODOS sus ingredientes requeridos están marcados en existencia
-      // b) Cero soya si hay alergia
-      // c) Cero trigo/gluten si hay adrenarquia/autoinmune
-      const eligibleRecipes = AUTHENTIC_RECIPES_DB.filter(rec => {
-        if (hasSoyAllergy && rec.containsSoy) return false;
-        if (hasGlutenAdrenarquia && rec.containsWheatGluten) return false;
-
-        // Comprobación matemática: ¿Están todos los ingredientes requeridos en stock?
-        const allPresent = rec.requiredIngredients.every(req => {
-          const cleanReq = normalizeText(req);
-          return Array.from(inStockSet).some(inStockName => inStockName.includes(cleanReq) || cleanReq.includes(inStockName));
-        });
-
-        return allPresent;
+      // Filtrar ingredientes que violen reglas familiares estrictas (ej. nunca usar soya si hay alergia)
+      const safeInStock = inStockItems.filter(item => {
+        const cleanName = normalizeText(item.name);
+        if (hasSoyAllergy && (cleanName.includes('soya') || cleanName.includes('soja') || cleanName.includes('tofu') || cleanName.includes('edamame'))) {
+          return false;
+        }
+        if ((hasAdrenarquia || hasGlutenRestriction) && (cleanName.includes('harina de trigo') || cleanName.includes('trigo') || cleanName.includes('miel') || cleanName.includes('datil'))) {
+          return false;
+        }
+        return true;
       });
 
-      // 4. Agrupar por tiempo de comida
-      const desayunos = eligibleRecipes.filter(r => r.type.includes('Desayuno'));
-      const lunches = eligibleRecipes.filter(r => r.type.includes('Lunch'));
-      const comidas = eligibleRecipes.filter(r => r.type.includes('Comida'));
-      const cenas = eligibleRecipes.filter(r => r.type.includes('Cena'));
+      // 3. Clasificar ingredientes seguros disponibles
+      const proteins = safeInStock.filter(i => i.cat === 'Proteínas').map(i => i.name);
+      const veggies = safeInStock.filter(i => i.cat === 'Verduras').map(i => i.name);
+      const grains = safeInStock.filter(i => i.cat === 'Granos/Harinas').map(i => i.name);
+      const fats = safeInStock.filter(i => i.cat === 'Grasas/Semillas').map(i => i.name);
+      const fruits = safeInStock.filter(i => i.cat === 'Frutas').map(i => i.name);
 
-      const pickMeal = (list, offset) => {
-        if (list.length === 0) return null;
+      // Función de selección rotativa circular
+      const pick = (list, offset) => {
+        if (!list || list.length === 0) return null;
         return list[(offset + menuRotationOffset) % list.length];
       };
 
+      // Selección de bases disponibles
+      const pBreakfast = pick(proteins, 0) || 'Huevos orgánicos';
+      const pLunch = pick(proteins, 1) || pBreakfast;
+      const pDinnerMain = pick(proteins, 2) || pLunch;
+      const pSupper = pick(proteins, 3) || pBreakfast;
+
+      const vBreakfast = pick(veggies, 0);
+      const vLunch = pick(veggies, 1) || vBreakfast;
+      const vDinner = pick(veggies, 2) || vLunch;
+      const vSupper = pick(veggies, 3) || vDinner;
+
+      const gSide1 = pick(grains, 0);
+      const gSide2 = pick(grains, 1) || gSide1;
+
+      const fatSide = pick(fats, 0);
+      const fruitSide = pick(fruits, 0);
+
+      // Construcción coherente de los 4 platillos
       const finalMenu = [];
 
-      // Si hay recetas exactas disponibles en la base de datos
-      if (desayunos.length > 0) finalMenu.push(pickMeal(desayunos, 0));
-      if (lunches.length > 0) finalMenu.push(pickMeal(lunches, 1));
-      if (comidas.length > 0) finalMenu.push(pickMeal(comidas, 2));
-      if (cenas.length > 0) finalMenu.push(pickMeal(cenas, 3));
-
-      // Si faltó alguna categoría porque hay ingredientes muy específicos desactivados, armar sugerencia limpia sin inventar comida absurda
-      container.innerHTML = '';
-
-      if (finalMenu.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full bg-slate-100 border border-slate-300 rounded-2xl p-6 text-center space-y-2">
-            <i data-lucide="chef-hat" class="w-8 h-8 text-slate-500 mx-auto"></i>
-            <h3 class="font-bold text-slate-900 text-sm">Combinación no disponible con los ingredientes actuales</h3>
-            <p class="text-xs text-slate-600">Con los ingredientes que desmarcaste no es posible armar una receta completa que cumpla con los estándares médicos de la familia. Activa ingredientes base en tu alacena (como <em>Huevos, Pollo, Calabacitas, Chayote, Aguacate o Tortillas de maíz</em>) para generar platillos equilibrados.</p>
-          </div>
-        `;
-        lucide.createIcons();
-        return;
+      // TIEMPO 1: DESAYUNO CALIENTE
+      if (pBreakfast.toLowerCase().includes('huevo') || pBreakfast.toLowerCase().includes('claras')) {
+        const vegText = vBreakfast ? `con ${vBreakfast}` : 'al sartén con aceite de oliva';
+        const fatText = fatSide ? ` y ${fatSide}` : '';
+        finalMenu.push({
+          type: "Desayuno Caliente",
+          tagColor: "emerald",
+          time: "⏱️ 10 minutos",
+          title: `Omelette Rústico ${vegText}${fatText}`,
+          ingredientsText: [pBreakfast, vBreakfast, fatSide].filter(Boolean).join(', '),
+          steps: `1. ${vBreakfast ? `Saltear ${vBreakfast} en sartén caliente 3 minutos con sal de mar. 2. ` : ''}Batir ${pBreakfast} con una pizca de sal. 3. Verter al sartén, cuajar a fuego medio ${fatSide ? `y servir acompañado de ${fatSide}` : ''}.`,
+          clinicalRationale: "Sin carbohidratos refinados. Proteína y lípidos saludables que estabilizan la glucosa y previenen sobreestímulo suprarrenal matutino."
+        });
+      } else if (grains.some(g => g.toLowerCase().includes('avena')) && safeInStock.some(s => s.name.toLowerCase().includes('leche casera'))) {
+        finalMenu.push({
+          type: "Desayuno Caliente",
+          tagColor: "emerald",
+          time: "⏱️ 8 minutos",
+          title: "Porridge Tibio de Avena con Canela",
+          ingredientsText: "Avena entera en hojuelas, leche casera de almendra, canela",
+          steps: "1. Calentar la leche vegetal casera con canela en polvo. 2. Integrar la avena en hojuelas y cocer a fuego bajo 4 minutos hasta espesar.",
+          clinicalRationale: "Absorción muy lenta gracias a los betaglucanos de la avena entera; la canela estimula la sensibilidad periférica a la insulina."
+        });
+      } else {
+        finalMenu.push({
+          type: "Desayuno Caliente",
+          tagColor: "emerald",
+          time: "⏱️ 10 minutos",
+          title: `Salteado Matutino de ${pBreakfast}${vBreakfast ? ` con ${vBreakfast}` : ''}`,
+          ingredientsText: [pBreakfast, vBreakfast, fatSide].filter(Boolean).join(', '),
+          steps: `1. Sellar ${pBreakfast} en sartén. 2. ${vBreakfast ? `Integrar ${vBreakfast} en cubos y saltear tapado 4 minutos. 3. ` : ''}Servir tibio con ${fatSide || 'aceite de oliva'}.`,
+          clinicalRationale: "Energía celular limpia y saciedad prolongada sin picos glucémicos."
+        });
       }
 
+      // TIEMPO 2: LUNCH ESCOLAR / OFICINA (FRÍO O PORTÁTIL)
+      if (gSide1 && gSide1.toLowerCase().includes('tortilla')) {
+        finalMenu.push({
+          type: "Lunch Escolar / Oficina (Frío)",
+          tagColor: "blue",
+          time: "⏱️ 8 minutos",
+          title: `Taquitos Fríos de ${pLunch} en ${gSide1}`,
+          ingredientsText: [pLunch, gSide1, vLunch].filter(Boolean).join(', '),
+          steps: `1. Deshebrar o porcionar ${pLunch} previamente cocido. 2. Rellenar las ${gSide1}. 3. ${vLunch ? `Empacar acompañado de bastones frescos de ${vLunch} con limón y sal de mar.` : 'Empacar con servilleta térmica.'}`,
+          clinicalRationale: "Calcio biodisponible del maíz nixtamalizado, libre de trigo refinado y con digestión estable durante la jornada escolar o laboral."
+        });
+      } else if (pLunch.toLowerCase().includes('atun')) {
+        finalMenu.push({
+          type: "Lunch Escolar / Oficina (Frío)",
+          tagColor: "blue",
+          time: "⏱️ 6 minutos",
+          title: `Ensalada Fresca de ${pLunch}${vLunch ? ` con ${vLunch}` : ''}${fatSide ? ` y ${fatSide}` : ''}`,
+          ingredientsText: [pLunch, vLunch, fatSide].filter(Boolean).join(', '),
+          steps: `1. Drenar ${pLunch}. 2. Picar ${vLunch || 'verdura fresca'} en cubos pequeños. 3. Mezclar en tazón con limón, sal marina y ${fatSide || 'aceite de oliva'}.`,
+          clinicalRationale: "Rico en ácidos grasos antiinflamatorios y proteína de fácil asimilación que no satura el hígado."
+        });
+      } else {
+        finalMenu.push({
+          type: "Lunch Escolar / Oficina (Frío)",
+          tagColor: "blue",
+          time: "⏱️ 10 minutos",
+          title: `Rollitos Portátiles de ${pLunch}${vLunch ? ` con ${vLunch}` : ''}`,
+          ingredientsText: [pLunch, vLunch, fatSide].filter(Boolean).join(', '),
+          steps: `1. Porcionar ${pLunch} en tiras delgadas. 2. Acompañar con ${vLunch || 'vegetales en bastones'} frescos. 3. Sazonar con limón y pizca de sal.`,
+          clinicalRationale: "Lunch liviano que preserva la concentración escolar sin provocar pesadez digestiva."
+        });
+      }
+
+      // TIEMPO 3: COMIDA PRINCIPAL (CALIENTE)
+      const vegCooking = vDinner ? `con ${vDinner} al Vapor` : 'con Guarnición Salteada';
+      const grainText = gSide2 ? ` y ${gSide2}` : (gSide1 ? ` y ${gSide1}` : '');
+      finalMenu.push({
+        type: "Comida Familiar (Caliente)",
+        tagColor: "amber",
+        time: "⏱️ 20 minutos",
+        title: `${pDinnerMain} a la Plancha ${vegCooking}${grainText}`,
+        ingredientsText: [pDinnerMain, vDinner, gSide2 || gSide1].filter(Boolean).join(', '),
+        steps: `1. ${vDinner ? `Cocer ${vDinner} al vapor o en sartén con hierbas de olor por 6 min. 2. ` : ''}Sellar ${pDinnerMain} a la plancha con ajo y orégano. 3. ${grainText ? `Calentar porción de ${gSide2 || gSide1}. ` : ''}Servir primero los vegetales para amortiguar el índice glucémico.`,
+        clinicalRationale: "Consenso culinario unificado: una sola preparación en la cocina, 100% segura para toda la familia y sin ingredientes contraindicados."
+      });
+
+      // TIEMPO 4: CENA REPARADORA (LIGERA / TIBIA)
+      const lightVeg = vSupper || vBreakfast || 'vegetales tiernos';
+      finalMenu.push({
+        type: "Cena Reparadora (Tibia)",
+        tagColor: "purple",
+        time: "⏱️ 12 minutos",
+        title: `Tazón Tibio de ${pSupper} con ${lightVeg}`,
+        ingredientsText: [pSupper, lightVeg, fatSide].filter(Boolean).join(', '),
+        steps: `1. Saltear suavemente ${lightVeg} en sartén con una cucharadita de aceite de oliva. 2. Cocinar ${pSupper} a la plancha con unas gotas de limón. 3. Servir tibio.`,
+        clinicalRationale: "Digestión rápida y limpia para no elevar la temperatura central ni interrumpir el pulso nocturno de la hormona de crecimiento en reposo."
+      });
+
+      // Renderizar las 4 tarjetas
+      container.innerHTML = '';
       finalMenu.forEach(m => {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3';
