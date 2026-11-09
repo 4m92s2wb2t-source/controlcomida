@@ -1360,12 +1360,7 @@
     function openAddPantryModal() {
       const name = prompt('Nombre del ingrediente:');
       if (!name) return;
-      const cat = prompt('Grupo del Plato del Bien Comer:
-1. Verduras y Frutas (50%)
-2. Cereales y Tubérculos
-3. Leguminosas
-4. Origen Animal
-5. Grasas Saludables', 'Verduras y Frutas (50%)') || 'Verduras y Frutas (50%)';
+      const cat = prompt('Grupo del Plato del Bien Comer:\n1. Verduras y Frutas (50%)\n2. Cereales y Tubérculos\n3. Leguminosas\n4. Origen Animal\n5. Grasas Saludables', 'Verduras y Frutas (50%)') || 'Verduras y Frutas (50%)';
       pantry.unshift({
         id: 'p_' + Date.now(),
         name,
@@ -1572,3 +1567,4 @@
   </script>
 </body>
 </html>
+index.html
