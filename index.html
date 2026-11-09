@@ -75,17 +75,17 @@
           </h2>
           <span id="engine-badge" class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-md font-medium">Motor Clínico Fisiológico Activo</span>
         </div>
-        <p class="text-xs text-slate-500 mb-4">Escribe cualquier receta o ingrediente. El sistema cruza tanto el cuadro clínico como las restricciones específicas y el grado de restricción médica de cada integrante.</p>
+        <p class="text-xs text-slate-500 mb-4">Escribe cualquier receta o ingrediente. El sistema detecta variaciones gramaticales (fresa/fresas, nopal/nopales), cuadros clínicos y el grado de restricción médica de cada integrante.</p>
         
         <div class="space-y-3">
-          <textarea id="recipe-input" rows="3" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none" placeholder="Ejemplo: Hotcakes con leche vegetal de soya, con fresa..."></textarea>
+          <textarea id="recipe-input" rows="3" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none" placeholder="Ejemplo: Hotcakes con fresas, o Hotcakes con leche vegetal de soya..."></textarea>
           
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div class="flex flex-wrap gap-2 text-xs">
               <span class="text-slate-400 self-center">Pruebas rápidas:</span>
-              <button onclick="setTestRecipe('Hotcakes con leche vegetal de soya, con fresa')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Leche de soya con fresa</button>
+              <button onclick="setTestRecipe('Hotcakes con fresas')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Hotcakes con fresas</button>
+              <button onclick="setTestRecipe('Hotcakes con leche vegetal de soya')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Leche vegetal de soya</button>
               <button onclick="setTestRecipe('Hotcakes de harina de trigo con miel')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Harina de trigo con miel</button>
-              <button onclick="setTestRecipe('Wafles de harina de almendra y avena con canela y huevo')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Wafles almendra seguros</button>
               <button onclick="setTestRecipe('Pechuga a la plancha con chayote y frijoles')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium transition">Pechuga con chayote</button>
             </div>
             <button onclick="runAudit()" id="audit-btn" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-md shadow-emerald-200 transition flex items-center justify-center gap-2">
@@ -105,17 +105,22 @@
 
     <!-- SECCIÓN 2: MENÚ DEL DÍA (100% DINÁMICO DESDE ALACENA) -->
     <section id="sec-menu" class="hidden space-y-6">
-      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
-            <i data-lucide="sparkles" class="w-5 h-5 text-emerald-600"></i>
-            Generador de Menú Consensuado Dinámico
-          </h2>
-          <p class="text-xs text-slate-500">Se adapta en tiempo real a los ingredientes que tienes marcados <strong>«En Existencia»</strong> en tu alacena, respetando las restricciones de toda la familia.</p>
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-5 h-5 text-emerald-600"></i>
+              Generador de Menú Consensuado Dinámico
+            </h2>
+            <p class="text-xs text-slate-500">Recetas reales de cocina casera mexicana que usan <strong>única y exclusivamente</strong> lo que tienes en stock y respetan las restricciones de toda la familia.</p>
+          </div>
+          <button onclick="generateConsensusMenu(true)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-md shadow-emerald-200 transition flex items-center gap-2">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Generar Nuevas Combinaciones
+          </button>
         </div>
-        <button onclick="generateConsensusMenu(true)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-md shadow-emerald-200 transition flex items-center gap-2">
-          <i data-lucide="refresh-cw" class="w-4 h-4"></i> Generar Menú de Hoy
-        </button>
+        <div id="in-stock-bar" class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 flex flex-wrap items-center gap-1.5">
+          <!-- Lista visible de ingredientes en existencia -->
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="menu-cards-container"></div>
@@ -130,7 +135,7 @@
               <i data-lucide="package-check" class="w-5 h-5 text-emerald-600"></i>
               Control de Alacena con Alertas Clínicas
             </h2>
-            <p class="text-xs text-slate-500">Apaga un ingrediente si se agotó. Al cambiarlo, el Menú del Día se recalcula automáticamente usando solo lo disponible.</p>
+            <p class="text-xs text-slate-500">Apaga un ingrediente si se agotó. Al desmarcarlo, el Menú del Día descarta inmediatamente cualquier receta que lo contenga.</p>
           </div>
           <button onclick="openAddPantryModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 transition">
             <i data-lucide="plus" class="w-4 h-4"></i> Agregar Alimento
@@ -305,7 +310,7 @@
         <div>
           <label class="block font-semibold text-slate-700 mb-1">Diagnóstico o Cuadro Clínico (Texto libre):</label>
           <input type="text" id="edit-member-condition" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Adrenarquia prematura, Alergia a la fresa, Gastritis...">
-          <p class="text-[10px] text-slate-400 mt-0.5">El auditor buscará cualquier alérgeno o condición mencionada aquí directamente.</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">El auditor extraerá cualquier condición o alérgeno que escribas aquí.</p>
         </div>
         <div>
           <label class="block font-semibold text-slate-700 mb-1">Restricciones Alimentarias Adicionales (separadas por coma):</label>
@@ -325,6 +330,37 @@
   </div>
 
   <script>
+    // ==========================================
+    // REGLAS Y STEMMING (SINGULAR / PLURAL EN ESPAÑOL)
+    // ==========================================
+    function normalizeText(str) {
+      return (str || '').toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function getWordStems(word) {
+      const w = word.trim().toLowerCase();
+      const stems = [w];
+      if (w.endsWith('ces') && w.length > 4) {
+        stems.push(w.slice(0, -3) + 'z'); // nueces -> nuez
+      } else if (w.endsWith('es') && w.length > 4) {
+        stems.push(w.slice(0, -2)); // nopales -> nopal
+      } else if (w.endsWith('s') && w.length > 3) {
+        stems.push(w.slice(0, -1)); // fresas -> fresa
+      }
+      return stems;
+    }
+
+    const STOPWORDS = new Set([
+      'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas',
+      'de', 'del', 'a', 'al', 'con', 'en', 'por', 'para', 'sin', 'o', 'y', 'e',
+      'alergia', 'alergias', 'alergico', 'alergica', 'intolerancia', 'intolerante',
+      'sensibilidad', 'sensible', 'evitar', 'cero', 'no', 'estricta', 'moderada',
+      'leve', 'prematura', 'sindrome', 'enfermedad', 'salud', 'control', 'grado',
+      'infantil', 'adulta', 'alimentaria', 'condicion', 'perfil'
+    ]);
+
     // ==========================================
     // ESTADO INICIAL DE INTEGRANTES
     // ==========================================
@@ -517,15 +553,44 @@
       runAudit();
     }
 
-    function normalizeText(str) {
-      return (str || '').toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '');
+    // ==========================================
+    // EXTRACTOR CLÍNICO Y MOTOR DE VISTO BUENO
+    // ==========================================
+    function extractMemberForbiddenTerms(member) {
+      const terms = new Set();
+
+      // 1. De las restricciones explícitas
+      if (member.restrictions && Array.isArray(member.restrictions)) {
+        member.restrictions.forEach(raw => {
+          let c = normalizeText(raw).trim();
+          c = c.replace(/^(sin|evitar|no|cero|alergia a la|alergia al|alergia a|alergia|alergico a)\s+/, '').trim();
+          const parts = c.split(/[,/]/);
+          parts.forEach(part => {
+            const p = part.trim();
+            if (p.length >= 3) {
+              getWordStems(p).forEach(s => terms.add(s));
+            }
+          });
+        });
+      }
+
+      // 2. Del cuadro clínico (diagnóstico en texto libre)
+      const cleanCond = normalizeText(member.condition);
+      const condWords = cleanCond.match(/[a-zñáéíóú]+/g) || [];
+      condWords.forEach((w, idx) => {
+        if (['alergia', 'alergico', 'alergica', 'intolerancia', 'sensibilidad', 'evitar'].includes(w)) {
+          for (let j = idx + 1; j < Math.min(idx + 4, condWords.length); j++) {
+            const candidate = condWords[j];
+            if (!STOPWORDS.has(candidate) && candidate.length >= 3) {
+              getWordStems(candidate).forEach(s => terms.add(s));
+            }
+          }
+        }
+      });
+
+      return Array.from(terms);
     }
 
-    // ==========================================
-    // EVALUACIÓN CLÍNICA PROFUNDA (RECONOCE CUADRO CLÍNICO Y RESTRICCIONES)
-    // ==========================================
     function evaluateMemberLocally(member, recipeText) {
       const cleanRecipe = normalizeText(recipeText);
       const cleanCond = normalizeText(member.condition);
@@ -535,31 +600,19 @@
       let reasons = [];
       let fix = '';
 
-      // Extracción de términos prohibidos desde las restricciones
-      const forbiddenTerms = [];
-      if (member.restrictions && Array.isArray(member.restrictions)) {
-        member.restrictions.forEach(raw => {
-          let c = normalizeText(raw).trim();
-          c = c.replace(/^(sin|evitar|no|cero|alergia a la|alergia al|alergia a)\s+/, '').trim();
-          if (c.length >= 3) forbiddenTerms.push(c);
-        });
-      }
+      // Tokenizar y extraer raíces de las palabras de la receta
+      const recipeWords = cleanRecipe.match(/[a-zñáéíóú]+/g) || [];
+      const recipeStems = new Set();
+      recipeWords.forEach(w => {
+        getWordStems(w).forEach(s => recipeStems.add(s));
+      });
 
-      // Extracción de alérgenos nombrados en el CUADRO CLÍNICO (ej. "Alergia a la fresa", "intolerancia a cacahuate")
-      const allergenMatches = cleanCond.match(/(?:alergia|alergico|intolerancia|sensibilidad|evitar)\s+(?:a\s+la|al|a)?\s*([a-zñáéíóú]+)/g);
-      if (allergenMatches) {
-        allergenMatches.forEach(phrase => {
-          const words = phrase.split(/\s+/);
-          const targetWord = words[words.length - 1];
-          if (targetWord && targetWord.length >= 3) {
-            forbiddenTerms.push(targetWord);
-          }
-        });
-      }
+      // Extraer términos prohibidos (con raíces) del integrante
+      const forbiddenTerms = extractMemberForbiddenTerms(member);
 
-      // Verificación directa de todos los términos extraídos
+      // Verificación cruzada (singular <-> plural)
       forbiddenTerms.forEach(term => {
-        if (cleanRecipe.includes(term)) {
+        if (recipeStems.has(term) || cleanRecipe.includes(term)) {
           if (level === 'Estricta') {
             status = 'rejected';
             reasons.push(`Contiene ${term} (Restricción médica estricta en su perfil)`);
@@ -577,7 +630,7 @@
       const isSoy = cleanRecipe.includes('soya') || cleanRecipe.includes('soja') || cleanRecipe.includes('tofu') || cleanRecipe.includes('edamame') || cleanRecipe.includes('tempeh');
       // Trigos y gluten
       const isWheat = cleanRecipe.includes('harina de trigo') || cleanRecipe.includes('trigo') || cleanRecipe.includes('pan') || cleanRecipe.includes('pasta') || cleanRecipe.includes('galleta');
-      // Azúcares de rápida absorción
+      // Azúcares de absorción rápida
       const isSugar = cleanRecipe.includes('miel') || cleanRecipe.includes('azucar') || cleanRecipe.includes('datil') || cleanRecipe.includes('jarabe');
 
       // Discriminación estricta de lácteo bovino vs vegetal
@@ -585,7 +638,6 @@
       const isExplicitVeg = cleanRecipe.includes('leche vegetal') || cleanRecipe.includes('leche de almendra') || cleanRecipe.includes('leche de chicharo') || cleanRecipe.includes('leche de coco') || cleanRecipe.includes('leche de soya');
       const isBovine = (mentionsMilk && !isExplicitVeg) || cleanRecipe.includes('leche de vaca') || cleanRecipe.includes('queso') || cleanRecipe.includes('crema') || cleanRecipe.includes('mantequilla');
 
-      // Reglas clínicas automáticas por diagnóstico médico
       // 1. Diagnóstico de SOYA
       if (cleanCond.includes('soya') || cleanCond.includes('soja') || forbiddenTerms.includes('soya')) {
         if (isSoy) {
@@ -657,22 +709,17 @@
       return { status, reasons, fix };
     }
 
-    // ==========================================
-    // EJECUCIÓN DEL AUDITOR MULTIFAMILIAR
-    // ==========================================
     async function runAudit() {
       const input = document.getElementById('recipe-input').value.trim();
       if (!input) return;
 
       const resultsDiv = document.getElementById('audit-results');
       const gridDiv = document.getElementById('audit-members-grid');
-      const auditBtn = document.getElementById('audit-btn');
 
       resultsDiv.classList.remove('hidden');
       gridDiv.innerHTML = '<div class="col-span-full py-8 text-center text-slate-500 text-xs flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin text-emerald-600"></i> Evaluando con criterio clínico multifamiliar...</div>';
       lucide.createIcons();
 
-      // Evaluación local inmediata y robusta
       let memberResults = [];
       let globalHasReject = false;
       let globalHasWarning = false;
@@ -788,7 +835,189 @@
     }
 
     // ==========================================
-    // GENERADOR DE MENÚ 100% CONECTADO A LA ALACENA
+    // CATÁLOGO DE RECETAS REALES (COCINA CASERA MEXICANA)
+    // Cero textos inventados. Solo recetas culinarias coherentes y verificables.
+    // ==========================================
+    const AUTHENTIC_RECIPES_DB = [
+      // DESAYUNOS
+      {
+        type: "Desayuno Caliente",
+        tagColor: "emerald",
+        time: "⏱️ 12 minutos",
+        title: "Omelette con Nopales Asados y Aguacate",
+        requiredIngredients: ["Huevos orgánicos", "Nopales frescos", "Aguacate Hass"],
+        ingredientsText: "Huevos orgánicos, nopales frescos, aguacate Hass, aceite de oliva",
+        steps: "1. Cortar los nopales en cubos y asarlos en sartén caliente seco 5 min hasta evaporar baba. 2. Batir 2 huevos con pizca de sal marina. 3. Verter sobre los nopales, doblar el omelette y servir con rebanadas de aguacate.",
+        clinicalRationale: "Sin carbohidratos simples ni soya. El mucílago del nopal aplana la curva de glucosa y aporta saciedad inmediata.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Desayuno Caliente",
+        tagColor: "emerald",
+        time: "⏱️ 10 minutos",
+        title: "Huevos Revueltos a la Mexicana con Aguacate",
+        requiredIngredients: ["Huevos orgánicos", "Jitomate saladet", "Aguacate Hass"],
+        ingredientsText: "Huevos orgánicos, jitomate saladet picado, aguacate Hass, aceite de oliva",
+        steps: "1. Saltear jitomate saladet picado en aceite de oliva durante 2 minutos. 2. Añadir huevos batidos con sal de mar y revolver a fuego bajo. 3. Acompañar con aguacate.",
+        clinicalRationale: "Aporte rico en colina, licopeno y grasas monoinsaturadas sin picos de insulina.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Desayuno Caliente",
+        tagColor: "emerald",
+        time: "⏱️ 10 minutos",
+        title: "Huevos con Calabacitas Salteadas al Orégano",
+        requiredIngredients: ["Huevos orgánicos", "Calabacitas tiernas"],
+        ingredientsText: "Huevos orgánicos, calabacitas tiernas en medias lunas, orégano seco",
+        steps: "1. Saltear calabacitas en sartén 3 minutos con pizca de orégano. 2. Estrellar o batir los huevos en el mismo sartén hasta cuajar.",
+        clinicalRationale: "Desayuno ligero y digestivo, rico en potasio y proteína limpia.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Desayuno Caliente",
+        tagColor: "emerald",
+        time: "⏱️ 8 minutos",
+        title: "Porridge Tibio de Avena Integral con Canela y Almendra",
+        requiredIngredients: ["Avena entera en hojuelas", "Leche casera de almendra"],
+        ingredientsText: "Avena entera en hojuela, leche casera de almendra, canela en polvo",
+        steps: "1. Calentar la leche de almendra con abundante canela. 2. Agregar la avena y cocer 4 minutos a fuego bajo hasta espesar.",
+        clinicalRationale: "Betaglucanos de absorción lenta. La canela actúa como sensibilizador celular a la insulina.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+
+      // LUNCH ESCOLAR / OFICINA (FRÍO O PORTÁTIL)
+      {
+        type: "Lunch Escolar / Oficina (Frío)",
+        tagColor: "blue",
+        time: "⏱️ 10 minutos",
+        title: "Tacos Fríos de Pollo Deshebrado en Tortilla Nixtamalizada",
+        requiredIngredients: ["Pechuga de pollo", "Tortillas de maíz nixtamalizado", "Pepino persa"],
+        ingredientsText: "Pechuga de pollo cocida deshebrada, tortillas de maíz nixtamalizado, bastones de pepino persa con limón",
+        steps: "1. Armar taquitos con pollo frío sazonado en tortilla de maíz nixtamalizado. 2. Empacar en lonchera junto con bastones de pepino con limón y sal de mar.",
+        clinicalRationale: "Calcio biodisponible del maíz nixtamalizado. Cero gluten refinado y cero alérgenos de soya.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Lunch Escolar / Oficina (Frío)",
+        tagColor: "blue",
+        time: "⏱️ 8 minutos",
+        title: "Ensalada Proteica de Atún con Aguacate y Pepino",
+        requiredIngredients: ["Atún en agua bajo en sodio", "Aguacate Hass", "Pepino persa"],
+        ingredientsText: "Atún en agua drenado, aguacate Hass en cubos, pepino persa picado, limón y sal marina",
+        steps: "1. Drenar el atún en agua. 2. Mezclar en tazón con cubos de aguacate, pepino y jugo de limón. 3. Empacar frío.",
+        clinicalRationale: "Grasas omega-3 y proteína de alta asimilación que no elevan insulina escolar.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Lunch Escolar / Oficina (Frío)",
+        tagColor: "blue",
+        time: "⏱️ 10 minutos",
+        title: "Rollitos de Lechuga con Salpicón de Pollo y Jitomate",
+        requiredIngredients: ["Pechuga de pollo", "Jitomate saladet", "Pepino persa"],
+        ingredientsText: "Pechuga de pollo deshebrada, jitomate picado, pepino en cubos, hojas de lechuga o espinaca",
+        steps: "1. Mezclar pollo deshebrado con jitomate, pepino, limón y aceite de oliva. 2. Envolver en hojas crujientes de lechuga.",
+        clinicalRationale: "Ultra bajo en carbohidratos netos, refrescante y completamente libre de granos.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+
+      // COMIDA PRINCIPAL (CALIENTE)
+      {
+        type: "Comida Familiar (Caliente)",
+        tagColor: "amber",
+        time: "⏱️ 22 minutos",
+        title: "Pechuga Asada al Limón con Chayote al Vapor y Frijoles de la Olla",
+        requiredIngredients: ["Pechuga de pollo", "Chayote sin espinas", "Frijoles negros de la olla"],
+        ingredientsText: "Pechuga de pollo, chayote sin espinas rebanado, frijoles negros de la olla, ajo y orégano",
+        steps: "1. Poner rodajas de chayote al vapor por 8 min. 2. Sellar pechugas con ajo y orégano en sartén. 3. Calentar frijoles de la olla. Servir primero la verdura y al final la porción de frijol.",
+        clinicalRationale: "Secuencia metabólica óptima: la fibra del chayote reduce el impacto glucémico global.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Comida Familiar (Caliente)",
+        tagColor: "amber",
+        time: "⏱️ 20 minutos",
+        title: "Picadillo Casero Magro con Calabacitas y Tortillas Nixtamalizadas",
+        requiredIngredients: ["Carne de res magra", "Calabacitas tiernas", "Jitomate saladet", "Tortillas de maíz nixtamalizado"],
+        ingredientsText: "Carne de res magra molida, calabacitas en cubos, caldillo de jitomate saladet natural, tortillas nixtamalizadas",
+        steps: "1. Sellar carne de res magra con cebolla. 2. Licuar jitomate natural con ajo y verter. 3. Añadir calabacitas en cubos y cocer 8 min. Servir con tortillas nixtamalizadas.",
+        clinicalRationale: "Hierro hemínico de alta biodisponibilidad y zinc mineral para soporte suprarrenal.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Comida Familiar (Caliente)",
+        tagColor: "amber",
+        time: "⏱️ 18 minutos",
+        title: "Pescado Blanco a la Plancha con Nopales Asados y Aguacate",
+        requiredIngredients: ["Filete de pescado blanco", "Nopales frescos", "Aguacate Hass"],
+        ingredientsText: "Filete de pescado blanco magro, nopales asados, aguacate Hass, limón",
+        steps: "1. Asar nopales en sartén seco. 2. Cocinar filete de pescado con ajo y limón 4 min por lado. 3. Servir con aguacate fresco.",
+        clinicalRationale: "Excelente digestión gástrica, antiinflamatorio para condiciones autoinmunes y sin alérgenos.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Comida Familiar (Caliente)",
+        tagColor: "amber",
+        time: "⏱️ 20 minutos",
+        title: "Fajitas de Pollo con Calabacita y Chayote Salteados",
+        requiredIngredients: ["Pechuga de pollo", "Calabacitas tiernas", "Chayote sin espinas"],
+        ingredientsText: "Pechuga de pollo en fajitas, calabacitas y chayote en tiras, aceite de oliva",
+        steps: "1. Saltear chayote en tiras 4 min. 2. Integrar fajitas de pollo y calabacita. 3. Cocinar tapado 6 minutos a fuego medio.",
+        clinicalRationale: "Equilibrio perfecto de aminoácidos y fibra soluble sin elevar la glucosa sanguínea.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+
+      // CENAS REPARADORAS (LIGERAS / TIBIAS)
+      {
+        type: "Cena Reparadora (Tibia)",
+        tagColor: "purple",
+        time: "⏱️ 12 minutos",
+        title: "Tazón Tibio de Pescado Blanco con Espinacas Salteadas",
+        requiredIngredients: ["Filete de pescado blanco", "Espinacas baby", "Aceite de oliva extra virgen"],
+        ingredientsText: "Filete de pescado blanco, espinacas baby, aceite de oliva virgen extra, limón",
+        steps: "1. Saltear espinacas con aceite de oliva 2 min. 2. En el mismo sartén cocer pescado blanco 4 min por lado con limón. Servir tibio.",
+        clinicalRationale: "Digestión liviana que favorece el pico nocturno de la hormona de crecimiento en reposo.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Cena Reparadora (Tibia)",
+        tagColor: "purple",
+        time: "⏱️ 10 minutos",
+        title: "Omelette Ligero de Espinacas con Aguacate",
+        requiredIngredients: ["Huevos orgánicos", "Espinacas baby", "Aguacate Hass"],
+        ingredientsText: "Huevos orgánicos, espinacas baby, rebanadas de aguacate Hass",
+        steps: "1. Saltear espinacas baby 1 minuto. 2. Verter huevos batidos y cuajar a fuego suave. 3. Servir con aguacate.",
+        clinicalRationale: "Aporte de magnesio y triptófano natural para inducir relajación muscular y descanso reparador.",
+        containsSoy: false,
+        containsWheatGluten: false
+      },
+      {
+        type: "Cena Reparadora (Tibia)",
+        tagColor: "purple",
+        time: "⏱️ 15 minutos",
+        title: "Caldo Claro de Pollo con Chayote y Calabacita",
+        requiredIngredients: ["Pechuga de pollo", "Chayote sin espinas", "Calabacitas tiernas"],
+        ingredientsText: "Caldo de pechuga de pollo desgrasado, chayote y calabacita en cubos, cilantro",
+        steps: "1. Calentar caldo de pollo desgrasado con trozos de pechuga. 2. Añadir chayote y calabacita en cubos y hervir 7 minutos. Servir caliente.",
+        clinicalRationale: "Hidratación celular profunda, descanso digestivo completo sin carbohidratos fermentables.",
+        containsSoy: false,
+        containsWheatGluten: false
+      }
+    ];
+
+    // ==========================================
+    // MOTOR REAL DE GENERACIÓN DE MENÚ (CERO RECETAS INVENTADAS)
     // ==========================================
     let menuRotationOffset = 0;
 
@@ -796,84 +1025,93 @@
       if (rotate) menuRotationOffset++;
 
       const container = document.getElementById('menu-cards-container');
-      const inStockPantry = pantry.filter(i => i.inStock);
+      const inStockBar = document.getElementById('in-stock-bar');
 
-      if (inStockPantry.length < 3) {
+      // 1. Obtener lista estricta de nombres en stock (normalizados para comparación)
+      const inStockItems = pantry.filter(i => i.inStock);
+      const inStockNames = inStockItems.map(i => i.name);
+      const inStockSet = new Set(inStockNames.map(n => normalizeText(n)));
+
+      // Renderizar barra visual de ingredientes en stock
+      if (inStockBar) {
+        if (inStockItems.length === 0) {
+          inStockBar.innerHTML = '<span class="text-rose-600 font-bold">⚠️ No hay ingredientes en stock. Ve a Alacena Activa y marca los que tengas disponibles.</span>';
+        } else {
+          inStockBar.innerHTML = `
+            <span class="font-bold text-slate-800 mr-1">Ingredientes activos considerados (${inStockItems.length}):</span>
+            ${inStockItems.map(i => `<span class="bg-white border border-slate-200 px-2 py-0.5 rounded text-[11px] font-medium text-slate-700">${i.name}</span>`).join(' ')}
+          `;
+        }
+      }
+
+      if (inStockItems.length < 2) {
         container.innerHTML = `
           <div class="col-span-full bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center space-y-2">
             <i data-lucide="alert-circle" class="w-8 h-8 text-amber-600 mx-auto"></i>
-            <h3 class="font-bold text-amber-900 text-sm">Alacena Insuficiente</h3>
-            <p class="text-xs text-amber-700">Tienes muy pocos ingredientes marcados "En Existencia". Ve a la pestaña <strong>Alacena Activa</strong> y activa al menos 4 ingredientes para calcular recetas reales.</p>
+            <h3 class="font-bold text-amber-900 text-sm">Alacena Vacía</h3>
+            <p class="text-xs text-amber-700">Por favor ve a la pestaña <strong>Alacena Activa</strong> y marca al menos 3 o 4 ingredientes que tengas en casa para calcular recetas reales.</p>
           </div>
         `;
         lucide.createIcons();
         return;
       }
 
-      const getInCat = (cat) => inStockPantry.filter(i => i.cat === cat).map(i => i.name);
-      const proteins = getInCat('Proteínas');
-      const veggies = getInCat('Verduras');
-      const grains = getInCat('Granos/Harinas');
-      const fruits = getInCat('Frutas');
-      const fats = getInCat('Grasas/Semillas');
+      // 2. Extraer restricciones familiares críticas
+      const hasSoyAllergy = members.some(m => normalizeText(m.condition).includes('soya') || m.restrictions.some(r => normalizeText(r).includes('soya')));
+      const hasGlutenAdrenarquia = members.some(m => normalizeText(m.condition).includes('adrenarquia') || normalizeText(m.condition).includes('gluten') || m.restrictions.some(r => normalizeText(r).includes('gluten')));
 
-      // Selección rotativa basada en los alimentos disponibles
-      const safePick = (arr, index) => arr.length > 0 ? arr[(index + menuRotationOffset) % arr.length] : null;
+      // 3. Filtrar recetas del catálogo que cumplan AL 100%:
+      // a) TODOS sus ingredientes requeridos están marcados en existencia
+      // b) Cero soya si hay alergia
+      // c) Cero trigo/gluten si hay adrenarquia/autoinmune
+      const eligibleRecipes = AUTHENTIC_RECIPES_DB.filter(rec => {
+        if (hasSoyAllergy && rec.containsSoy) return false;
+        if (hasGlutenAdrenarquia && rec.containsWheatGluten) return false;
 
-      const prot1 = safePick(proteins, 0) || 'Huevos orgánicos';
-      const prot2 = safePick(proteins, 1) || prot1;
-      const prot3 = safePick(proteins, 2) || prot1;
+        // Comprobación matemática: ¿Están todos los ingredientes requeridos en stock?
+        const allPresent = rec.requiredIngredients.every(req => {
+          const cleanReq = normalizeText(req);
+          return Array.from(inStockSet).some(inStockName => inStockName.includes(cleanReq) || cleanReq.includes(inStockName));
+        });
 
-      const veg1 = safePick(veggies, 0) || 'Nopales o calabacitas';
-      const veg2 = safePick(veggies, 1) || veg1;
-      const veg3 = safePick(veggies, 2) || veg1;
+        return allPresent;
+      });
 
-      const grain1 = safePick(grains, 0) || 'Tortillas de maíz nixtamalizado';
-      const grain2 = safePick(grains, 1) || grain1;
-      const fat1 = safePick(fats, 0) || 'Aguacate Hass';
-      const fruit1 = safePick(fruits, 0) || 'Fresas o manzana verde';
+      // 4. Agrupar por tiempo de comida
+      const desayunos = eligibleRecipes.filter(r => r.type.includes('Desayuno'));
+      const lunches = eligibleRecipes.filter(r => r.type.includes('Lunch'));
+      const comidas = eligibleRecipes.filter(r => r.type.includes('Comida'));
+      const cenas = eligibleRecipes.filter(r => r.type.includes('Cena'));
 
-      const menuList = [
-        {
-          type: "Desayuno Caliente",
-          time: "⏱️ 12 minutos",
-          title: `Salteado Matutino de ${prot1} con ${veg1}`,
-          ingredients: [prot1, veg1, fat1].filter(Boolean).join(', '),
-          steps: `1. Picar ${veg1} y asar en sartén con pizca de sal. 2. Integrar ${prot1} hasta cocer al término deseado. 3. Servir acompañado de ${fat1}.`,
-          clinicalRationale: `Preparado exclusivamente con ingredientes en existencia. Sin soya ni harinas de trigo; carbohidrato nulo que protege la función suprarrenal matutina.`,
-          tagColor: "emerald"
-        },
-        {
-          type: "Lunch Escolar / Oficina (Frío)",
-          time: "⏱️ 10 minutos",
-          title: `Porción Portátil de ${prot2} con ${veg3} y ${grain1}`,
-          ingredients: [prot2, veg3, grain1].filter(Boolean).join(', '),
-          steps: `1. Cocinar o porcionar ${prot2}. 2. Cortar ${veg3} en bastones frescos. 3. Acompañar con ${grain1}.`,
-          clinicalRationale: `Saciedad de digestión gradual sin alérgenos. Energía sostenida que no dispara andrógenos ni genera picos de insulina.`,
-          tagColor: "blue"
-        },
-        {
-          type: "Comida Familiar (Caliente)",
-          time: "⏱️ 22 minutos",
-          title: `${prot2} Asado con ${veg2} y ${grain2}`,
-          ingredients: [prot2, veg2, grain2].filter(Boolean).join(', '),
-          steps: `1. Cocinar ${veg2} al vapor. 2. Sellar ${prot2} con especias seguras. 3. Servir primero ${veg2} para amortiguar la absorción de ${grain2}.`,
-          clinicalRationale: `Consenso familiar perfecto: base única sin gluten refinado ni lácteos. Modulación glucémica natural gracias a la fibra vegetal activa.`,
-          tagColor: "amber"
-        },
-        {
-          type: "Cena Reparadora (Tibia)",
-          time: "⏱️ 12 minutos",
-          title: `Tazón Ligero de ${prot3} con ${veg1}`,
-          ingredients: [prot3, veg1, fat1].filter(Boolean).join(', '),
-          steps: `1. Saltear suavemente ${veg1}. 2. Cocinar ${prot3} a la plancha. 3. Servir tibio para optimizar la secreción nocturna de la hormona de crecimiento en reposo.`,
-          clinicalRationale: `Proteína magra biodisponible de fácil asimilación que no satura el hígado ni eleva glucosa antes de dormir.`,
-          tagColor: "purple"
-        }
-      ];
+      const pickMeal = (list, offset) => {
+        if (list.length === 0) return null;
+        return list[(offset + menuRotationOffset) % list.length];
+      };
 
+      const finalMenu = [];
+
+      // Si hay recetas exactas disponibles en la base de datos
+      if (desayunos.length > 0) finalMenu.push(pickMeal(desayunos, 0));
+      if (lunches.length > 0) finalMenu.push(pickMeal(lunches, 1));
+      if (comidas.length > 0) finalMenu.push(pickMeal(comidas, 2));
+      if (cenas.length > 0) finalMenu.push(pickMeal(cenas, 3));
+
+      // Si faltó alguna categoría porque hay ingredientes muy específicos desactivados, armar sugerencia limpia sin inventar comida absurda
       container.innerHTML = '';
-      menuList.forEach(m => {
+
+      if (finalMenu.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full bg-slate-100 border border-slate-300 rounded-2xl p-6 text-center space-y-2">
+            <i data-lucide="chef-hat" class="w-8 h-8 text-slate-500 mx-auto"></i>
+            <h3 class="font-bold text-slate-900 text-sm">Combinación no disponible con los ingredientes actuales</h3>
+            <p class="text-xs text-slate-600">Con los ingredientes que desmarcaste no es posible armar una receta completa que cumpla con los estándares médicos de la familia. Activa ingredientes base en tu alacena (como <em>Huevos, Pollo, Calabacitas, Chayote, Aguacate o Tortillas de maíz</em>) para generar platillos equilibrados.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      finalMenu.forEach(m => {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3';
         card.innerHTML = `
@@ -882,9 +1120,9 @@
             <span class="text-xs text-slate-500 font-medium">${m.time}</span>
           </div>
           <h3 class="font-bold text-slate-900 text-base">${m.title}</h3>
-          <p class="text-xs text-slate-600"><strong>Ingredientes Disponibles:</strong> ${m.ingredients}</p>
+          <p class="text-xs text-slate-600"><strong>Ingredientes de Alacena:</strong> ${m.ingredientsText}</p>
           <div class="bg-slate-50 rounded-xl p-3 text-xs space-y-1 border border-slate-100">
-            <p class="font-semibold text-slate-800">🍳 Por dónde empezar:</p>
+            <p class="font-semibold text-slate-800">🍳 Preparación culinaria:</p>
             <p class="text-slate-600 leading-relaxed">${m.steps}</p>
           </div>
           <p class="text-[11px] text-${m.tagColor}-800 bg-${m.tagColor}-50/80 p-2.5 rounded-lg border border-${m.tagColor}-100">
@@ -920,7 +1158,7 @@
         item.inStock = !item.inStock;
         saveState();
         renderPantry();
-        // Si el menú está abierto, se actualiza en automático
+        // Si el menú está abierto, se recalcula al instante
         const menuSec = document.getElementById('sec-menu');
         if (menuSec && !menuSec.classList.contains('hidden')) {
           generateConsensusMenu(false);
@@ -1160,7 +1398,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       updateApiStatusUI();
-      document.getElementById('recipe-input').value = 'Hotcakes con leche vegetal de soya, con fresa';
+      document.getElementById('recipe-input').value = 'Hotcakes con fresas';
       runAudit();
     });
   </script>
