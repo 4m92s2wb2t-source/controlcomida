@@ -650,31 +650,54 @@ Responde ÚNICAMENTE un JSON válido (sin backticks markdown ni texto adicional)
   ]
 }`;
 
-      const activeModel = await getAvailableModel(geminiApiKey);
+      // Lista de modelos en cascada para tolerancia a alta demanda (503 / 429)
+      const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.5-pro'];
+      
+      // Asegurar que el modelo detectado esté al frente
+      const detected = await getAvailableModel(geminiApiKey);
+      const modelsToTry = [detected, ...candidateModels.filter(m => m !== detected)];
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${activeModel}:generateContent?key=${geminiApiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { responseMimeType: "application/json" }
-        })
-      });
+      let lastError = null;
 
-      if (!response.ok) {
-        const errJson = await response.json().catch(() => ({}));
-        const errMsg = errJson.error ? errJson.error.message : ('HTTP ' + response.status + ' ' + (response.statusText || ''));
-        throw new Error(errMsg);
+      for (const model of modelsToTry) {
+        try {
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { responseMimeType: "application/json" }
+            })
+          });
+
+          if (!response.ok) {
+            const errJson = await response.json().catch(() => ({}));
+            const errMsg = errJson.error ? errJson.error.message : ('HTTP ' + response.status);
+            // Si el modelo está saturado (503) o con límite de tasa, intentar el siguiente
+            if (response.status === 503 || response.status === 429 || errMsg.toLowerCase().includes('demand') || errMsg.toLowerCase().includes('overloaded')) {
+              console.warn(`Modelo ${model} con alta demanda, alternando al siguiente...`);
+              lastError = new Error(errMsg);
+              continue;
+            }
+            throw new Error(errMsg);
+          }
+
+          const data = await response.json();
+          let rawText = data.candidates[0].content.parts[0].text.trim();
+          if (rawText.startsWith('```json')) {
+            rawText = rawText.replace(/^```json/, '').replace(/```$/, '').trim();
+          } else if (rawText.startsWith('```')) {
+            rawText = rawText.replace(/^```/, '').replace(/```$/, '').trim();
+          }
+          return JSON.parse(rawText);
+        } catch (err) {
+          lastError = err;
+          // Si no es error de demanda o red, continuar probando
+          continue;
+        }
       }
 
-      const data = await response.json();
-      let rawText = data.candidates[0].content.parts[0].text.trim();
-      if (rawText.startsWith('```json')) {
-        rawText = rawText.replace(/^```json/, '').replace(/```$/, '').trim();
-      } else if (rawText.startsWith('```')) {
-        rawText = rawText.replace(/^```/, '').replace(/```$/, '').trim();
-      }
-      return JSON.parse(rawText);
+      throw lastError || new Error('No se pudo conectar con ningún modelo de Gemini disponible.');
     }
 
     async function runAudit() {
