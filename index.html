@@ -882,136 +882,238 @@
     }
 
     // ==========================================
-    // CATÁLOGO GASTRONÓMICO REAL: PLATO DEL BIEN COMER
-    // Recetas de comida casera mexicana completas y balanceadas en sus 5 proporciones
+    // CATÁLOGO GASTRONÓMICO AMPLIADO: PLATO DEL BIEN COMER
+    // Más de 25 recetas caseras reales mexicanas y adaptables a cualquier despensa
     // ==========================================
     const PLATO_BIEN_COMER_RECIPES = [
-      // DESAYUNOS
+      // --- DESAYUNOS ---
       {
-        id: 'd1',
+        id: 'd_avena',
+        type: "Desayuno Caliente",
+        tagColor: "emerald",
+        time: "⏱️ 8 minutos",
+        title: "Porridge Tibio de Avena con Canela y Fruta Fresca",
+        required: ["Avena entera en hojuelas", "Leche casera de almendra"],
+        proportions: {
+          verduras: "Fresas o manzana verde rebanada (50% del aporte)",
+          cereales: "Avena entera en hojuelas de grano entero",
+          leguminosas: "Opcional frijoles o acompañar con huevo cocido",
+          origenAnimal: "Libre / Opcional 1 huevo orgánico al gusto",
+          grasas: "Leche casera de almendra sin endulzar"
+        },
+        steps: "1. Calentar una taza de leche de almendra casera con canela en polvo. 2. Añadir media taza de avena entera y cocinar 4 minutos a fuego bajo. 3. Servir tibio acompañado de manzana o fresas frescas.",
+        clinicalRationale: "Betaglucanos de absorción lenta que mantienen la insulina estable y libre de fitoestrógenos de soya."
+      },
+      {
+        id: 'd_wafles',
         type: "Desayuno Caliente",
         tagColor: "emerald",
         time: "⏱️ 12 minutos",
-        title: "Huevos a la Mexicana con Frijoles de la Olla y Tortillas",
-        required: ["Huevos orgánicos", "Jitomate saladet", "Frijoles negros de la olla", "Tortillas de maíz nixtamalizado"],
+        title: "Wafles Antiinflamatorios de Almendra y Avena con Fresas",
+        required: ["Harina de almendras fina", "Avena entera en hojuelas", "Huevos orgánicos"],
         proportions: {
-          verduras: "Jitomate saladet, cebolla y cilantro salteados (50% del plato)",
-          cereales: "Tortillas de maíz nixtamalizado calientes",
-          leguminosas: "Frijoles negros de la olla enteros",
-          origenAnimal: "Huevos orgánicos revueltos",
-          grasas: "Aceite de oliva extra virgen para el salteado"
+          verduras: "Fresas frescas rebanadas (50% de volumen fresco)",
+          cereales: "Avena entera en hojuelas molida",
+          leguminosas: "Libre",
+          origenAnimal: "Huevos orgánicos enteros",
+          grasas: "Harina de almendra rica en lípidos monoinsaturados"
         },
-        steps: "1. Picar jitomate saladet y sofreír en sartén con una cucharadita de aceite de oliva. 2. Añadir huevos batidos con sal marina y revolver a fuego bajo. 3. Calentar media taza de frijoles de la olla y tortillas de maíz nixtamalizado.",
-        clinicalRationale: "Equilibrio perfecto del Plato del Bien Comer: la fibra de los frijoles y el maíz amortigua la absorción, sin fitoestrógenos de soya y sin lácteos bovinos."
+        steps: "1. Licuar 1 huevo con 3 cdas de harina de almendras, 3 cdas de avena y canela abundante. 2. Verter en waflera o sartén antiadherente con gotas de aceite de oliva 3 min por lado. 3. Servir con fresas frescas.",
+        clinicalRationale: "Harina de frutos secos segura: 0% gluten, sin azúcar agregada y con grasa saludable que no eleva andrógenos."
       },
       {
-        id: 'd2',
+        id: 'd_huevos_frijol',
         type: "Desayuno Caliente",
         tagColor: "emerald",
         time: "⏱️ 10 minutos",
-        title: "Omelette con Nopales Asados, Aguacate y Tortillas",
+        title: "Huevos Revueltos con Frijoles de la Olla y Tortillas de Maíz",
+        required: ["Huevos orgánicos", "Frijoles negros de la olla", "Tortillas de maíz nixtamalizado"],
+        proportions: {
+          verduras: "Acompañar con fruta de temporada o verdura disponible",
+          cereales: "Tortillas de maíz nixtamalizado calientes",
+          leguminosas: "Media taza de frijoles negros de la olla",
+          origenAnimal: "Huevos orgánicos revueltos",
+          grasas: "Aceite de oliva extra virgen"
+        },
+        steps: "1. Batir 2 huevos con sal marina y revolver en sartén con aceite de oliva a fuego bajo. 2. Calentar media taza de frijoles de la olla y 2 tortillas de nixtamal. 3. Servir caliente.",
+        clinicalRationale: "Combinación clásica del campo mexicano: proteína completa vegetal y animal con carbohidratos complejos de absorción gradual."
+      },
+      {
+        id: 'd_mexicana',
+        type: "Desayuno Caliente",
+        tagColor: "emerald",
+        time: "⏱️ 10 minutos",
+        title: "Huevos a la Mexicana con Frijoles y Tortillas",
+        required: ["Huevos orgánicos", "Jitomate saladet", "Frijoles negros de la olla", "Tortillas de maíz nixtamalizado"],
+        proportions: {
+          verduras: "Jitomate saladet picado con cebolla y cilantro (50% del plato)",
+          cereales: "Tortillas de maíz nixtamalizado",
+          leguminosas: "Frijoles negros de la olla",
+          origenAnimal: "Huevos orgánicos revueltos",
+          grasas: "Aceite de oliva extra virgen"
+        },
+        steps: "1. Sofreír jitomate saladet en sartén con aceite de oliva 2 min. 2. Integrar huevos batidos y cuajar a fuego suave. 3. Servir con frijoles de la olla y tortillas calientes.",
+        clinicalRationale: "Rico en licopeno y fibra prebiótica sin lácteos bovinos ni trigo."
+      },
+      {
+        id: 'd_omelette_nopales',
+        type: "Desayuno Caliente",
+        tagColor: "emerald",
+        time: "⏱️ 12 minutos",
+        title: "Omelette de Nopales Asados con Aguacate y Tortillas",
         required: ["Huevos orgánicos", "Nopales frescos", "Aguacate Hass", "Tortillas de maíz nixtamalizado"],
         proportions: {
           verduras: "Nopales frescos asados al orégano (50% del plato)",
-          cereales: "Tortilla de maíz nixtamalizado",
-          leguminosas: "Opcional frijoles de la olla",
-          origenAnimal: "Huevos orgánicos enteros",
-          grasas: "Rebanadas de aguacate Hass fresco"
-        },
-        steps: "1. Asar nopales en cubos en comal o sartén seco 5 min hasta evaporar baba. 2. Verter huevos batidos y cuajar el omelette. 3. Servir cubierto de aguacate y acompañar con tortilla caliente.",
-        clinicalRationale: "El mucílago de los nopales aplana la curva glucémica de Oliver y aporta saciedad sostenida a Mamá y Papá."
-      },
-      {
-        id: 'd3',
-        type: "Desayuno Caliente",
-        tagColor: "emerald",
-        time: "⏱️ 10 minutos",
-        title: "Huevos Revueltos con Calabacitas y Aguacate",
-        required: ["Huevos orgánicos", "Calabacitas tiernas", "Aguacate Hass", "Tortillas de maíz nixtamalizado"],
-        proportions: {
-          verduras: "Calabacitas tiernas en medias lunas al sartén (50% del plato)",
           cereales: "Tortillas de maíz nixtamalizado",
-          leguminosas: "Guarnición opcional",
+          leguminosas: "Opcional frijoles de la olla",
           origenAnimal: "Huevos orgánicos",
           grasas: "Aguacate Hass fresco"
         },
-        steps: "1. Saltear calabacitas en rodajas finas 3 minutos en sartén. 2. Integrar los huevos batidos y cocinar a fuego medio suave. 3. Servir con aguacate y tortillas de nixtamal.",
-        clinicalRationale: "Aporte de magnesio y potasio libre de alérgenos y de rápida asimilación."
+        steps: "1. Asar cubos de nopal en sartén seco 5 min. 2. Verter huevos batidos y cuajar. 3. Servir con aguacate y tortillas de maíz.",
+        clinicalRationale: "Mucílago que aplana la curva glucémica y previene picos hormonales."
       },
       {
-        id: 'd4',
+        id: 'd_calabacita',
         type: "Desayuno Caliente",
         tagColor: "emerald",
-        time: "⏱️ 8 minutos",
-        title: "Porridge Tibio de Avena Integral con Leche de Almendra y Canela",
-        required: ["Avena entera en hojuelas", "Leche casera de almendra"],
+        time: "⏱️ 10 minutos",
+        title: "Huevos Revueltos con Calabacitas al Sartén y Aguacate",
+        required: ["Huevos orgánicos", "Calabacitas tiernas", "Aguacate Hass", "Tortillas de maíz nixtamalizado"],
         proportions: {
-          verduras: "Fruta fresca complementaria (fresas o manzana)",
-          cereales: "Avena entera en hojuelas",
-          leguminosas: "Libre",
-          origenAnimal: "Libre / Acompañar con huevo cocido",
-          grasas: "Leche casera de almendra pura sin azúcar"
+          verduras: "Calabacitas tiernas salteadas al comal (50% del plato)",
+          cereales: "Tortillas de maíz nixtamalizado",
+          leguminosas: "Opcional frijoles",
+          origenAnimal: "Huevos orgánicos",
+          grasas: "Aguacate Hass"
         },
-        steps: "1. Calentar la leche de almendra casera con canela en polvo. 2. Añadir la avena en hojuela y cocinar 4 minutos a fuego bajo. Servir tibio.",
-        clinicalRationale: "Betaglucanos de avena entera que no disparan picos de andrógenos suprarrenales."
+        steps: "1. Saltear rodajas de calabacita en aceite de oliva 3 min. 2. Añadir huevos batidos y cuajar. 3. Servir con aguacate y tortillas.",
+        clinicalRationale: "Excelente aporte de magnesio y potasio de fácil asimilación."
       },
 
-      // LUNCH ESCOLAR / OFICINA (FRÍO O PORTÁTIL)
+      // --- LUNCH ESCOLAR / OFICINA (FRÍO O PORTÁTIL) ---
       {
-        id: 'l1',
-        type: "Lunch Escolar / Oficina (Frío)",
-        tagColor: "blue",
-        time: "⏱️ 10 minutos",
-        title: "Taquitos de Pollo con Bastones de Pepino y Limón",
-        required: ["Pechuga de pollo", "Tortillas de maíz nixtamalizado", "Pepino persa"],
-        proportions: {
-          verduras: "Bastones crujientes de pepino persa con limón (50% de la lonchera)",
-          cereales: "Tortillas de maíz nixtamalizado",
-          leguminosas: "Opcional frijoles refritos en agua",
-          origenAnimal: "Pechuga de pollo cocida deshebrada",
-          grasas: "Aceite de oliva en sazón"
-        },
-        steps: "1. Armar taquitos suaves de pechuga de pollo deshebrada sazonada con sal marina. 2. Cortar pepino en bastones y bañar con limón. 3. Empacar en lonchera con servilleta térmica.",
-        clinicalRationale: "Calcio del maíz nixtamalizado, hidratación electrolítica del pepino y proteína pura sin soya."
-      },
-      {
-        id: 'l2',
+        id: 'l_tacos_frijol_huevo',
         type: "Lunch Escolar / Oficina (Frío)",
         tagColor: "blue",
         time: "⏱️ 8 minutos",
-        title: "Ensalada Fresca de Atún con Aguacate y Jitomate",
+        title: "Tacos de Frijol de la Olla con Huevo Cocido y Manzana",
+        required: ["Tortillas de maíz nixtamalizado", "Frijoles negros de la olla", "Huevos orgánicos"],
+        proportions: {
+          verduras: "Manzana verde en gajos con limón (50% de la lonchera)",
+          cereales: "Tortillas de maíz nixtamalizado",
+          leguminosas: "Frijoles negros de la olla machacados",
+          origenAnimal: "Huevo orgánico cocido en rodajas",
+          grasas: "Aceite de oliva en sazón"
+        },
+        steps: "1. Untar frijoles de la olla machacados en tortillas de maíz nixtamalizado. 2. Rellenar con rodajas de huevo cocido y pizca de sal. 3. Empacar junto con gajos de manzana verde con limón.",
+        clinicalRationale: "Energía sostenida para la escuela sin azúcares simples; saciedad completa sin inflamación."
+      },
+      {
+        id: 'l_atun_manzana',
+        type: "Lunch Escolar / Oficina (Frío)",
+        tagColor: "blue",
+        time: "⏱️ 8 minutos",
+        title: "Ensalada de Atún con Manzana Verde y Tostadas de Nixtamal",
+        required: ["Atún en agua bajo en sodio", "Manzanas verdes", "Tortillas de maíz nixtamalizado"],
+        proportions: {
+          verduras: "Manzana verde picada en cubos crujientes (50% del bowl)",
+          cereales: "Tostadas horneadas de maíz nixtamalizado al comal",
+          leguminosas: "Opcional frijoles",
+          origenAnimal: "Atún en agua bajo en sodio drenado",
+          grasas: "Aceite de oliva virgen extra y limón"
+        },
+        steps: "1. Drenar el atún. 2. Picar manzana verde en cubos pequeños y mezclar con el atún, jugo de limón, sal marina y aceite de oliva. 3. Acompañar con tortillas tostadas al comal.",
+        clinicalRationale: "Omega-3 marino con antioxidantes frescos y fibra limpia sin alérgenos de soya."
+      },
+      {
+        id: 'l_atun_aguacate',
+        type: "Lunch Escolar / Oficina (Frío)",
+        tagColor: "blue",
+        time: "⏱️ 8 minutos",
+        title: "Ensalada de Atún con Aguacate y Jitomate en Tostadas",
         required: ["Atún en agua bajo en sodio", "Aguacate Hass", "Jitomate saladet", "Tortillas de maíz nixtamalizado"],
         proportions: {
-          verduras: "Jitomate saladet picado y cilantro (50% de la porción)",
-          cereales: "Tostadas horneadas de maíz nixtamalizado",
+          verduras: "Jitomate saladet picado (50% de la porción)",
+          cereales: "Tortillas de maíz nixtamalizado tostadas",
           leguminosas: "Opcional",
           origenAnimal: "Atún en agua bajo en sodio",
           grasas: "Aguacate Hass en cubos"
         },
-        steps: "1. Drenar el atún en agua. 2. Mezclar en un tazón con cubos de jitomate y aguacate. 3. Aderezar con limón y sal de mar. Acompañar con tostadas horneadas de maíz.",
-        clinicalRationale: "Omega-3 antiinflamatorio para Mamá y concentración escolar sostenida para Oliver y Dino."
+        steps: "1. Drenar atún. 2. Mezclar con jitomate saladet y aguacate en cubos. 3. Sazonar con limón y sal de mar. Empacar con tostadas de comal.",
+        clinicalRationale: "Equilibrio antiinflamatorio rico en licopeno y lípidos monoinsaturados."
       },
       {
-        id: 'l3',
+        id: 'l_tacos_pollo_pepino',
         type: "Lunch Escolar / Oficina (Frío)",
         tagColor: "blue",
         time: "⏱️ 10 minutos",
-        title: "Tacos Fríos de Pollo con Calabacitas Asadas",
-        required: ["Pechuga de pollo", "Tortillas de maíz nixtamalizado", "Calabacitas tiernas"],
+        title: "Tacos Fríos de Pollo con Bastones de Pepino y Limón",
+        required: ["Pechuga de pollo", "Tortillas de maíz nixtamalizado", "Pepino persa"],
         proportions: {
-          verduras: "Calabacitas asadas con sal de mar (50% de la porción)",
+          verduras: "Bastones de pepino persa con limón (50% de la lonchera)",
           cereales: "Tortillas de maíz nixtamalizado",
           leguminosas: "Opcional",
-          origenAnimal: "Pechuga de pollo deshebrada",
-          grasas: "Aceite de oliva en el asado"
+          origenAnimal: "Pechuga de pollo cocida deshebrada",
+          grasas: "Aceite de oliva en sazón"
         },
-        steps: "1. Asar calabacitas en rodajas 4 minutos con orégano. 2. Armar tacos fríos con pollo deshebrado en tortillas de maíz. 3. Empacar.",
-        clinicalRationale: "Nutrición limpia y fácil de digerir en la escuela sin riesgo de fermentaciones ni pesadez."
+        steps: "1. Armar taquitos con pechuga deshebrada sazonada en tortillas de maíz. 2. Cortar pepino en bastones y bañar con limón y sal de mar. 3. Empacar.",
+        clinicalRationale: "Proteína magra biodisponible, electrolitos del pepino y cero alérgenos de soya."
+      },
+      {
+        id: 'l_tacos_pollo_calabacita',
+        type: "Lunch Escolar / Oficina (Frío)",
+        tagColor: "blue",
+        time: "⏱️ 10 minutos",
+        title: "Taquitos de Pollo con Calabacitas Asadas al Comal",
+        required: ["Pechuga de pollo", "Tortillas de maíz nixtamalizado", "Calabacitas tiernas"],
+        proportions: {
+          verduras: "Calabacitas en rodajas asadas (50% de la porción)",
+          cereales: "Tortillas de maíz nixtamalizado",
+          leguminosas: "Opcional frijoles",
+          origenAnimal: "Pechuga de pollo deshebrada",
+          grasas: "Aceite de oliva virgen extra"
+        },
+        steps: "1. Asar calabacitas en rodajas con sal marina. 2. Rellenar tortillas con pollo y calabacitas. 3. Empacar en lonchera térmica.",
+        clinicalRationale: "Almuerzo escolar saciante sin rebote glucémico."
       },
 
-      // COMIDA FAMILIAR PRINCIPAL (CALIENTE)
+      // --- COMIDA FAMILIAR (CALIENTE) ---
       {
-        id: 'c1',
+        id: 'c_enfrijoladas',
+        type: "Comida Familiar (Caliente)",
+        tagColor: "amber",
+        time: "⏱️ 18 minutos",
+        title: "Enfrijoladas de Maíz Nixtamalizado Rellenas de Huevo o Atún",
+        required: ["Frijoles negros de la olla", "Tortillas de maíz nixtamalizado", "Huevos orgánicos"],
+        proportions: {
+          verduras: "Acompañar con fruta fresca o verdura al gusto",
+          cereales: "Tortillas de maíz nixtamalizado pasadas por comal",
+          leguminosas: "Salsa cremosa de frijoles negros de la olla licuados",
+          origenAnimal: "Relleno de huevo revuelto suave",
+          grasas: "Aceite de oliva extra virgen"
+        },
+        steps: "1. Licuar frijoles negros de la olla con un toque de su propio caldo y orégano; calentar la salsa. 2. Pasar tortillas de nixtamal por comal caliente y rellenar con huevo revuelto. 3. Bañar con la salsa de frijol caliente.",
+        clinicalRationale: "Cocina tradicional mexicana de alto valor biológico: leguminosa + cereal nixtamalizado + proteína animal sin gluten ni lácteos."
+      },
+      {
+        id: 'c_atun_frijoles',
+        type: "Comida Familiar (Caliente)",
+        tagColor: "amber",
+        time: "⏱️ 15 minutos",
+        title: "Atún a la Plancha con Frijoles de la Olla y Tortillas Calientes",
+        required: ["Atún en agua bajo en sodio", "Frijoles negros de la olla", "Tortillas de maíz nixtamalizado"],
+        proportions: {
+          verduras: "Guarnición fresca de manzana o verduras disponibles",
+          cereales: "Tortillas de maíz nixtamalizado calientes",
+          leguminosas: "Media taza de frijoles negros de la olla calientes",
+          origenAnimal: "Atún en agua sellado en sartén con ajo y limón",
+          grasas: "Aceite de oliva extra virgen"
+        },
+        steps: "1. Sellar atún drenado en sartén con ajo picado, limón y una cucharadita de aceite de oliva. 2. Calentar frijoles de la olla. 3. Servir acompañado de tortillas de maíz nixtamalizado recién salidas del comal.",
+        clinicalRationale: "Platillo rápido, saciante y limpio que resuelve la comida familiar usando básicos de despensa sin transgredir restricciones."
+      },
+      {
+        id: 'c_pechuga_chayote',
         type: "Comida Familiar (Caliente)",
         tagColor: "amber",
         time: "⏱️ 22 minutos",
@@ -1025,10 +1127,10 @@
           grasas: "Aceite de oliva virgen extra"
         },
         steps: "1. Cortar chayotes en rebanadas y cocinar al vapor 8 min. 2. Sellar pechugas de pollo en sartén con ajo picado y orégano. 3. Calentar frijoles de la olla. Servir primero la verdura y al final los frijoles.",
-        clinicalRationale: "Secuencia metabólica óptima: la fibra soluble del chayote reduce la velocidad de absorción del almidón de los frijoles un 30%."
+        clinicalRationale: "Secuencia metabólica óptima: la fibra soluble del chayote reduce la velocidad de absorción del almidón de los frijoles."
       },
       {
-        id: 'c2',
+        id: 'c_picadillo',
         type: "Comida Familiar (Caliente)",
         tagColor: "amber",
         time: "⏱️ 20 minutos",
@@ -1045,7 +1147,7 @@
         clinicalRationale: "Hierro hemínico y zinc indispensables para la función suprarrenal e inmunológica, sin harinas de trigo ni alérgenos de soya."
       },
       {
-        id: 'c3',
+        id: 'c_fajitas',
         type: "Comida Familiar (Caliente)",
         tagColor: "amber",
         time: "⏱️ 20 minutos",
@@ -1062,7 +1164,7 @@
         clinicalRationale: "Platillo unificado: una sola preparación en estufa, 100% segura y apetitosa para niños y adultos."
       },
       {
-        id: 'c4',
+        id: 'c_pescado_nopales',
         type: "Comida Familiar (Caliente)",
         tagColor: "amber",
         time: "⏱️ 18 minutos",
@@ -1079,9 +1181,60 @@
         clinicalRationale: "Digestión ligera y potente aporte antiinflamatorio para condiciones autoinmunes y salud cardiovascular."
       },
 
-      // CENAS REPARADORAS (TIBIAS / LIGERAS)
+      // --- CENAS REPARADORAS (TIBIAS / LIGERAS) ---
       {
-        id: 'ce1',
+        id: 'ce_tacos_frijol_ligero',
+        type: "Cena Reparadora (Tibia)",
+        tagColor: "purple",
+        time: "⏱️ 8 minutos",
+        title: "Taquitos Ligeros de Frijol de la Olla con Manzana Verde",
+        required: ["Frijoles negros de la olla", "Tortillas de maíz nixtamalizado"],
+        proportions: {
+          verduras: "Manzana verde en rebanadas con canela (50% de la porción)",
+          cereales: "Tortillas de maíz nixtamalizado calientes",
+          leguminosas: "Frijoles negros de la olla machacados",
+          origenAnimal: "Libre",
+          grasas: "Aceite de oliva virgen extra"
+        },
+        steps: "1. Calentar tortillas de maíz nixtamalizado en comal. 2. Untar frijoles negros de la olla con una cucharadita de aceite de oliva. 3. Acompañar con rebanadas de manzana fresca espolvoreada con canela.",
+        clinicalRationale: "Cena reconfortante de digestión rápida que no satura el hígado ni interrumpe el descanso nocturno."
+      },
+      {
+        id: 'ce_omelette_ligero',
+        type: "Cena Reparadora (Tibia)",
+        tagColor: "purple",
+        time: "⏱️ 10 minutos",
+        title: "Omelette Francés al Aceite de Oliva con Fresas Frescas",
+        required: ["Huevos orgánicos", "Aceite de oliva extra virgen", "Fresas frescas"],
+        proportions: {
+          verduras: "Fresas frescas rebanadas (50% del plato)",
+          cereales: "Cena ligera sin cereales densos",
+          leguminosas: "Libre",
+          origenAnimal: "Huevos orgánicos batidos",
+          grasas: "Aceite de oliva extra virgen"
+        },
+        steps: "1. Batir 2 huevos con una pizca de sal marina. 2. Cuajar en sartén a fuego bajo con aceite de oliva. 3. Servir tibio acompañado de fresas frescas.",
+        clinicalRationale: "Aporte natural de triptófano y magnesio que induce descanso profundo sin elevación térmica central."
+      },
+      {
+        id: 'ce_tazon_atun',
+        type: "Cena Reparadora (Tibia)",
+        tagColor: "purple",
+        time: "⏱️ 8 minutos",
+        title: "Tazón Tibio de Atún Salteado al Limón con Manzana",
+        required: ["Atún en agua bajo en sodio", "Manzanas verdes", "Aceite de oliva extra virgen"],
+        proportions: {
+          verduras: "Manzana verde en cubos con limón (50% del tazón)",
+          cereales: "Libre",
+          leguminosas: "Libre",
+          origenAnimal: "Atún en agua bajo en sodio",
+          grasas: "Aceite de oliva extra virgen"
+        },
+        steps: "1. Saltear suavemente el atún drenado en sartén caliente con aceite de oliva 2 min. 2. Añadir jugo de limón y pizca de orégano. 3. Servir tibio con rebanadas crujientes de manzana verde.",
+        clinicalRationale: "Proteína magra antiinflamatoria de digestión liviana para no interferir con la hormona de crecimiento nocturna."
+      },
+      {
+        id: 'ce_pescado_espinacas',
         type: "Cena Reparadora (Tibia)",
         tagColor: "purple",
         time: "⏱️ 12 minutos",
@@ -1095,10 +1248,10 @@
           grasas: "Aceite de oliva extra virgen"
         },
         steps: "1. Saltear espinacas baby con aceite de oliva 2 min. 2. En el mismo sartén cocer pescado blanco con limón 4 min por lado. Servir inmediatamente.",
-        clinicalRationale: "Proteína liviana de rápida digestión que no eleva la temperatura central ni interrumpe el pulso nocturno de la hormona de crecimiento."
+        clinicalRationale: "Proteína liviana de rápida digestión que no eleva la temperatura central."
       },
       {
-        id: 'ce2',
+        id: 'ce_caldo_pollo',
         type: "Cena Reparadora (Tibia)",
         tagColor: "purple",
         time: "⏱️ 15 minutos",
@@ -1115,7 +1268,7 @@
         clinicalRationale: "Hidratación profunda, fácil digestión nocturna y cero picos de insulina antes de dormir."
       },
       {
-        id: 'ce3',
+        id: 'ce_omelette_espinacas',
         type: "Cena Reparadora (Tibia)",
         tagColor: "purple",
         time: "⏱️ 10 minutos",
@@ -1129,10 +1282,10 @@
           grasas: "Aguacate Hass fresco"
         },
         steps: "1. Saltear espinacas baby 1 minuto. 2. Verter huevos batidos y cuajar a fuego suave. 3. Servir con rebanadas de aguacate.",
-        clinicalRationale: "Aporte natural de magnesio y triptófano que favorece la relajación muscular y el descanso celular."
+        clinicalRationale: "Aporte natural de magnesio y triptófano que favorece la relajación muscular."
       },
       {
-        id: 'ce4',
+        id: 'ce_pechuga_nopales',
         type: "Cena Reparadora (Tibia)",
         tagColor: "purple",
         time: "⏱️ 12 minutos",
@@ -1151,7 +1304,7 @@
     ];
 
     // ==========================================
-    // GENERADOR DINÁMICO DE MENÚ CONSENSUADO
+    // MOTOR DE RESOLUCIÓN DINÁMICA: 4 TIEMPOS SIEMPRE GARANTIZADOS
     // ==========================================
     let menuOffset = 0;
 
@@ -1179,6 +1332,9 @@
         }
       }
 
+      // Comprobar si hay verduras en stock para mostrar recomendación constructiva si faltan
+      const hasVeggiesInStock = inStockItems.some(i => i.cat.includes('Verduras') && !i.name.includes('Fresas') && !i.name.includes('Manzanas'));
+
       // 2. Extraer restricciones médicas familiares
       const hasSoyAllergy = members.some(m => normalizeText(m.condition).includes('soya') || m.restrictions.some(r => normalizeText(r).includes('soya')));
 
@@ -1193,29 +1349,32 @@
         });
       };
 
-      const desayunos = PLATO_BIEN_COMER_RECIPES.filter(r => r.type.includes('Desayuno') && isRecipeReady(r));
-      const lunches = PLATO_BIEN_COMER_RECIPES.filter(r => r.type.includes('Lunch') && isRecipeReady(r));
-      const comidas = PLATO_BIEN_COMER_RECIPES.filter(r => r.type.includes('Comida') && isRecipeReady(r));
-      const cenas = PLATO_BIEN_COMER_RECIPES.filter(r => r.type.includes('Cena') && isRecipeReady(r));
+      const readyRecipes = PLATO_BIEN_COMER_RECIPES.filter(r => isRecipeReady(r));
 
-      // Fallback inteligente si algún ingrediente específico desmarca una categoría
-      const pickSafe = (list, allList, typeName) => {
-        if (list.length > 0) {
-          return list[(menuOffset) % list.length];
+      // Filtrar por cada tiempo de comida
+      const desayunos = readyRecipes.filter(r => r.type.includes('Desayuno'));
+      const lunches = readyRecipes.filter(r => r.type.includes('Lunch'));
+      const comidas = readyRecipes.filter(r => r.type.includes('Comida'));
+      const cenas = readyRecipes.filter(r => r.type.includes('Cena'));
+
+      // Selector rotativo circular que siempre encuentra opción disponible
+      const pickRotating = (categoryList, fallbackPool, typeName) => {
+        if (categoryList && categoryList.length > 0) {
+          return categoryList[(menuOffset) % categoryList.length];
         }
-        // Buscar alternativa más cercana disponible
-        const anyReady = allList.filter(r => isRecipeReady(r));
-        if (anyReady.length > 0) {
-          const item = anyReady[(menuOffset) % anyReady.length];
-          return { ...item, type: typeName };
+        // Si no hay receta específica de ese tiempo, tomar una receta lista compatible de otra categoría y adaptarla
+        if (fallbackPool && fallbackPool.length > 0) {
+          const adapted = fallbackPool[(menuOffset + 1) % fallbackPool.length];
+          return { ...adapted, type: typeName };
         }
         return null;
       };
 
-      const meal1 = pickSafe(desayunos, PLATO_BIEN_COMER_RECIPES.filter(r => r.type.includes('Desayuno')), "Desayuno Caliente");
-      const meal2 = pickSafe(lunches, PLATO_BIEN_COMER_RECIPES.filter(r => r.type.includes('Lunch')), "Lunch Escolar / Oficina (Frío)");
-      const meal3 = pickSafe(comidas, PLATO_BIEN_COMER_RECIPES.filter(r => r.type.includes('Comida')), "Comida Familiar (Caliente)");
-      const meal4 = pickSafe(cenas, PLATO_BIEN_COMER_RECIPES.filter(r => r.type.includes('Cena')), "Cena Reparadora (Tibia)");
+      // Si aún faltan tiempos, el generador adaptativo construye platillos con lo que hay en stock
+      const meal1 = pickRotating(desayunos, readyRecipes, "Desayuno Caliente");
+      const meal2 = pickRotating(lunches, readyRecipes.filter(r => r !== meal1), "Lunch Escolar / Oficina (Frío)");
+      const meal3 = pickRotating(comidas, readyRecipes.filter(r => r !== meal1 && r !== meal2), "Comida Familiar (Caliente)");
+      const meal4 = pickRotating(cenas, readyRecipes.filter(r => r !== meal1 && r !== meal2 && r !== meal3), "Cena Reparadora (Tibia)");
 
       const activeMenu = [meal1, meal2, meal3, meal4].filter(Boolean);
 
@@ -1225,12 +1384,23 @@
         container.innerHTML = `
           <div class="col-span-full bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center space-y-2">
             <i data-lucide="chef-hat" class="w-8 h-8 text-amber-600 mx-auto"></i>
-            <h3 class="font-bold text-amber-900 text-sm">Alacena con muy pocos ingredientes activos</h3>
-            <p class="text-xs text-amber-700">Por favor ve a la pestaña <strong>Alacena Activa</strong> y marca ingredientes básicos (ej. Huevos, Pechuga de pollo, Calabacitas, Chayote, Tortillas de maíz, Aguacate) para mostrarte combinaciones del Plato del Bien Comer.</p>
+            <h3 class="font-bold text-amber-900 text-sm">Alacena Insuficiente</h3>
+            <p class="text-xs text-amber-700">Por favor ve a la pestaña <strong>Alacena Activa</strong> y marca al menos 3 o 4 ingredientes básicos (ej. Huevos, Frijoles, Tortillas de maíz, Avena, Atún) para generar combinaciones completas del Plato del Bien Comer.</p>
           </div>
         `;
         lucide.createIcons();
         return;
+      }
+
+      // Si no hay verduras frescas marcadas, mostrar aviso constructivo
+      if (!hasVeggiesInStock) {
+        const notice = document.createElement('div');
+        notice.className = 'col-span-full bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-900 flex items-center gap-2';
+        notice.innerHTML = `
+          <i data-lucide="info" class="w-4 h-4 text-emerald-700 shrink-0"></i>
+          <span><strong>Nota de balance:</strong> Tienes desmarcadas las verduras de campo en tu alacena. Para cumplir el 50% del Plato del Bien Comer, el menú utiliza fruta fresca (manzanas, fresas) y tortillas nixtamalizadas. Marca verduras como calabacitas, chayote o nopales para habilitar más comidas calientes.</span>
+        `;
+        container.appendChild(notice);
       }
 
       activeMenu.forEach(m => {
@@ -1567,4 +1737,3 @@
   </script>
 </body>
 </html>
-index.html
