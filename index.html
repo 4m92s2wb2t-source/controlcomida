@@ -1,3 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriFamily OS - Planificador Inteligente Multifamiliar con IA Real</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .tab-btn.active {
+      background-color: #059669;
+      color: #ffffff;
+      box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-16">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-md shadow-emerald-200">
+          <i data-lucide="shield-check" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900 leading-tight">NutriFamily OS</h1>
+          <p class="text-xs text-slate-500 font-medium">Control Hormonal &amp; Razonamiento Clínico IA</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openApiKeyModal()" id="api-status-btn" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200 flex items-center gap-1.5 hover:bg-slate-200 transition">
+          <span id="api-status-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+          <span id="api-status-text">Conectar Gemini API</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navegación por pestañas -->
+    <div class="max-w-6xl mx-auto px-4 flex gap-2 border-t border-slate-100 pt-2 pb-2 overflow-x-auto">
+      <button onclick="switchTab('auditor')" id="tab-auditor" class="tab-btn active px-3.5 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2 whitespace-nowrap">
+        <i data-lucide="check-circle" class="w-4 h-4"></i> Visto Bueno
+      </button>
+      <button onclick="switchTab('menu')" id="tab-menu" class="tab-btn px-3.5 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2 whitespace-nowrap">
+        <i data-lucide="calendar" class="w-4 h-4"></i> Menú del Día
+      </button>
+      <button onclick="switchTab('pantry')" id="tab-pantry" class="tab-btn px-3.5 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2 whitespace-nowrap">
+        <i data-lucide="shopping-basket" class="w-4 h-4"></i> Alacena Activa
+      </button>
+      <button onclick="switchTab('shopping')" id="tab-shopping" class="tab-btn px-3.5 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2 whitespace-nowrap">
+        <i data-lucide="sparkles" class="w-4 h-4"></i> Sugerencias de Compra
       </button>
       <button onclick="switchTab('family')" id="tab-family" class="tab-btn px-3.5 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2 whitespace-nowrap">
         <i data-lucide="users" class="w-4 h-4"></i> Integrantes &amp; Clínico
@@ -800,68 +855,222 @@ Responde ÚNICAMENTE este JSON:
       lucide.createIcons();
     }
 
+        // ==========================================
+    // GENERADOR DINÁMICO DE MENÚ CONSENSUADO
     // ==========================================
-    // MENÚ CONSENSUADO
-    // ==========================================
-    function generateConsensusMenu() {
+    async function generateConsensusMenu() {
       const container = document.getElementById('menu-cards-container');
+      const inStockPantry = pantry.filter(i => i.inStock);
+
+      if (inStockPantry.length < 3) {
+        container.innerHTML = `
+          <div class="col-span-full bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center space-y-2">
+            <i data-lucide="alert-circle" class="w-8 h-8 text-amber-600 mx-auto"></i>
+            <h3 class="font-bold text-amber-900 text-sm">Alacena Insuficiente</h3>
+            <p class="text-xs text-amber-700">Tienes muy pocos ingredientes marcados "En Existencia". Ve a la pestaña <strong>Alacena Activa</strong> y activa al menos 4 o 5 ingredientes para crear recetas reales.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
       container.innerHTML = `
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">Desayuno Caliente</span>
-            <span class="text-xs text-slate-500 font-medium">⏱️ 12 minutos</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-base">Omelette Campestre con Nopales Asados &amp; Aguacate Hass</h3>
-          <p class="text-xs text-slate-600"><strong>Ingredientes de Alacena:</strong> Huevos orgánicos, nopales frescos, jitomate saladet, aguacate Hass, aceite de oliva virgen extra.</p>
-          <div class="bg-slate-50 rounded-xl p-3 text-xs space-y-1 border border-slate-100">
-            <p class="font-semibold text-slate-800">🍳 Por dónde empezar:</p>
-            <p class="text-slate-600">1. Picar los nopales en cubos y asarlos en sartén caliente seco 5 min hasta evaporar baba. 2. Batir huevos con pizca de sal marina. 3. Verter sobre nopales, cuajar a fuego medio y servir con aguacate.</p>
-          </div>
-          <p class="text-[11px] text-emerald-700 bg-emerald-50/70 p-2 rounded-lg"><strong>Aporte Clínico:</strong> El mucílago del nopal aplana la curva de glucosa de Oliver; 100% libre de soya para Dino niño; alta colina y magnesio para Mamá y Papá.</p>
-        </div>
-
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Lunch Escolar / Oficina (Frío)</span>
-            <span class="text-xs text-slate-500 font-medium">⏱️ 10 minutos</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-base">Tacos Fríos de Pollo y Nopal en Tortilla Nixtamalizada</h3>
-          <p class="text-xs text-slate-600"><strong>Ingredientes de Alacena:</strong> Pechuga de pollo deshebrada, tortillas de maíz nixtamalizado, pepino persa en bastones, limón.</p>
-          <div class="bg-slate-50 rounded-xl p-3 text-xs space-y-1 border border-slate-100">
-            <p class="font-semibold text-slate-800">🍱 Por dónde empezar:</p>
-            <p class="text-slate-600">1. Rellenar las tortillas de nixtamal con pollo frío deshebrado. 2. Empacar en lonchera junto con bastones de pepino con limón y sal de mar.</p>
-          </div>
-          <p class="text-[11px] text-blue-700 bg-blue-50/70 p-2 rounded-lg"><strong>Aporte Clínico:</strong> El maíz nixtamalizado provee calcio biodisponible sin gluten refinado; cero alérgenos de soya.</p>
-        </div>
-
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">Comida Familiar (Caliente)</span>
-            <span class="text-xs text-slate-500 font-medium">⏱️ 22 minutos</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-base">Pechuga Asada con Chayote al Vapor y Frijoles de la Olla</h3>
-          <p class="text-xs text-slate-600"><strong>Ingredientes de Alacena:</strong> Pechuga de pollo, chayote sin espinas, frijoles negros de la olla, calabacitas tiernas.</p>
-          <div class="bg-slate-50 rounded-xl p-3 text-xs space-y-1 border border-slate-100">
-            <p class="font-semibold text-slate-800">🍲 Por dónde empezar:</p>
-            <p class="text-slate-600">1. Cortar chayotes y calabazas en rodajas y poner al vapor 8 min. 2. Sellar las pechugas con ajo y orégano en sartén. 3. Calentar frijoles de la olla.</p>
-          </div>
-          <p class="text-[11px] text-amber-800 bg-amber-50 p-2 rounded-lg"><strong>Secuencia Metabólica:</strong> Servir primero el chayote y calabaza, luego la pechuga y al final 1/2 taza de frijoles para reducir el impacto glucémico un 30%.</p>
-        </div>
-
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">Cena Reparadora (Tibia)</span>
-            <span class="text-xs text-slate-500 font-medium">⏱️ 12 minutos</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-base">Tazón Tibio de Pescado Blanco con Espinacas Salteadas</h3>
-          <p class="text-xs text-slate-600"><strong>Ingredientes de Alacena:</strong> Filete de pescado blanco magro, espinacas baby, aceite de oliva, limón.</p>
-          <div class="bg-slate-50 rounded-xl p-3 text-xs space-y-1 border border-slate-100">
-            <p class="font-semibold text-slate-800">🌙 Por dónde empezar:</p>
-            <p class="text-slate-600">1. Saltear espinacas con aceite de oliva 2 min. 2. En el mismo sartén cocer filete de pescado 4 min por lado con limón. Servir inmediatamente.</p>
-          </div>
-          <p class="text-[11px] text-purple-800 bg-purple-50 p-2 rounded-lg"><strong>Aporte Clínico:</strong> Digestión liviana que optimiza el pico nocturno de la hormona de crecimiento en reposo.</p>
+        <div class="col-span-full py-12 text-center text-slate-500 text-xs flex items-center justify-center gap-2">
+          <i data-lucide="loader-2" class="w-5 h-5 animate-spin text-emerald-600"></i>
+          Cruzando tus ingredientes disponibles con los perfiles clínicos de la familia...
         </div>
       `;
+      lucide.createIcons();
+
+      // Si hay Gemini conectado, intentamos generación de menú personalizada
+      if (geminiApiKey) {
+        try {
+          const menuAi = await generateMenuWithGemini(inStockPantry);
+          if (menuAi && menuAi.length === 4) {
+            renderMenuCards(menuAi);
+            return;
+          }
+        } catch (e) {
+          console.warn('Fallo en menú IA, alternando a generador dinámico local:', e);
+        }
+      }
+
+      // Generador dinámico local inteligente
+      const localMenu = buildDynamicLocalMenu(inStockPantry);
+      renderMenuCards(localMenu);
+    }
+
+    async function generateMenuWithGemini(availableItems) {
+      const pantryNames = availableItems.map(i => `${i.name} (${i.cat})`).join(', ');
+      const familyContext = members.map(m => `${m.name}: ${m.condition}. Restricciones: ${m.restrictions.join(', ')}`).join('\n');
+
+      const prompt = `Actúa como chef nutricionista clínico.
+Genera un menú consensuado de 4 tiempos (Desayuno, Lunch escolar/trabajo, Comida principal, Cena ligera) usando EXCLUSIVAMENTE ingredientes que estén en la despensa:
+DESPENSA EN EXISTENCIA:
+${pantryNames}
+
+FAMILIA Y RESTRICCIONES:
+${familyContext}
+
+REGLAS OBLIGATORIAS:
+- Usa SOLO ingredientes de la lista en existencia.
+- Ningún platillo puede contener soya para Dino ni fitoestrógenos/gluten/azúcar rápida para Oliver.
+- Misma base familiar con adaptación en 1 paso si hace falta.
+
+Responde ÚNICAMENTE un array JSON con 4 objetos exactos:
+[
+  {
+    "type": "Desayuno Caliente",
+    "time": "⏱️ 12 min",
+    "title": "Nombre creativo del platillo",
+    "ingredients": "Ingredientes usados",
+    "steps": "Por dónde empezar paso a paso",
+    "clinicalRationale": "Por qué es seguro para todos y aporte nutricional",
+    "tagColor": "emerald"
+  },
+  {
+    "type": "Lunch Escolar / Oficina (Frío)",
+    "time": "⏱️ 10 min",
+    "title": "Nombre del lunch",
+    "ingredients": "Ingredientes usados",
+    "steps": "Paso a paso de armado",
+    "clinicalRationale": "Beneficio metabólico",
+    "tagColor": "blue"
+  },
+  {
+    "type": "Comida Familiar (Caliente)",
+    "time": "⏱️ 25 min",
+    "title": "Nombre de la comida",
+    "ingredients": "Ingredientes usados",
+    "steps": "Secuencia culinaria",
+    "clinicalRationale": "Balance glucémico",
+    "tagColor": "amber"
+  },
+  {
+    "type": "Cena Reparadora (Tibia/Ligera)",
+    "time": "⏱️ 15 min",
+    "title": "Nombre de la cena",
+    "ingredients": "Ingredientes usados",
+    "steps": "Preparación rápida",
+    "clinicalRationale": "Digestión nocturna",
+    "tagColor": "purple"
+  }
+]`;
+
+      const candidateModels = ['gemini-3.8-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+      for (const model of candidateModels) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`, {
+            method: 'POST',
+            signal: controller.signal,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { responseMimeType: "application/json", temperature: 0.3 }
+            })
+          });
+          clearTimeout(timeoutId);
+          if (res.ok) {
+            const data = await res.json();
+            let rawText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+            if (rawText.startsWith('```json')) rawText = rawText.replace(/^```json/, '').replace(/```$/, '').trim();
+            else if (rawText.startsWith('```')) rawText = rawText.replace(/^```/, '').replace(/```$/, '').trim();
+            return JSON.parse(rawText);
+          }
+        } catch (e) {
+          clearTimeout(timeoutId);
+          continue;
+        }
+      }
+      return null;
+    }
+
+    function buildDynamicLocalMenu(availableItems) {
+      const getInCat = (cat) => availableItems.filter(i => i.cat === cat).map(i => i.name);
+      const proteins = getInCat('Proteínas');
+      const veggies = getInCat('Verduras');
+      const grains = getInCat('Granos/Harinas');
+      const fruits = getInCat('Frutas');
+      const fats = getInCat('Grasas/Semillas');
+
+      const p1 = proteins[0] || 'Huevos orgánicos';
+      const p2 = proteins[1] || proteins[0] || 'Pechuga de pollo';
+      const p3 = proteins[2] || proteins[0] || 'Pescado blanco o atún';
+
+      const v1 = veggies[0] || 'Calabacitas tiernas';
+      const v2 = veggies[1] || veggies[0] || 'Nopales o espinacas';
+      const v3 = veggies[2] || veggies[0] || 'Jitomate o pepino';
+
+      const g1 = grains[0] || 'Tortillas de maíz nixtamalizado';
+      const g2 = grains[1] || 'Frijoles de la olla';
+      const fat1 = fats[0] || 'Aguacate Hass';
+
+      return [
+        {
+          type: "Desayuno Caliente",
+          time: "⏱️ 12 minutos",
+          title: `Salteado Matutino de ${p1} con ${v1}`,
+          ingredients: [p1, v1, fat1].filter(Boolean).join(', '),
+          steps: `1. Picar ${v1} en rodajas finas y saltear en sartén caliente. 2. Integrar ${p1} y cocinar a fuego medio. 3. Servir acompañado de ${fat1}.`,
+          clinicalRationale: `Base 100% segura elaborada exclusivamente con ingredientes en stock. Sin soya ni trigos refinados; absorción gradual que protege la función suprarrenal.`,
+          tagColor: "emerald"
+        },
+        {
+          type: "Lunch Escolar / Oficina (Frío)",
+          time: "⏱️ 10 minutos",
+          title: `Porción Empacable de ${p2} con ${v3}`,
+          ingredients: [p2, v3, g1].filter(Boolean).join(', '),
+          steps: `1. Cocinar o porcionar ${p2}. 2. Acompañar con ${v3} fresco picado en tiras. 3. Complementar con ${g1}.`,
+          clinicalRationale: `Excelente biodisponibilidad y energía sostenida para la jornada escolar y laboral sin alérgenos.`,
+          tagColor: "blue"
+        },
+        {
+          type: "Comida Familiar (Caliente)",
+          time: "⏱️ 22 minutos",
+          title: `${p2} Asado con ${v2} y ${g2}`,
+          ingredients: [p2, v2, g2].filter(Boolean).join(', '),
+          steps: `1. Poner al vapor ${v2}. 2. Sellar ${p2} con hierbas de olor. 3. Calentar ${g2}. Servir primero las verduras para reducir la respuesta glucémica global.`,
+          clinicalRationale: `Secuencia metabólica óptima: la fibra de ${v2} amortigua los carbohidratos de ${g2}.`,
+          tagColor: "amber"
+        },
+        {
+          type: "Cena Reparadora (Tibia)",
+          time: "⏱️ 12 minutos",
+          title: `Tazón Ligero de ${p3} con Vegetales Salteados`,
+          ingredients: [p3, v1, fat1].filter(Boolean).join(', '),
+          steps: `1. Saltear suavemente ${v1}. 2. Cocer ${p3} de digestión rápida. 3. Servir tibio para no interrumpir el descanso hormonal nocturno.`,
+          clinicalRationale: `Aporte de aminoácidos esenciales livianos para optimizar la regeneración tisular durante el sueño.`,
+          tagColor: "purple"
+        }
+      ];
+    }
+
+    function renderMenuCards(menuList) {
+      const container = document.getElementById('menu-cards-container');
+      container.innerHTML = '';
+
+      menuList.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-${m.tagColor}-600 bg-${m.tagColor}-50 px-2.5 py-1 rounded-md">${m.type}</span>
+            <span class="text-xs text-slate-500 font-medium">${m.time}</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">${m.title}</h3>
+          <p class="text-xs text-slate-600"><strong>Ingredientes de Alacena:</strong> ${m.ingredients}</p>
+          <div class="bg-slate-50 rounded-xl p-3 text-xs space-y-1 border border-slate-100">
+            <p class="font-semibold text-slate-800">🍳 Por dónde empezar:</p>
+            <p class="text-slate-600 leading-relaxed">${m.steps}</p>
+          </div>
+          <p class="text-[11px] text-${m.tagColor}-800 bg-${m.tagColor}-50/80 p-2.5 rounded-lg border border-${m.tagColor}-100">
+            <strong>Aporte Clínico:</strong> ${m.clinicalRationale}
+          </p>
+        `;
+        container.appendChild(card);
+      });
       lucide.createIcons();
     }
 
