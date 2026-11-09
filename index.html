@@ -35,7 +35,7 @@
       <div class="flex items-center gap-2">
         <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          Motor Clínico v2.2 Activo
+          Motor Clínico v2.3 Activo
         </span>
       </div>
     </div>
@@ -50,6 +50,9 @@
       </button>
       <button onclick="switchTab('pantry')" id="tab-pantry" class="tab-btn px-3.5 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2 whitespace-nowrap">
         <i data-lucide="shopping-basket" class="w-4 h-4"></i> Alacena Activa
+      </button>
+      <button onclick="switchTab('shopping')" id="tab-shopping" class="tab-btn px-3.5 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2 whitespace-nowrap">
+        <i data-lucide="sparkles" class="w-4 h-4"></i> Sugerencias de Compra
       </button>
       <button onclick="switchTab('family')" id="tab-family" class="tab-btn px-3.5 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2 whitespace-nowrap">
         <i data-lucide="users" class="w-4 h-4"></i> Integrantes &amp; Clínico
@@ -94,17 +97,9 @@
 
       <!-- Resultados del Auditor -->
       <div id="audit-results" class="hidden space-y-4">
-        <div id="audit-banner" class="rounded-xl p-4 border flex items-center justify-between">
-          <!-- Dinámico -->
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="audit-members-grid">
-          <!-- Tarjetas por miembro -->
-        </div>
-
-        <div id="audit-adaptation-box" class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 space-y-1">
-          <!-- Adaptación en 1 solo paso -->
-        </div>
+        <div id="audit-banner" class="rounded-xl p-4 border flex items-center justify-between"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="audit-members-grid"></div>
+        <div id="audit-adaptation-box" class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 space-y-1"></div>
       </div>
     </section>
 
@@ -123,9 +118,7 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="menu-cards-container">
-        <!-- Renderizado dinámico de Desayuno, Lunch, Comida y Cena -->
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="menu-cards-container"></div>
     </section>
 
     <!-- SECCIÓN 3: ALACENA ACTIVA -->
@@ -153,13 +146,26 @@
           <button onclick="filterPantry('Grasas/Semillas')" class="pantry-cat-btn px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium">Grasas &amp; Semillas</button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" id="pantry-grid">
-          <!-- Renderizado de items de despensa -->
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" id="pantry-grid"></div>
       </div>
     </section>
 
-    <!-- SECCIÓN 4: INTEGRANTES & PERFIL CLÍNICO -->
+    <!-- SECCIÓN 4: SUGERENCIAS DE COMPRA INTELIGENTE -->
+    <section id="sec-shopping" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="shopping-cart" class="w-5 h-5 text-emerald-600"></i>
+            Sugerencia de Compras para Futuras Recetas Aptas
+          </h2>
+          <p class="text-xs text-slate-500">Ingredientes estratégicos con alto aporte metabólico que resuelven las restricciones de todos los integrantes simultáneamente. Puedes agregarlos a tu alacena con un solo clic.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="smart-shopping-grid"></div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: INTEGRANTES & PERFIL CLÍNICO (EDITABLE) -->
     <section id="sec-family" class="hidden space-y-6">
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-4">
@@ -168,23 +174,20 @@
               <i data-lucide="heart-pulse" class="w-5 h-5 text-emerald-600"></i>
               Perfiles Clínicos Familiares
             </h2>
-            <p class="text-xs text-slate-500">Agrega el diagnóstico médico. El motor clínico deducirá automáticamente qué alimentos evitar y cuáles potenciar.</p>
+            <p class="text-xs text-slate-500">Edita en cualquier momento el diagnóstico, notas o restricciones de cualquier integrante. El motor clínico recalcula al instante.</p>
           </div>
           <button onclick="openAddMemberModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 transition">
             <i data-lucide="user-plus" class="w-4 h-4"></i> Nuevo Integrante
           </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="family-members-cards">
-          <!-- Tarjetas de miembros -->
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="family-members-cards"></div>
       </div>
     </section>
 
-    <!-- SECCIÓN 5: BASES CASERAS Y GUÍAS -->
+    <!-- SECCIÓN 6: BASES CASERAS Y GUÍAS -->
     <section id="sec-bases" class="hidden space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Tarjeta Leche Almendras -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-2">
           <div class="flex items-center justify-between">
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
@@ -193,10 +196,9 @@
             <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">0% Glucosa</span>
           </div>
           <p class="text-xs text-slate-600"><strong>Ingredientes:</strong> 1 taza almendras crudas remojadas 8-12 hrs + 3 a 4 tazas de agua filtrada + pizca de sal marina.</p>
-          <p class="text-xs text-slate-600"><strong>Pasos:</strong> Escurrir y enjuagar almendras. Licuar 2 minutos a potencia alta. Colar con bolsa de leches vegetales. Conservar en frasco de vidrio tapado en refri (dura 3-4 días).</p>
+          <p class="text-xs text-slate-600"><strong>Pasos:</strong> Escurrir y enjuagar almendras. Licuar 2 minutos a potencia alta. Colar con bolsa de leches vegetales. Conservar en frasco de vidrio en refri (3-4 días).</p>
         </div>
 
-        <!-- Tarjeta Leche Chícharo -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-2">
           <div class="flex items-center justify-between">
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
@@ -205,10 +207,9 @@
             <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">8g Proteína/Vaso</span>
           </div>
           <p class="text-xs text-slate-600"><strong>Ingredientes:</strong> 1 taza chícharos secos partidos amarillos cocidos + 3 tazas de agua filtrada + vainilla y canela.</p>
-          <p class="text-xs text-slate-600"><strong>Pasos:</strong> Cocer chícharos secos previamente remojados (25 min). Licuar fríos con agua, sal y vainilla. Colar con tela fina. Excelente para sustituir leche de vaca sin fitoestrógenos ni lactosa.</p>
+          <p class="text-xs text-slate-600"><strong>Pasos:</strong> Cocer chícharos secos previamente remojados (25 min). Licuar fríos con agua, sal y vainilla. Colar con tela fina. Cero fitoestrógenos de soya, cero lactosa.</p>
         </div>
 
-        <!-- Tarjeta Wafles Antiinflamatorios -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-2">
           <div class="flex items-center justify-between">
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
@@ -220,7 +221,6 @@
           <p class="text-xs text-slate-600"><strong>Regla clínica:</strong> Sin dátiles ni jarabes. La canela aumenta sensibilidad a insulina. Consumir con huevo cocido o post-entreno.</p>
         </div>
 
-        <!-- Tarjeta Licuado Cacao Pro -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-2">
           <div class="flex items-center justify-between">
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
@@ -235,6 +235,54 @@
     </section>
 
   </main>
+
+  <!-- MODAL: EDITAR / AGREGAR INTEGRANTE -->
+  <div id="modal-member" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h3 id="modal-title" class="font-bold text-slate-900 text-base">Editar Cuadro Clínico</h3>
+        <button onclick="closeMemberModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <input type="hidden" id="edit-member-id">
+      
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Nombre del Integrante:</label>
+          <input type="text" id="edit-member-name" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Edad:</label>
+            <input type="number" id="edit-member-age" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Rol / Relación:</label>
+            <input type="text" id="edit-member-role" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Hijo, Mamá, etc.">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Diagnóstico o Cuadro Clínico (Texto libre):</label>
+          <input type="text" id="edit-member-condition" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej. Adrenarquia prematura, Alergia estricta a soya...">
+          <p class="text-[10px] text-slate-400 mt-0.5">El motor clínico deducirá automáticamente restricciones cruzadas.</p>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Restricciones Alimentarias (separadas por coma):</label>
+          <textarea id="edit-member-restrictions" rows="2" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Sin soya, Sin gluten refinado, Sin azúcar..."></textarea>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Notas Clínicas &amp; Criterio Metabólico:</label>
+          <textarea id="edit-member-notes" rows="2" class="w-full border rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Explicación clínica, pautas del médico..."></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2 border-t">
+        <button onclick="closeMemberModal()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">Cancelar</button>
+        <button onclick="saveMemberModal()" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-md shadow-emerald-200">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ==========================================
@@ -264,6 +312,54 @@
     };
 
     // ==========================================
+    // CATÁLOGO DE SUGERENCIAS DE COMPRA ESTRATÉGICAS
+    // ==========================================
+    const SMART_SHOPPING_SUGGESTIONS = [
+      {
+        id: 's1',
+        name: 'Chícharo seco partido amarillo',
+        cat: 'Proteínas / Bebidas',
+        benefit: 'Permite hacer leche vegetal casera con 8g de proteína pura por vaso. 100% libre de soya, libre de lácteos y sin fitoestrógenos.',
+        targetRecipe: 'Leche vegetal casera proteica & licuados matutinos'
+      },
+      {
+        id: 's2',
+        name: 'Semillas de calabaza (pepitas)',
+        cat: 'Grasas / Semillas',
+        benefit: 'Aporte masivo de Zinc biodisponible y Magnesio. El zinc regula la función suprarrenal y modula la conversión de andrógenos.',
+        targetRecipe: 'Snack escolar crocante & topping para ensaladas'
+      },
+      {
+        id: 's3',
+        name: 'Aminoácidos de coco (Coconut Aminos)',
+        cat: 'Bebidas / Especias',
+        benefit: 'Sustituto idéntico a la salsa de soya, fermentado de savia de coco con 70% menos sodio y 0% alérgenos de soya o trigo.',
+        targetRecipe: 'Aderezo para pollo salteado y verduras al wok apto para Dino niño'
+      },
+      {
+        id: 's4',
+        name: 'Avena integral certificada sin gluten',
+        cat: 'Granos / Harinas',
+        benefit: 'Aporta betaglucanos de digestión extra lenta sin riesgo de contaminación cruzada de gluten que detone anticuerpos.',
+        targetRecipe: 'Porridge tibio con canela & base de wafles'
+      },
+      {
+        id: 's5',
+        name: 'Canela de Ceilán en polvo',
+        cat: 'Bebidas / Especias',
+        benefit: 'Sensibilizador celular a la insulina comprobado. Aromatiza postres y wafles sin necesidad de añadir endulzantes ni dátiles.',
+        targetRecipe: 'Wafles antiandrógenos & leche tibia'
+      },
+      {
+        id: 's6',
+        name: 'Harina de coco orgánica',
+        cat: 'Granos / Harinas',
+        benefit: 'Ultra rica en fibra no fermentable y bajísimo índice glucémico. Absorbe líquidos y da consistencia a hotcakes sin gluten ni trigo.',
+        targetRecipe: 'Hotcakes cetogénicos bajos en carbohidratos netos'
+      }
+    ];
+
+    // ==========================================
     // ESTADO INICIAL DE INTEGRANTES
     // ==========================================
     const DEFAULT_MEMBERS = [
@@ -271,6 +367,7 @@
         id: 'oliver',
         name: 'Oliver (Hijo)',
         age: 9,
+        role: 'Hijo',
         condition: 'Adrenarquia prematura / Crecimiento acelerado',
         restrictions: ['Sin lacteos bovinos', 'Sin gluten refinado', 'Sin azucar anadida', 'Sin datiles/jugos (cero picos insulina)'],
         notes: 'Prevenir picos de insulina que estimulan andrógenos suprarrenales. Cuidar cartílagos de crecimiento.'
@@ -279,6 +376,7 @@
         id: 'dino',
         name: 'Dino niño',
         age: 6,
+        role: 'Hijo',
         condition: 'Alergia alimentaria estricta a la soya',
         restrictions: ['Soya', 'Salsa de soya', 'Tofu', 'Edamames', 'Lecitina de soya'],
         notes: 'Alergia inmunológica. Cero tolerancia a derivados de soya.'
@@ -287,6 +385,7 @@
         id: 'xanat',
         name: 'Mamá (Xanat)',
         age: 40,
+        role: 'Mamá',
         condition: 'Fibromialgia, Síndrome de Sjogren, Hipotiroidismo Autoinmune',
         restrictions: ['Sin gluten', 'Dieta antiinflamatoria profunda', 'Bajo en ultraprocesados'],
         notes: 'Priorizar grasas antiinflamatorias omega-3, hojas verdes y magnesio.'
@@ -295,6 +394,7 @@
         id: 'papa',
         name: 'Papá',
         age: 47,
+        role: 'Papá',
         condition: 'Salud cardiovascular & prevención metabólica',
         restrictions: ['Moderación grasas saturadas', 'Cero harinas refinadas'],
         notes: 'Intensa carga laboral. Necesita energía limpia y saciedad sostenida.'
@@ -305,30 +405,30 @@
     // ESTADO INICIAL DE ALACENA
     // ==========================================
     const DEFAULT_PANTRY = [
-      { id: 'p1', name: 'Huevos orgánicos', cat: 'Proteínas', inStock: true, conflicts: [] },
-      { id: 'p2', name: 'Pechuga de pollo', cat: 'Proteínas', inStock: true, conflicts: [] },
-      { id: 'p3', name: 'Atún en agua bajo en sodio', cat: 'Proteínas', inStock: true, conflicts: [] },
-      { id: 'p4', name: 'Carne de res magra', cat: 'Proteínas', inStock: true, conflicts: [] },
-      { id: 'p5', name: 'Filete de pescado blanco', cat: 'Proteínas', inStock: true, conflicts: [] },
-      { id: 'p6', name: 'Calabacitas tiernas', cat: 'Verduras', inStock: true, conflicts: [] },
-      { id: 'p7', name: 'Chayote sin espinas', cat: 'Verduras', inStock: true, conflicts: [] },
-      { id: 'p8', name: 'Nopales frescos', cat: 'Verduras', inStock: true, conflicts: [] },
-      { id: 'p9', name: 'Espinacas baby', cat: 'Verduras', inStock: true, conflicts: [] },
-      { id: 'p10', name: 'Jitomate saladet', cat: 'Verduras', inStock: true, conflicts: [] },
-      { id: 'p11', name: 'Pepino persa', cat: 'Verduras', inStock: true, conflicts: [] },
-      { id: 'p12', name: 'Fresas frescas', cat: 'Frutas', inStock: true, conflicts: [] },
-      { id: 'p13', name: 'Manzanas verdes', cat: 'Frutas', inStock: true, conflicts: [] },
-      { id: 'p14', name: 'Avena entera en hojuelas', cat: 'Granos/Harinas', inStock: true, conflicts: [] },
-      { id: 'p15', name: 'Tortillas de maíz nixtamalizado', cat: 'Granos/Harinas', inStock: true, conflicts: [] },
-      { id: 'p16', name: 'Harina de almendras fina', cat: 'Granos/Harinas', inStock: true, conflicts: [] },
-      { id: 'p17', name: 'Frijoles negros de la olla', cat: 'Granos/Harinas', inStock: true, conflicts: [] },
-      { id: 'p18', name: 'Semillas de chía', cat: 'Grasas/Semillas', inStock: true, conflicts: [] },
-      { id: 'p19', name: 'Linaza molida en frío', cat: 'Grasas/Semillas', inStock: true, conflicts: [] },
-      { id: 'p20', name: 'Aguacate Hass', cat: 'Grasas/Semillas', inStock: true, conflicts: [] },
-      { id: 'p21', name: 'Crema de cacahuate 100%', cat: 'Grasas/Semillas', inStock: true, conflicts: [] },
-      { id: 'p22', name: 'Aceite de oliva extra virgen', cat: 'Grasas/Semillas', inStock: true, conflicts: [] },
-      { id: 'p23', name: 'Cacao puro orgánico 100%', cat: 'Grasas/Semillas', inStock: true, conflicts: [] },
-      { id: 'p24', name: 'Leche casera de almendra', cat: 'Grasas/Semillas', inStock: true, conflicts: [] }
+      { id: 'p1', name: 'Huevos orgánicos', cat: 'Proteínas', inStock: true },
+      { id: 'p2', name: 'Pechuga de pollo', cat: 'Proteínas', inStock: true },
+      { id: 'p3', name: 'Atún en agua bajo en sodio', cat: 'Proteínas', inStock: true },
+      { id: 'p4', name: 'Carne de res magra', cat: 'Proteínas', inStock: true },
+      { id: 'p5', name: 'Filete de pescado blanco', cat: 'Proteínas', inStock: true },
+      { id: 'p6', name: 'Calabacitas tiernas', cat: 'Verduras', inStock: true },
+      { id: 'p7', name: 'Chayote sin espinas', cat: 'Verduras', inStock: true },
+      { id: 'p8', name: 'Nopales frescos', cat: 'Verduras', inStock: true },
+      { id: 'p9', name: 'Espinacas baby', cat: 'Verduras', inStock: true },
+      { id: 'p10', name: 'Jitomate saladet', cat: 'Verduras', inStock: true },
+      { id: 'p11', name: 'Pepino persa', cat: 'Verduras', inStock: true },
+      { id: 'p12', name: 'Fresas frescas', cat: 'Frutas', inStock: true },
+      { id: 'p13', name: 'Manzanas verdes', cat: 'Frutas', inStock: true },
+      { id: 'p14', name: 'Avena entera en hojuelas', cat: 'Granos/Harinas', inStock: true },
+      { id: 'p15', name: 'Tortillas de maíz nixtamalizado', cat: 'Granos/Harinas', inStock: true },
+      { id: 'p16', name: 'Harina de almendras fina', cat: 'Granos/Harinas', inStock: true },
+      { id: 'p17', name: 'Frijoles negros de la olla', cat: 'Granos/Harinas', inStock: true },
+      { id: 'p18', name: 'Semillas de chía', cat: 'Grasas/Semillas', inStock: true },
+      { id: 'p19', name: 'Linaza molida en frío', cat: 'Grasas/Semillas', inStock: true },
+      { id: 'p20', name: 'Aguacate Hass', cat: 'Grasas/Semillas', inStock: true },
+      { id: 'p21', name: 'Crema de cacahuate 100%', cat: 'Grasas/Semillas', inStock: true },
+      { id: 'p22', name: 'Aceite de oliva extra virgen', cat: 'Grasas/Semillas', inStock: true },
+      { id: 'p23', name: 'Cacao puro orgánico 100%', cat: 'Grasas/Semillas', inStock: true },
+      { id: 'p24', name: 'Leche casera de almendra', cat: 'Grasas/Semillas', inStock: true }
     ];
 
     let members = JSON.parse(localStorage.getItem('nutri_members')) || DEFAULT_MEMBERS;
@@ -351,6 +451,7 @@
 
       if (tab === 'pantry') renderPantry();
       if (tab === 'family') renderFamily();
+      if (tab === 'shopping') renderSmartShopping();
       if (tab === 'menu') generateConsensusMenu();
       lucide.createIcons();
     }
@@ -374,7 +475,7 @@
       const cleanCond = normalizeText(member.condition);
       const allRestrictions = member.restrictions.map(r => normalizeText(r)).join(' ');
 
-      let status = 'approved'; // approved | warning | rejected
+      let status = 'approved';
       let reasons = [];
       let fix = '';
 
@@ -398,7 +499,7 @@
         if (!fix) fix = `Sustituir por ${ALLERGEN_TAXONOMY.gluten.substitute}.`;
       }
 
-      // 3. REVISIÓN ESPECÍFICA PARA OLIVER (Adrenarquia / Picos de Insulina)
+      // 3. REVISIÓN ESPECÍFICA PARA ADRENARQUIA (Picos de Insulina)
       if (cleanCond.includes('adrenarquia') || cleanCond.includes('crecimiento')) {
         const containsHighGlycemic = ALLERGEN_TAXONOMY.azucar_rapida.terms.some(term => cleanRecipe.includes(normalizeText(term)));
         if (containsHighGlycemic) {
@@ -478,7 +579,6 @@
         gridDiv.appendChild(card);
       });
 
-      // Banner general
       if (globalHasReject) {
         bannerDiv.className = 'rounded-xl p-4 border bg-rose-100 border-rose-300 text-rose-900 flex items-center justify-between';
         bannerDiv.innerHTML = `
@@ -507,7 +607,6 @@
         `;
       }
 
-      // Caja de adaptación en 1 paso
       if (adaptationSteps.length > 0) {
         adaptDiv.classList.remove('hidden');
         adaptDiv.innerHTML = `
@@ -526,12 +625,11 @@
     }
 
     // ==========================================
-    // MENÚ CONSENSUADO DINÁMICO
+    // MENÚ CONSENSUADO
     // ==========================================
     function generateConsensusMenu() {
       const container = document.getElementById('menu-cards-container');
       container.innerHTML = `
-        <!-- Desayuno -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">Desayuno Caliente</span>
@@ -546,7 +644,6 @@
           <p class="text-[11px] text-emerald-700 bg-emerald-50/70 p-2 rounded-lg"><strong>Aporte Clínico:</strong> El mucílago del nopal aplana la curva de glucosa de Oliver; 100% libre de soya para Dino niño; alta colina y magnesio para Mamá y Papá.</p>
         </div>
 
-        <!-- Lunch Escolar / Trabajo -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Lunch Escolar / Oficina (Frío)</span>
@@ -561,7 +658,6 @@
           <p class="text-[11px] text-blue-700 bg-blue-50/70 p-2 rounded-lg"><strong>Aporte Clínico:</strong> El maíz nixtamalizado provee calcio biodisponible sin gluten refinado; cero alérgenos de soya.</p>
         </div>
 
-        <!-- Comida Principal -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">Comida Familiar (Caliente)</span>
@@ -576,7 +672,6 @@
           <p class="text-[11px] text-amber-800 bg-amber-50 p-2 rounded-lg"><strong>Secuencia Metabólica:</strong> Servir primero el chayote y calabaza, luego la pechuga y al final 1/2 taza de frijoles para reducir el impacto glucémico un 30%.</p>
         </div>
 
-        <!-- Cena Ligera -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">Cena Reparadora (Tibia)</span>
@@ -657,71 +752,194 @@
         id: 'p_' + Date.now(),
         name,
         cat,
-        inStock: true,
-        conflicts: []
+        inStock: true
       });
       saveState();
       renderPantry();
     }
 
     // ==========================================
-    // RENDER INTEGRANTES FAMILIARES
+    // SUGERENCIAS DE COMPRA ESTRATÉGICA
+    // ==========================================
+    function renderSmartShopping() {
+      const grid = document.getElementById('smart-shopping-grid');
+      grid.innerHTML = '';
+
+      SMART_SHOPPING_SUGGESTIONS.forEach(item => {
+        const alreadyInPantry = pantry.some(p => normalizeText(p.name).includes(normalizeText(item.name.split(' ')[0])));
+        
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3 flex flex-col justify-between';
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">${item.cat}</span>
+              ${alreadyInPantry ? '<span class=\"text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded\">En Alacena</span>' : ''}
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">${item.name}</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">${item.benefit}</p>
+            <p class="text-[11px] text-emerald-700 bg-emerald-50/70 p-2 rounded-lg"><strong>Ideal para:</strong> ${item.targetRecipe}</p>
+          </div>
+          <button onclick="addSuggestedToPantry('${item.name}', '${item.cat.split(' ')[0]}')" class="w-full mt-2 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition ${
+            alreadyInPantry ? 'bg-slate-100 hover:bg-slate-200 text-slate-700' : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-200'
+          }">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> ${alreadyInPantry ? 'Añadir Más a Alacena' : 'Agregar a Alacena'}
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function addSuggestedToPantry(name, cat) {
+      pantry.unshift({
+        id: 'p_' + Date.now(),
+        name,
+        cat: cat === 'Proteínas' ? 'Proteínas' : (cat === 'Grasas' ? 'Grasas/Semillas' : (cat === 'Granos' ? 'Granos/Harinas' : 'Verduras')),
+        inStock: true
+      });
+      saveState();
+      alert(`¡${name} agregado con éxito a tu Alacena!`);
+      renderSmartShopping();
+    }
+
+    // ==========================================
+    // RENDER & EDICIÓN DE INTEGRANTES FAMILIARES
     // ==========================================
     function renderFamily() {
       const container = document.getElementById('family-members-cards');
       container.innerHTML = '';
 
-      members.forEach((m, index) => {
+      members.forEach((m) => {
         const card = document.createElement('div');
-        card.className = 'p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3';
+        card.className = 'p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3 flex flex-col justify-between';
         card.innerHTML = `
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="font-bold text-slate-900 text-sm">${m.name}</h3>
-              <p class="text-xs text-emerald-700 font-medium">${m.condition}</p>
+          <div class="space-y-3">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                  ${m.name} 
+                  <span class="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">${m.role || 'Integrante'} · ${m.age} años</span>
+                </h3>
+                <p class="text-xs text-emerald-700 font-semibold mt-0.5">${m.condition}</p>
+              </div>
+              <button onclick="openEditMemberModal('${m.id}')" class="text-slate-400 hover:text-emerald-600 p-1 rounded-lg hover:bg-slate-50 transition" title="Editar cuadro clínico">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+              </button>
             </div>
-            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600">${m.age} años</span>
-          </div>
-          <div class="space-y-1">
-            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Restricciones:</span>
-            <div class="flex flex-wrap gap-1.5">
-              ${m.restrictions.map(r => `<span class="bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 rounded text-[11px] font-medium">${r}</span>`).join('')}
+            <div class="space-y-1">
+              <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Restricciones Alimentarias:</span>
+              <div class="flex flex-wrap gap-1.5">
+                ${m.restrictions.map(r => `<span class=\"bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 rounded text-[11px] font-medium\">${r}</span>`).join('')}
+              </div>
             </div>
+            <p class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed">
+              <strong>Criterio clínico:</strong> ${m.notes}
+            </p>
           </div>
-          <p class="text-xs text-slate-500 bg-slate-50 p-2 rounded-lg"><strong>Criterio clínico:</strong> ${m.notes}</p>
+          <div class="pt-2 border-t border-slate-100 flex justify-end">
+            <button onclick="openEditMemberModal('${m.id}')" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
+              <i data-lucide="file-pen" class="w-3.5 h-3.5"></i> Modificar Cuadro Clínico
+            </button>
+          </div>
         `;
         container.appendChild(card);
       });
       lucide.createIcons();
     }
 
+    function openEditMemberModal(id) {
+      const member = members.find(m => m.id === id);
+      if (!member) return;
+
+      document.getElementById('modal-title').innerText = `Editar Cuadro Clínico: ${member.name}`;
+      document.getElementById('edit-member-id').value = member.id;
+      document.getElementById('edit-member-name').value = member.name;
+      document.getElementById('edit-member-age').value = member.age;
+      document.getElementById('edit-member-role').value = member.role || '';
+      document.getElementById('edit-member-condition').value = member.condition;
+      document.getElementById('edit-member-restrictions').value = member.restrictions.join(', ');
+      document.getElementById('edit-member-notes').value = member.notes;
+
+      document.getElementById('modal-member').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
     function openAddMemberModal() {
-      const name = prompt('Nombre del integrante:');
-      if (!name) return;
-      const age = parseInt(prompt('Edad:', '10') || '10');
-      const condition = prompt('Diagnóstico o condición médica (ej. Alergia al cacahuate, Resistencia insulina):', '') || 'General';
-      const restrictionsRaw = prompt('Alimentos que debe evitar (separados por coma):', '') || '';
+      document.getElementById('modal-title').innerText = 'Nuevo Integrante Familiar';
+      document.getElementById('edit-member-id').value = '';
+      document.getElementById('edit-member-name').value = '';
+      document.getElementById('edit-member-age').value = '';
+      document.getElementById('edit-member-role').value = '';
+      document.getElementById('edit-member-condition').value = '';
+      document.getElementById('edit-member-restrictions').value = '';
+      document.getElementById('edit-member-notes').value = '';
+
+      document.getElementById('modal-member').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeMemberModal() {
+      document.getElementById('modal-member').classList.add('hidden');
+    }
+
+    function saveMemberModal() {
+      const id = document.getElementById('edit-member-id').value;
+      const name = document.getElementById('edit-member-name').value.trim();
+      const age = parseInt(document.getElementById('edit-member-age').value) || 0;
+      const role = document.getElementById('edit-member-role').value.trim();
+      const condition = document.getElementById('edit-member-condition').value.trim();
+      const restrictionsRaw = document.getElementById('edit-member-restrictions').value;
+      const notes = document.getElementById('edit-member-notes').value.trim();
+
+      if (!name) {
+        alert('Por favor ingresa un nombre.');
+        return;
+      }
+
       const restrictions = restrictionsRaw.split(',').map(s => s.trim()).filter(Boolean);
 
-      members.push({
-        id: 'm_' + Date.now(),
-        name,
-        age,
-        condition,
-        restrictions,
-        notes: 'Monitoreo activo configurado por el usuario.'
-      });
+      if (id) {
+        // Actualizar existente
+        const member = members.find(m => m.id === id);
+        if (member) {
+          member.name = name;
+          member.age = age;
+          member.role = role;
+          member.condition = condition;
+          member.restrictions = restrictions;
+          member.notes = notes;
+        }
+      } else {
+        // Crear nuevo
+        members.push({
+          id: 'm_' + Date.now(),
+          name,
+          age,
+          role,
+          condition,
+          restrictions,
+          notes: notes || 'Monitoreo clínico personalizado.'
+        });
+      }
+
       saveState();
+      closeMemberModal();
       renderFamily();
+      // Si el auditor está visible, re-auditar
+      if (!document.getElementById('sec-auditor').classList.contains('hidden')) {
+        runAudit();
+      }
     }
 
     // Inicialización al cargar la ventana
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
-      // Ejecución de prueba inicial para verificar visualización
       document.getElementById('recipe-input').value = 'Hotcakes con leche de soya';
       runAudit();
     });
   </script>
 </body>
-</html>"""
+</html>
+
+print("FILE_REGENERATED_SUCCESSFULLY: index.html")
