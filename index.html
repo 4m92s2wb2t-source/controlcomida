@@ -621,116 +621,76 @@
     }
 
     // Llamada a la API real de Gemini si el usuario configuró su key
-    let cachedModelName = null;
-
-    async function getAvailableModel(apiKey) {
-      if (cachedModelName) return cachedModelName;
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data.models && data.models.length > 0) {
-            const contentModels = data.models.filter(m => 
-              m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent')
-            );
-            // Buscar prioritariamente gemini-3.8-flash o flash activo
-            const preferred = contentModels.find(m => m.name.includes('3.8-flash')) || 
-                              contentModels.find(m => m.name.includes('flash') && !m.name.includes('lite'));
-            if (preferred) {
-              cachedModelName = preferred.name.replace('models/', '');
-              return cachedModelName;
-            }
-            if (contentModels.length > 0) {
-              cachedModelName = contentModels[0].name.replace('models/', '');
-              return cachedModelName;
-            }
-          }
-        }
-      } catch (e) {
-        console.warn('No se pudo listar modelos dinámicamente:', e);
-      }
-      return 'gemini-3.8-flash';
-    }
-
+        // Caché de modelo y llamada ultra-rápida con límite de tiempo estricto
     async function evaluateWithGeminiApi(recipeText) {
-      const familyContext = members.map(m => `- ${m.name} (${m.role}, ${m.age} años): Diagnóstico: "${m.condition}". Restricciones: ${m.restrictions.join(', ')}. Notas: ${m.notes}`).join('\n');
+      const familyContext = members.map(m => `${m.name}: ${m.condition}. Evitar: ${m.restrictions.join(', ')}`).join('\n');
 
-      const prompt = `Actúa como médico especialista en nutrición clínica y endocrinología pediátrica familiar.
-Audita la siguiente receta para esta familia:
-RECETA: "${recipeText}"
-
-INTEGRANTES FAMILIARES:
+      const prompt = `Actúa como médico especialista en nutrición familiar y endocrinología pediátrica.
+Audita esta receta: "${recipeText}"
+Familia:
 ${familyContext}
 
-REGLAS CLÍNICAS RIGUROSAS:
-1. Comprensión semántica: Reconoce que "leche vegetal de soya" NO es lácteo bovino, pero SÍ es SOYA.
-2. Oliver tiene Adrenarquia prematura / desarrollo acelerado: La SOYA contiene fitoestrógenos que interfieren hormonalmente con el crecimiento y la adrenarquia. La harina de trigo y azúcares causan picos de insulina que disparan andrógenos suprarrenales.
-3. Dino niño tiene alergia inmunológica estricta a la soya: cualquier derivado es rechazo inmediato.
-4. Mamá (Xanat) tiene condiciones autoinmunes: cero gluten.
+Reglas estrictas:
+1. "Leche vegetal de soya" NO es lácteo bovino, pero SÍ es soya.
+2. Soya contraindicada para alergia (Dino) y adrenarquia/crecimiento acelerado por fitoestrógenos (Oliver).
+3. Trigo/gluten contraindicado para adrenarquia (picos insulina) y autoinmune (Xanat).
+4. Restricciones personalizadas deben respetarse estrictamente.
 
-Responde ÚNICAMENTE un JSON válido (sin backticks markdown ni texto adicional) con esta estructura exacta:
+Responde ÚNICAMENTE este JSON:
 {
   "globalStatus": "rejected" | "warning" | "approved",
-  "globalTitle": "Título resumen",
-  "adaptationStep": "Sugerencia en 1 solo paso para adaptar el platillo a todos sin cocinar doble",
+  "globalTitle": "Resumen clínico",
+  "adaptationStep": "Ajuste en 1 paso para no cocinar doble",
   "members": [
     {
-      "name": "Nombre exacto del integrante",
+      "name": "Nombre",
       "status": "rejected" | "warning" | "approved",
-      "reasons": ["Razón médica clara y contextual"],
-      "fix": "Sustitución específica"
+      "reasons": ["Motivo conciso"],
+      "fix": "Sustitución rápida"
     }
   ]
 }`;
 
-      // Lista de modelos en cascada para tolerancia a alta demanda (503 / 429)
-      const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.5-pro'];
-      
-      // Asegurar que el modelo detectado esté al frente
-      const detected = await getAvailableModel(geminiApiKey);
-      const modelsToTry = [detected, ...candidateModels.filter(m => m !== detected)];
+      // Modelos ordenados por velocidad y disponibilidad actual
+      const candidateModels = ['gemini-3.8-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
 
-      let lastError = null;
+      for (const model of candidateModels) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500); // Máximo 3.5s por intento
 
-      for (const model of modelsToTry) {
         try {
           const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`, {
             method: 'POST',
+            signal: controller.signal,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: { responseMimeType: "application/json" }
+              generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
             })
           });
 
+          clearTimeout(timeoutId);
+
           if (!response.ok) {
-            const errJson = await response.json().catch(() => ({}));
-            const errMsg = errJson.error ? errJson.error.message : ('HTTP ' + response.status);
-            // Si el modelo está saturado (503) o con límite de tasa, intentar el siguiente
-            if (response.status === 503 || response.status === 429 || errMsg.toLowerCase().includes('demand') || errMsg.toLowerCase().includes('overloaded')) {
-              console.warn(`Modelo ${model} con alta demanda, alternando al siguiente...`);
-              lastError = new Error(errMsg);
-              continue;
-            }
-            throw new Error(errMsg);
+            continue; // Si da 503 o 404, pasa al siguiente de inmediato sin demoras
           }
 
           const data = await response.json();
-          let rawText = data.candidates[0].content.parts[0].text.trim();
+          let rawText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
           if (rawText.startsWith('```json')) {
             rawText = rawText.replace(/^```json/, '').replace(/```$/, '').trim();
           } else if (rawText.startsWith('```')) {
             rawText = rawText.replace(/^```/, '').replace(/```$/, '').trim();
           }
           return JSON.parse(rawText);
-        } catch (err) {
-          lastError = err;
-          // Si no es error de demanda o red, continuar probando
+        } catch (e) {
+          clearTimeout(timeoutId);
+          // Si hubo timeout o error, intentar el siguiente candidato de inmediato
           continue;
         }
       }
 
-      throw lastError || new Error('No se pudo conectar con ningún modelo de Gemini disponible.');
+      throw new Error('Timeout o saturación temporal de servidores');
     }
 
     async function runAudit() {
